@@ -1,3 +1,5 @@
+var autoDraw = false;
+var resizeCanvasBool = true;
 
 const sketch = function(p) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
@@ -31,7 +33,7 @@ const sketch = function(p) {
   let lastModelDrawing = []; // the actual sequence of lines that the model drew, so that we can erase them.
 
   // Don't record mouse events when the splash is open.
-  let splashIsOpen = true;
+  let splashIsOpen = false;
 
   /*
    * Main p5 code
@@ -45,24 +47,29 @@ const sketch = function(p) {
     p.frameRate(60);
 
     restart();
-    initModel(22);  // Cat!
+    initModel(20);  // Cat!
+
+    settings.style.display = 'none';
 
     selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
     selectModels.selectedIndex = 22;
     selectModels.addEventListener('change', () => initModel(selectModels.selectedIndex));
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
-    btnHelp.addEventListener('click', () => {
-      splash.classList.remove('hidden');
-      splashIsOpen = true;
-    });
-    btnGo.addEventListener('click', () => {
-      splashIsOpen = false;
-      splash.classList.add('hidden');
-    });
+    // btnHelp.addEventListener('click', () => {
+    //   splash.classList.remove('hidden');
+    //   splashIsOpen = true;
+    // });
+    // btnGo.addEventListener('click', () => {
+    //   splashIsOpen = false;
+    //   splash.classList.add('hidden');
+    // });
     btnSave.addEventListener('click', () => {
       p.saveCanvas('magic-sketchpad', 'jpg');
     });
+
+
+    console.log("end setup");
   };
 
   p.windowResized = function () {
@@ -70,7 +77,9 @@ const sketch = function(p) {
     const containerSize = document.getElementById('sketch').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
-    p.resizeCanvas(screenWidth, screenHeight);
+    if(resizeCanvasBool){
+      p.resizeCanvas(screenWidth, screenHeight);
+    }
   };
 
   /*
@@ -96,7 +105,7 @@ const sketch = function(p) {
       const currentRawLineSimplified = model.simplifyLine(currentRawLine);
 
       // If it's an accident...ignore it.
-      if (currentRawLineSimplified.length > 1) {
+      if (currentRawLineSimplified.length > 1 && autoDraw) {
         // Encode this line as a stroke, and feed it to the model.
         lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
         encodeStrokes(lastHumanStroke);
@@ -193,6 +202,7 @@ const sketch = function(p) {
 
   function restart() {
     p.background(255, 255, 255, 255);
+
     p.strokeWeight(3.0);
 
     // Start drawing in the middle-ish of the screen
@@ -224,6 +234,12 @@ const sketch = function(p) {
       document.getElementById('sketch').classList.remove('loading');
       console.log(`🤖${availableModels[index]} loaded.`);
       model.setPixelFactor(5.0);  // Bigger -> large outputs
+
+      const containerSize = document.getElementById('sketch').getBoundingClientRect();
+      const screenWidth = Math.floor(containerSize.width);
+      const screenHeight = Math.floor(containerSize.height);
+      p.resizeCanvas(screenWidth, screenHeight);
+      resizeCanvasBool = false;
     });
   };
 

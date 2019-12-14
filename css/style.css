@@ -6,6 +6,10 @@ html, body {
   padding: 0;
   position: fixed;
   overscroll-behavior-y: contain;
+  background: url('../images/background.jpg') no-repeat fixed;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
 }
 
 body {
