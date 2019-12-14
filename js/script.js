@@ -66,7 +66,20 @@ const sketch = function(p) {
     //   splash.classList.add('hidden');
     // });
     btnSave.addEventListener('click', () => {
-      p.saveCanvas('magic-sketchpad', 'jpg');
+      p.saveCanvas('magic-sketchpad', 'png');
+    });
+
+    btnDone.addEventListener('click', () => {
+      //p.saveCanvas('magic-sketchpad', 'png');
+      resetCanvas();
+      var img = document.createElement("img");
+      img.src = "../drawings/magic-sketchpad.png";
+      var src = document.getElementById("sketch");
+      src.insertBefore(img, src.childNodes[0]);
+      document.getElementById("img").style.zIndex = "-1";
+      document.getElementById("defaultCanvas0").style.zIndex = "1";
+      restart();
+      resetCanvas();
     });
 
 
@@ -189,8 +202,12 @@ const sketch = function(p) {
       p.line(...lastHumanDrawing[i]);
     }
 
+
+
     p.strokeWeight(3.0);
     p.stroke(currentColor);
+
+    resetCanvas();
 
     // Redraw the human drawing.
     for (let i = 0; i < lastHumanDrawing.length; i++) {
@@ -202,7 +219,7 @@ const sketch = function(p) {
   }
 
   function restart() {
-    p.background(255, 255, 255, 255);
+    p.background(255,255,255,255);
 
     p.strokeWeight(3.0);
 
@@ -219,7 +236,11 @@ const sketch = function(p) {
     // Reset the model drawing state.
     modelIsActive = false;
     previousPen = [0, 1, 0];
+
+    resetCanvas();
+
   };
+
 
   function initModel(index) {
     modelLoaded = false;
@@ -236,10 +257,7 @@ const sketch = function(p) {
       console.log(`🤖${availableModels[index]} loaded.`);
       model.setPixelFactor(5.0);  // Bigger -> large outputs
 
-      const containerSize = document.getElementById('sketch').getBoundingClientRect();
-      const screenWidth = Math.floor(containerSize.width);
-      const screenHeight = Math.floor(containerSize.height);
-      p.resizeCanvas(screenWidth, screenHeight);
+      resetCanvas();
       resizeCanvasBool = false;
     });
   };
@@ -313,4 +331,15 @@ function changeColor(event){
   p5Sketch.updateCurrentColor(btn.dataset.index);
   document.querySelector('.active').classList.remove('active');
   btn.classList.add('active');
+}
+
+
+//.............................................................
+//Nuove funzioni
+
+function resetCanvas() {
+  const containerSize = document.getElementById('sketch').getBoundingClientRect();
+  const screenWidth = Math.floor(containerSize.width);
+  const screenHeight = Math.floor(containerSize.height);
+  p.resizeCanvas(screenWidth, screenHeight);
 }
