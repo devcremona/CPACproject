@@ -72,14 +72,16 @@ const sketch = function(p) {
     });
 
     btnDone.addEventListener('click', () => {
-      //p.saveCanvas('magic-sketchpad', 'png');
+      //p.saveCanvas('magic-sketchpad', 'png'); <<<---bisogna cambiarla per rendere il salvataggio trasparente
       resetCanvas();
       var img = document.createElement("img");
       img.src = "../drawings/magic-sketchpad.png";
+      img.id = "draw-test";
       var src = document.getElementById("sketch");
-      src.insertBefore(img, src.childNodes[0]);
-      document.getElementById("img").style.zIndex = "-1";
+      src.append(img);
+      document.getElementById("draw-test").style.zIndex = "+1";
       document.getElementById("defaultCanvas0").style.zIndex = "1";
+      document.getElementById("defaultCanvas0").style.position = "absolute";
       restart();
       resetCanvas();
     });
@@ -341,9 +343,3 @@ function changeColor(event){
   document.querySelector('.active').classList.remove('active');
   btn.classList.add('active');
 }
-
-
-//.............................................................
-//Nuove funzioni
-
-
