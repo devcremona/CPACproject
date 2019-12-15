@@ -1,6 +1,6 @@
 var autoDraw = false;
 var resizeCanvasBool = true;
-
+var drawingsCounter = 0;
 
 
 const sketch = function(p) {
@@ -52,7 +52,7 @@ const sketch = function(p) {
     restart();
     initModel(0);  // Angel!
 
-    settings.style.display = 'none';
+    settings.style.display = 'none'; //Hide settings, buttons, list of models menu
 
     selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
     selectModels.selectedIndex = 22;
@@ -72,16 +72,29 @@ const sketch = function(p) {
     });
 
     btnDone.addEventListener('click', () => {
-      //p.saveCanvas('magic-sketchpad', 'png'); <<<---bisogna cambiarla per rendere il salvataggio trasparente
-      resetCanvas();
-      var img = document.createElement("img");
-      img.src = "../drawings/magic-sketchpad.png";
-      img.id = "draw-test";
+      //Increase the counter for the number of drawings Done
+      drawingsCounter++;
+
+      //Create an univocal base64 code for the image drawn in the canvas
+      var imageTestSrc = document.getElementById("defaultCanvas0").toDataURL("image/png");
+
+      //Create a new image with the source equal to the previously computed code
+      var draw = document.createElement("img");
+      draw.src = imageTestSrc;
+      draw.id = "draw"+drawingsCounter; //<----- needs to be changed in order to create images with different id each time the button is pressed
+
+      //Insert the image inside the sketch div together with the canvas
       var src = document.getElementById("sketch");
-      src.append(img);
-      document.getElementById("draw-test").style.zIndex = "+1";
+      src.append(draw);
+
+      //Set the properties to properly see all the images
+      document.getElementById("draw"+drawingsCounter).style.zIndex = "+1";
+      document.getElementById("draw"+drawingsCounter).style.position = "absolute";
+
       document.getElementById("defaultCanvas0").style.zIndex = "1";
       document.getElementById("defaultCanvas0").style.position = "absolute";
+
+      //Clear the transparent canvas above all the other elements
       restart();
       resetCanvas();
     });
@@ -101,10 +114,10 @@ const sketch = function(p) {
   };
 
   function resetCanvas() {
-  const containerSize = document.getElementById('sketch').getBoundingClientRect();
-  const screenWidth = Math.floor(containerSize.width);
-  const screenHeight = Math.floor(containerSize.height);
-  p.resizeCanvas(screenWidth, screenHeight);
+    const containerSize = document.getElementById('sketch').getBoundingClientRect();
+    const screenWidth = Math.floor(containerSize.width);
+    const screenHeight = Math.floor(containerSize.height);
+    p.resizeCanvas(screenWidth, screenHeight);
   }
 
   /*
