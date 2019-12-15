@@ -94,7 +94,10 @@ const sketch = function(p) {
       document.getElementById("defaultCanvas0").style.zIndex = "1";
       document.getElementById("defaultCanvas0").style.position = "absolute";
 
-      //Clear the transparent canvas above all the other elements
+      //Animation example: moveObject(objectID, xTarget, yTarget, duration[ms])
+      moveObject(draw.id,400,$("#draw1").position().top,1000);
+
+      //Clear the transparent canvas that is above all the other elements
       restart();
       resetCanvas();
     });
@@ -355,4 +358,13 @@ function changeColor(event){
   p5Sketch.updateCurrentColor(btn.dataset.index);
   document.querySelector('.active').classList.remove('active');
   btn.classList.add('active');
+}
+
+
+function moveObject(objID, xEnd, yEnd, duration){
+  //Initialize object position as canvas position
+  document.getElementById(objID).style.left=$("#defaultCanvas0").position().left+"px";
+  document.getElementById(objID).style.top=$("#defaultCanvas0").position().top+"px";
+  //Move the object
+  $("#"+objID).animate({left:""+xEnd+"px", top:""+yEnd+"px"},duration);
 }
