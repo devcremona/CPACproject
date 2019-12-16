@@ -1,25 +1,27 @@
-function imageFromCanvas() {
+function imageFromCanvas(idCanvas, idImg) {
   //Increase the counter for the number of drawings Done
   drawingsCounter++;
 
   //Create an univocal base64 code for the image drawn in the canvas
-  var imageTestSrc = document.getElementById("defaultCanvas0").toDataURL("image/png");
+  var imageSrc = document.getElementById(idCanvas).toDataURL("image/png");
 
   //Create a new image with the source equal to the previously computed code
-  var draw = document.createElement("img");
-  draw.src = imageTestSrc;
-  draw.id = "draw"+drawingsCounter; //<----- needs to be changed in order to create images with different id each time the button is pressed
+  var img = document.createElement("img");
+  img.src = imageSrc;
+  img.id = idImg;
 
-  //Insert the image inside the sketch div together with the canvas
+  //Insert the image inside the "sketch div" together with the canvas
   var src = document.getElementById("sketch");
-  src.append(draw);
+  src.append(img);
 
-  //Set the properties to properly see all the images
-  document.getElementById("draw"+drawingsCounter).style.zIndex = "+1";
-  document.getElementById("draw"+drawingsCounter).style.position = "absolute";
+  //Set the properties to properly see the image below the canvas
+  document.getElementById(idImg).style.zIndex = "+1";
+  document.getElementById(idImg).style.position = "absolute";
 
-  document.getElementById("defaultCanvas0").style.zIndex = "1";
-  document.getElementById("defaultCanvas0").style.position = "absolute";
+  document.getElementById(idCanvas).style.zIndex = "1";
+  document.getElementById(idCanvas).style.position = "absolute";
+
+  return img;
 }
 
 
