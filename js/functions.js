@@ -16,6 +16,11 @@ function imageFromCanvas(idCanvas, idImg) {
   document.getElementById(idCanvas).style.zIndex = "1";
   document.getElementById(idCanvas).style.position = "absolute";
 
+  document.getElementById(idImg).style.width = document.getElementById(idCanvas).style.width;
+  document.getElementById(idImg).style.height = document.getElementById(idCanvas).style.height;
+
+
+
   return canvasImg;
 }
 
