@@ -1,7 +1,8 @@
 var autoDraw = false;
 var resizeCanvasBool = true;
 var drawingsCounter = 0;
-
+var drawedAngel = false;
+var lastDrawPosition = 0;
 
 const sketch = function(p) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
@@ -52,7 +53,7 @@ const sketch = function(p) {
     restart();
     initModel(0);  // Angel!
 
-    settings.style.display = 'none'; //Hide settings, buttons, list of models menu
+    //settings.style.display = 'none'; //Hide settings, buttons, list of models menu
 
     selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
     selectModels.selectedIndex = 22;
@@ -67,9 +68,9 @@ const sketch = function(p) {
     //   splashIsOpen = false;
     //   splash.classList.add('hidden');
     // });
-    btnSave.addEventListener('click', () => {
-      p.saveCanvas('magic-sketchpad', 'png');
-    });
+    // btnSave.addEventListener('click', () => {
+    //   p.saveCanvas('magic-sketchpad', 'png');
+    // });
 
     btnDone.addEventListener('click', () => {
       //Start the story
@@ -79,6 +80,10 @@ const sketch = function(p) {
       restart();
       resetCanvas();
     });
+
+    document.getElementById("selectModels").style.opacity = 0;
+    //document.getElementById("defaultCanvas0").style.position = "absolute";
+    //document.getElementById("modelsSelect").style.position = "absolute";
 
     console.log("end setup");
   };
@@ -121,6 +126,7 @@ const sketch = function(p) {
     if (!splashIsOpen && p.isInBounds()) {
       userPen = 0;  // Up!
       const currentRawLineSimplified = model.simplifyLine(currentRawLine);
+      lastDrawPosition = currentRawLine[currentRawLine.length-1];
 
       // If it's an accident...ignore it.
       if (currentRawLineSimplified.length > 1 && autoDraw) {
@@ -172,17 +178,43 @@ const sketch = function(p) {
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
       modelIsActive = false;
-      addImage("../images/boxTotal.png","present","sketch");
-      document.getElementById("present").style.position = "absolute";
-      document.getElementById("present").style.width = "180px";
-      document.getElementById("present").style.left = "300px";
+      if(!drawedAngel){
+        addImage("../images/boxCover.png","presentTop","sketch");
+        document.getElementById("presentTop").style.position = "absolute";
+        document.getElementById("presentTop").style.width = "200px";
+        document.getElementById("presentTop").style.left = lastDrawPosition[0]+150+"px";
+        document.getElementById("presentTop").style.top = "145px";
+        document.getElementById("presentTop").style.opacity = "0";
+        document.getElementById("presentTop").style.transform = "rotate(-40deg)";
+        document.getElementById("presentTop").style.transformOrigin = "bottom left";
 
-      var angel = imageFromCanvas("defaultCanvas0", "angel");
+        addImage("../images/boxDown.png","presentBox","sketch");
+        document.getElementById("presentBox").style.position = "absolute";
+        document.getElementById("presentBox").style.width = "200px";
+        document.getElementById("presentBox").style.left = lastDrawPosition[0]+150+"px";
+        document.getElementById("presentBox").style.top = "230px";
+        document.getElementById("presentBox").style.opacity = "0";
+
+        var angel = imageFromCanvas("defaultCanvas0", "angel");
+
+        drawedAngel = true;
+
+        $("#presentTop").animate({opacity:"1"},800);
+        $("#presentBox").animate({opacity:"1"},800, function(){
+          document.getElementById("textField").innerHTML = "Now select you present and draw a circle!";
+          $("#selectModels").animate({opacity:"1"},700);
+        });
+      }
+      else{
+        document.getElementById("textField").innerHTML = "Let's see the end of the story!";
+      }
+
+
 
       setTimeout(function(){
-        resetCanvas();
-        moveDraw("angel", 440, 340, 1000);
-        $("#present").animate({left:""+750+"px", top:""+340+"px"},1000);
+        // resetCanvas();
+        // moveDraw("angel", 440, 340, 1000);
+        // $("#present").animate({left:""+750+"px", top:""+340+"px"},1000);
       },500);
 
     } else {

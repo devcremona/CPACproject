@@ -192,7 +192,7 @@ select {
 }
 #sketch.loading {
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 1;
   filter: blur(3px);
 }
 
