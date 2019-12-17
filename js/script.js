@@ -172,6 +172,19 @@ const sketch = function(p) {
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
       modelIsActive = false;
+      addImage("../images/boxTotal.png","present","sketch");
+      document.getElementById("present").style.position = "absolute";
+      document.getElementById("present").style.width = "180px";
+      document.getElementById("present").style.left = "300px";
+
+      var angel = imageFromCanvas("defaultCanvas0", "angel");
+
+      setTimeout(function(){
+        resetCanvas();
+        moveDraw("angel", 440, 340, 1000);
+        $("#present").animate({left:""+750+"px", top:""+340+"px"},1000);
+      },500);
+
     } else {
       // Only draw on the paper if the pen is still touching the paper.
       if (previousPen[PEN.DOWN] === 1) {
