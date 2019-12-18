@@ -172,6 +172,7 @@ header .top {
   align-items: center;
   justify-content: space-between;
   padding-left: 4px;
+  position: absolute;
 }
 
 select {

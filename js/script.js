@@ -14,7 +14,12 @@ var cat = new Audio("sound/cat.wav");
 var bike = new Audio("sound/bike.wav");
 var angel = new Audio("sound/angel.wav");
 
+// /! variabili per il ritaglio
+  var maxx, minx, maxy, miny;
+
 const sketch = function(p) {
+  
+
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
   //const availableModels = ['bird', 'ant','ambulance','angel','alarm_clock','antyoga','backpack','barn','basket','bear','bee','beeflower','bicycle','book','brain','bridge','bulldozer','bus','butterfly','cactus','calendar','castle','cat','catbus','catpig','chair','couch','crab','crabchair','crabrabbitfacepig','cruise_ship','diving_board','dog','dogbunny','dolphin','duck','elephant','elephantpig','everything','eye','face','fan','fire_hydrant','firetruck','flamingo','flower','floweryoga','frog','frogsofa','garden','hand','hedgeberry','hedgehog','helicopter','kangaroo','key','lantern','lighthouse','lion','lionsheep','lobster','map','mermaid','monapassport','monkey','mosquito','octopus','owl','paintbrush','palm_tree','parrot','passport','peas','penguin','pig','pigsheep','pineapple','pool','postcard','power_outlet','rabbit','rabbitturtle','radio','radioface','rain','rhinoceros','rifle','roller_coaster','sandwich','scorpion','sea_turtle','sheep','skull','snail','snowflake','speedboat','spider','squirrel','steak','stove','strawberry','swan','swing_set','the_mona_lisa','tiger','toothbrush','toothpaste','tractor','trombone','truck','whale','windmill','yoga','yogabicycle'];
   const availableModels = ['angel', 'cat', 'dog', 'bicycle'];
@@ -158,6 +163,12 @@ const sketch = function(p) {
     if (!splashIsOpen && p.isInBounds()) {
       x = startX = p.mouseX;
       y = startY = p.mouseY;
+
+      maxx = p.mouseX;
+      minx = p.mouseX;
+      maxy = p.mouseY;
+      miny = p.mouseY;
+
       userPen = 1; // down!
 
       modelIsActive = false;
@@ -179,6 +190,7 @@ const sketch = function(p) {
         // Encode this line as a stroke, and feed it to the model.
         lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
         encodeStrokes(lastHumanStroke);
+        console.log("\n"+maxx+" "+minx+" "+maxy+" "+miny+"\n");
       }
       currentRawLine = [];
       previousUserPen = userPen;
@@ -192,6 +204,13 @@ const sketch = function(p) {
       if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area.
         dx = dx0;
         dy = dy0;
+
+        // /! operazoni per il ritaglio
+        maxx = Math.max(p.mouseX, maxx);
+        minx = Math.min(p.mouseX, minx);
+        maxy = Math.max(p.mouseY, maxy);
+        miny = Math.min(p.mouseY, miny);
+
         userPen = 1;
         if (previousUserPen == 1) {
           p.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
@@ -241,6 +260,13 @@ const sketch = function(p) {
       if (previousPen[PEN.DOWN] === 1) {
         p.line(x, y, x+dx, y+dy);
         lastModelDrawing.push([x, y, x+dx, y+dy]);
+
+        // /! operazoni per il ritaglio
+        maxx = Math.max(x, maxx);
+        minx = Math.min(x, minx);
+        maxy = Math.max(y, maxy);
+        miny = Math.min(y, miny);
+
       }
       // Update.
       x += dx;

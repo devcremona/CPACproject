@@ -78,3 +78,26 @@ function playSound(s){
     angel.play();
   }
 }
+
+
+// The crop function
+// src:          https://stackoverflow.com/questions/35033357/how-do-i-extract-a-portion-of-an-image-in-canvas-and-use-it-as-background-image
+// call:         crop(document.getElementById("defaultCanvas0"), 380, 50, 300, 200);
+
+var crop = function(canvas, offsetX, offsetY, width, height) {
+
+  // create an in-memory canvas
+  var buffer = document.createElement('canvas');
+  var b_ctx = buffer.getContext('2d');
+
+  buffer.width = width;
+  buffer.height = height;
+
+  // drawImage(source, source_X, source_Y, source_Width, source_Height, 
+  //  dest_X, dest_Y, dest_Width, dest_Height)
+  b_ctx.drawImage(canvas, offsetX, offsetY, width, height,
+                  0, 0, buffer.width, buffer.height);
+
+  
+  addImage(buffer.toDataURL(), "prova", "sketch");
+};
