@@ -128,6 +128,7 @@ const sketch = function(p) {
 
       if(storyState == storyStates.DRAW_PRESENT){
         var present = imageFromCanvas("defaultCanvas0", "present");
+        autoDraw = false;
         //moveDraw(present.id, $("#presentBox").position().left, $("#presentBox").position().top, function(){})
         var closeBoxAnimationDuration = 800;
         $({rotation: -45}).animate({rotation: 0}, {
