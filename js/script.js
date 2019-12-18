@@ -1,7 +1,13 @@
 var autoDraw = false;
 var resizeCanvasBool = true;
 var drawingsCounter = 0;
-var drawedAngel = false;
+var storyStates = {
+  DRAW_AVATAR: 1,
+  DRAW_ANGEL: 2,
+  DRAW_PRESENT: 3,
+  FINAL_ANIMATION: 4,
+};
+var storyState = storyStates.DRAW_AVATAR;
 var lastDrawPosition = 0;
 
 const sketch = function(p) {
@@ -73,19 +79,55 @@ const sketch = function(p) {
     // });
 
     btnDone.addEventListener('click', () => {
-      //Start the story
-      story();
+      if(storyState == storyStates.DRAW_AVATAR) moveAvatar();
+
+      if(storyState == storyStates.DRAW_ANGEL){
+        var angel = imageFromCanvas("defaultCanvas0", "angel");
+
+        addImage("../images/boxCover.png","presentTop","sketch");
+        document.getElementById("presentTop").style.position = "absolute";
+        document.getElementById("presentTop").style.width = "200px";
+        document.getElementById("presentTop").style.left = lastDrawPosition[0]+150+"px";
+        document.getElementById("presentTop").style.top = "145px";
+        document.getElementById("presentTop").style.opacity = "0";
+        document.getElementById("presentTop").style.transform = "rotate(-40deg)";
+        document.getElementById("presentTop").style.transformOrigin = "bottom left";
+
+        addImage("../images/boxDown.png","presentBox","sketch");
+        document.getElementById("presentBox").style.position = "absolute";
+        document.getElementById("presentBox").style.width = "200px";
+        document.getElementById("presentBox").style.left = lastDrawPosition[0]+150+"px";
+        document.getElementById("presentBox").style.top = "230px";
+        document.getElementById("presentBox").style.opacity = "0";
+
+        $("#presentTop").animate({opacity:"1"},800);
+        $("#presentBox").animate({opacity:"1"},800, function(){
+          storyState = storyStates.DRAW_PRESENT;
+          console.log("storyState: ", storyState);
+          document.getElementById("textField").innerHTML = "Now select you present and draw a circle!";
+          $("#modelsSelect").animate({opacity:"1"},700);
+        });
+      }
+
+      if(storyState == storyStates.DRAW_PRESENT){
+        //Save present, end story
+      }
 
       //Clear the transparent canvas that is above all the other elements
       restart();
       resetCanvas();
+
+      storyState = changeState(storyState);
+      console.log("story state: ", storyState);
     });
 
-    document.getElementById("selectModels").style.opacity = 0;
+    document.getElementById("modelsSelect").style.opacity = 0;
     //document.getElementById("defaultCanvas0").style.position = "absolute";
     //document.getElementById("modelsSelect").style.position = "absolute";
 
     console.log("end setup");
+
+    console.log("storyState: ", storyState);
   };
 
   p.windowResized = function () {
@@ -178,36 +220,9 @@ const sketch = function(p) {
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
       modelIsActive = false;
-      if(!drawedAngel){
-        addImage("../images/boxCover.png","presentTop","sketch");
-        document.getElementById("presentTop").style.position = "absolute";
-        document.getElementById("presentTop").style.width = "200px";
-        document.getElementById("presentTop").style.left = lastDrawPosition[0]+150+"px";
-        document.getElementById("presentTop").style.top = "145px";
-        document.getElementById("presentTop").style.opacity = "0";
-        document.getElementById("presentTop").style.transform = "rotate(-40deg)";
-        document.getElementById("presentTop").style.transformOrigin = "bottom left";
-
-        addImage("../images/boxDown.png","presentBox","sketch");
-        document.getElementById("presentBox").style.position = "absolute";
-        document.getElementById("presentBox").style.width = "200px";
-        document.getElementById("presentBox").style.left = lastDrawPosition[0]+150+"px";
-        document.getElementById("presentBox").style.top = "230px";
-        document.getElementById("presentBox").style.opacity = "0";
-
-        var angel = imageFromCanvas("defaultCanvas0", "angel");
-
-        drawedAngel = true;
-
-        $("#presentTop").animate({opacity:"1"},800);
-        $("#presentBox").animate({opacity:"1"},800, function(){
-          document.getElementById("textField").innerHTML = "Now select you present and draw a circle!";
-          $("#selectModels").animate({opacity:"1"},700);
-        });
-      }
-      else{
-        document.getElementById("textField").innerHTML = "Let's see the end of the story!";
-      }
+      // if(storyState){
+      //   document.getElementById("textField").innerHTML = "Let's see the end of the story!";
+      // }
 
 
 

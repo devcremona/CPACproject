@@ -25,12 +25,12 @@ function imageFromCanvas(idCanvas, idImg) {
 }
 
 
-function moveDraw(objID, xEnd, yEnd, duration){
+function moveDraw(objID, xEnd, yEnd, duration, callback){
   //Initialize object position as canvas position
   document.getElementById(objID).style.left=$("#defaultCanvas0").position().left+"px";
   document.getElementById(objID).style.top=$("#defaultCanvas0").position().top+"px";
   //Move the object
-  $("#"+objID).animate({left:""+xEnd+"px", top:""+yEnd+"px"},duration);
+  $("#"+objID).animate({left:""+xEnd+"px", top:""+yEnd+"px"},duration, callback);
 }
 
 
@@ -43,4 +43,22 @@ function addImage(src,id,containerID, style=""){
   container.append(img);
 
   return img;
+}
+
+function changeState(currentState){
+  switch(currentState) {
+    case storyStates.DRAW_AVATAR:
+      storyState = storyStates.DRAW_ANGEL;
+      break;
+    case storyStates.DRAW_ANGEL:
+      storyState = storyStates.DRAW_PRESENT;
+      break;
+    case storyStates.DRAW_PRESENT:
+      storyState = storyStates.FINAL_ANIMATION;
+      break;
+    default:
+      storyState = 0;
+      console.log("missing state! State reset...");
+  }
+  return storyState;
 }
