@@ -92,7 +92,11 @@ const sketch = function(p) {
 
       if(storyState == storyStates.DRAW_ANGEL){
         var angel = imageFromCanvas("defaultCanvas0", "angel");
+<<<<<<< HEAD
         playSound("angel");
+=======
+        //playSound(availableModels[selectModels.selectedIndex]);
+>>>>>>> 24455e84b761576e52d17000d32d64e153e84dcc
 
         addImage("../images/boxCover.png","presentTop","sketch");
         document.getElementById("presentTop").style.position = "absolute";

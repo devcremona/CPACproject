@@ -55,32 +55,33 @@
 
         <div class="wrapper">
           <div>
-            <h3 id="textField">Hei!! Start by drawing yourself!</h3>
+            <h3 id="textField">Draw yourself! Then click done</h3>
           </div>
-          <button class="box" id="btnDone">
-            Done
-          </button>
-          <button class="box" id="btnClear" alt="clear drawing">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
-          </button>
-          <button class="box" id="btnRetry" alt="retry magic drawing">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
-          </button>
+          <div>
+            <button class="box" id="btnDone">
+              Done
+            </button>
+            <button class="box" id="btnClear" alt="clear drawing">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
+            </button>
+            <button class="box" id="btnRetry" alt="retry magic drawing">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+            </button>
+          </div>
           <div id="colorsContainer">
-            <button data-index="0" style="background-color: rgb(0, 0, 0)" class="active" onclick="changeColor(event)"></button>
+            <button data-index="0" style="background-color: rgb(0, 0, 0)"  class="active" onclick="changeColor(event)"></button>
             <button data-index="1" style="background-color: rgb(244, 67, 54)" onclick="changeColor(event)"></button>
             <button data-index="2" style="background-color: rgb(233, 30, 99)" onclick="changeColor(event)"></button>
             <button data-index="3" style="background-color: rgb(156, 39, 176)" onclick="changeColor(event)"></button>
-            <button data-index="4" style="background-color: rgb(103, 58, 183)" onclick="changeColor(event)"></button>
             <button data-index="5" style="background-color: rgb(63, 81, 181)" onclick="changeColor(event)"></button>
-            <button data-index="6" style="background-color: rgb(33, 150, 243)" onclick="changeColor(event)"></button>
+            <button data-index="6" style="background-color: rgb(33, 150, 243); display: none" onclick="changeColor(event)"></button>
             <button data-index="7" style="background-color: rgb(0, 188, 212)" onclick="changeColor(event)"></button>
             <button data-index="8" style="background-color: rgb(0, 150, 136)" onclick="changeColor(event)"></button>
             <button data-index="9" style="background-color: rgb(76, 175, 80)" onclick="changeColor(event)"></button>
             <button data-index="10" style="background-color: rgb(139, 195, 74)" onclick="changeColor(event)"></button>
-            <button data-index="11" style="background-color: rgb(205, 220, 57)" onclick="changeColor(event)"></button>
+            <button data-index="11" style="background-color: rgb(205, 220, 57); display: none" onclick="changeColor(event)"></button>
             <button data-index="12" style="background-color: rgb(255, 235, 59)" onclick="changeColor(event)"></button>
-            <button data-index="13" style="background-color: rgb(255, 193, 7)" onclick="changeColor(event)"></button>
+            <button data-index="13" style="background-color: rgb(255, 193, 7); display: none" onclick="changeColor(event)"></button>
             <button data-index="14" style="background-color: rgb(255, 152, 0)" onclick="changeColor(event)"></button>
             <button data-index="15" style="background-color: rgb(255, 87, 34)" onclick="changeColor(event)"></button>
             <button data-index="16" style="background-color: rgb(121, 85, 72)" onclick="changeColor(event)"></button>
