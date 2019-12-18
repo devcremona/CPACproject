@@ -17,7 +17,7 @@ var angel = new Audio("sound/angel.wav");
 const sketch = function(p) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
   //const availableModels = ['bird', 'ant','ambulance','angel','alarm_clock','antyoga','backpack','barn','basket','bear','bee','beeflower','bicycle','book','brain','bridge','bulldozer','bus','butterfly','cactus','calendar','castle','cat','catbus','catpig','chair','couch','crab','crabchair','crabrabbitfacepig','cruise_ship','diving_board','dog','dogbunny','dolphin','duck','elephant','elephantpig','everything','eye','face','fan','fire_hydrant','firetruck','flamingo','flower','floweryoga','frog','frogsofa','garden','hand','hedgeberry','hedgehog','helicopter','kangaroo','key','lantern','lighthouse','lion','lionsheep','lobster','map','mermaid','monapassport','monkey','mosquito','octopus','owl','paintbrush','palm_tree','parrot','passport','peas','penguin','pig','pigsheep','pineapple','pool','postcard','power_outlet','rabbit','rabbitturtle','radio','radioface','rain','rhinoceros','rifle','roller_coaster','sandwich','scorpion','sea_turtle','sheep','skull','snail','snowflake','speedboat','spider','squirrel','steak','stove','strawberry','swan','swing_set','the_mona_lisa','tiger','toothbrush','toothpaste','tractor','trombone','truck','whale','windmill','yoga','yogabicycle'];
-  const availableModels = ['angel', 'cat', 'dog', 'bicycle'];
+  const availableModels = ['cat', 'dog', 'bicycle', 'angel'];
   let model;
 
   // Model
@@ -61,12 +61,14 @@ const sketch = function(p) {
     p.frameRate(60);
 
     restart();
-    initModel(0);  // Angel!
+    initModel(3);  // Angel!
 
     //settings.style.display = 'none'; //Hide settings, buttons, list of models menu
-
-    selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
-    selectModels.selectedIndex = 22;
+    presentList = [...availableModels];
+    presentList.pop(); // no show the angel into the presentList box
+    console.log(presentList);
+    selectModels.innerHTML = presentList.map(m => `<option>${m}</option>`).join('');
+    //selectModels.selectedIndex = 1;
     selectModels.addEventListener('change', () => initModel(selectModels.selectedIndex));
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
@@ -104,6 +106,10 @@ const sketch = function(p) {
         document.getElementById("presentBox").style.top = "230px";
         document.getElementById("presentBox").style.opacity = "0";
 
+        // model initialization and box
+        selectModels.selectedIndex = 0;
+        initModel(0);
+
         $("#presentTop").animate({opacity:"1"},800);
         $("#presentBox").animate({opacity:"1"},800, function(){
           storyState = storyStates.DRAW_PRESENT;
@@ -111,6 +117,7 @@ const sketch = function(p) {
           document.getElementById("textField").innerHTML = "Now select you present and draw a circle!";
           $("#modelsSelect").animate({opacity:"1"},700);
         });
+
       }
 
       if(storyState == storyStates.DRAW_PRESENT){
