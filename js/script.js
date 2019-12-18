@@ -7,6 +7,9 @@ var storyStates = {
   DRAW_PRESENT: 3,
   FINAL_ANIMATION: 4,
 };
+var angelPosition = 0;
+var presentPosition = 0;
+var avatarPosition = 0
 var storyState = storyStates.DRAW_AVATAR;
 var lastDrawPosition = 0;
 var dog = new Audio("sound/dog.wav");
@@ -92,13 +95,12 @@ const sketch = function(p) {
 
       if(storyState == storyStates.DRAW_ANGEL){
         var angel = imageFromCanvas("defaultCanvas0", "angel");
-        playSound("angel");
 
         addImage("../images/boxCover.png","presentTop","sketch");
         document.getElementById("presentTop").style.position = "absolute";
         document.getElementById("presentTop").style.width = "200px";
-        document.getElementById("presentTop").style.left = lastDrawPosition[0]+150+"px";
-        document.getElementById("presentTop").style.top = "145px";
+        document.getElementById("presentTop").style.left = angelPosition[0]+150+"px";
+        document.getElementById("presentTop").style.top = angelPosition[1]+"px";
         document.getElementById("presentTop").style.opacity = "0";
         document.getElementById("presentTop").style.transform = "rotate(-40deg)";
         document.getElementById("presentTop").style.transformOrigin = "bottom left";
@@ -106,8 +108,8 @@ const sketch = function(p) {
         addImage("../images/boxDown.png","presentBox","sketch");
         document.getElementById("presentBox").style.position = "absolute";
         document.getElementById("presentBox").style.width = "200px";
-        document.getElementById("presentBox").style.left = lastDrawPosition[0]+150+"px";
-        document.getElementById("presentBox").style.top = "230px";
+        document.getElementById("presentBox").style.left = angelPosition[0]+150+"px";
+        document.getElementById("presentBox").style.top = angelPosition[1]+(230-145)+"px";
         document.getElementById("presentBox").style.opacity = "0";
 
         // model initialization and box
@@ -143,13 +145,16 @@ const sketch = function(p) {
           avatarTop = $("#avatar").position().top;
           avatarLeft = $("#avatar").position().left;
 
-          plusX = 350;
-          plusY = 150;
+          targetPositionAngel = [screenWidth*0.5, screenHeight*0.6];
 
-          coordEndAngel = [$("#angel").position().left+plusX, $("#angel").position().top+plusY];
+          targetPositionPresentTop = [targetPositionAngel[0]+150, targetPositionAngel[1]];
+          targetPositionPresentBox = [targetPositionAngel[0]+150, targetPositionAngel[1]+(230-145)];
+
+
+          coordEndAngel = [$("#angel").position().left+(targetPositionAngel[0]-angelPosition[0]), $("#angel").position().top+(targetPositionAngel[1]-angelPosition[1])];
           //coordEndPresent = [avatarLeft-200, avatarTop+100];
-          coordEndPresentTop = [$("#presentTop").position().left+plusX, $("#presentTop").position().top+plusY];
-          coordEndPresentBox = [$("#presentBox").position().left+plusX, $("#presentBox").position().top+plusY];
+          coordEndPresentTop = [targetPositionPresentTop[0], targetPositionPresentTop[1]];
+          coordEndPresentBox = [targetPositionPresentBox[0], targetPositionPresentBox[1]];
 
           moveDraw(document.getElementById("angel").id, coordEndAngel[0], coordEndAngel[1], duration, function(){});
           //moveDraw(document.getElementById("present").id, coordEndPresent[0], coordEndPresent[1], duration, function(){});
@@ -163,7 +168,6 @@ const sketch = function(p) {
                 easing: 'linear',
                 step: function () {
                     $("#presentTop").css({transform: 'rotate(' + this.rotation + 'deg)'});
-                    console.log(this.rotation);
                 }
             });
             setTimeout(function(){
@@ -188,8 +192,6 @@ const sketch = function(p) {
     //document.getElementById("modelsSelect").style.position = "absolute";
 
     console.log("end setup");
-
-    console.log("storyState: ", storyState);
   };
 
   p.windowResized = function () {
@@ -230,7 +232,6 @@ const sketch = function(p) {
     if (!splashIsOpen && p.isInBounds()) {
       userPen = 0;  // Up!
       const currentRawLineSimplified = model.simplifyLine(currentRawLine);
-      lastDrawPosition = currentRawLine[currentRawLine.length-1];
 
       // If it's an accident...ignore it.
       if (currentRawLineSimplified.length > 1 && autoDraw) {
@@ -238,6 +239,19 @@ const sketch = function(p) {
         lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
         encodeStrokes(lastHumanStroke);
       }
+
+      if(storyState == storyStates.DRAW_AVATAR){
+        avatarPosition = currentRawLine[currentRawLine.length-1];
+      }
+
+      if(storyState == storyStates.DRAW_ANGEL){
+        angelPosition = currentRawLine[currentRawLine.length-1];
+      }
+
+      if(storyState == storyStates.DRAW_PRESENT){
+        presentPosition = currentRawLine[currentRawLine.length-1];
+      }
+
       currentRawLine = [];
       previousUserPen = userPen;
     }
@@ -282,10 +296,10 @@ const sketch = function(p) {
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
       modelIsActive = false;
-      // if(storyState){
-      //   document.getElementById("textField").innerHTML = "Let's see the end of the story!";
-      // }
 
+      if(storyState==storyStates.DRAW_ANGEL){
+        playSound("angel");
+      }
 
 
       setTimeout(function(){
