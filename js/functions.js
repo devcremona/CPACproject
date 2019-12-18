@@ -62,3 +62,19 @@ function changeState(currentState){
   }
   return storyState;
 }
+
+function playSound(s){
+  switch(s){
+    case 'cat':
+    cat.play();
+    break;
+    case 'dog':
+    dog.play();
+    break;
+    case 'bike':
+    bike.play();
+    break;
+    case 'angel':
+    angel.play();
+  }
+}
