@@ -87,6 +87,7 @@ const sketch = function(p) {
 
       if(storyState == storyStates.DRAW_ANGEL){
         var angel = imageFromCanvas("defaultCanvas0", "angel");
+        playSound(availableModels[selectModels.selectedIndex]);
 
         addImage("../images/boxCover.png","presentTop","sketch");
         document.getElementById("presentTop").style.position = "absolute";
@@ -114,7 +115,9 @@ const sketch = function(p) {
       }
 
       if(storyState == storyStates.DRAW_PRESENT){
-        //Save present, end story
+        var present = imageFromCanvas("defaultCanvas0", "present");
+        //moveDraw(present.id, $("#presentBox").position().left, $("#presentBox").position().top, function(){})
+        playSound(availableModels[selectModels.selectedIndex]);
       }
 
       //Clear the transparent canvas that is above all the other elements
