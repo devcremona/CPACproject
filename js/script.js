@@ -181,16 +181,20 @@ const sketch = function(p) {
       }
 
       //Clear the transparent canvas that is above all the other elements
-      restart();
-      resetCanvas();
+      if(storyState < 4){
+        restart();
+        resetCanvas();
+        storyState = changeState(storyState);
+        console.log("story state: ", storyState);
+      }
 
-      storyState = changeState(storyState);
-      console.log("story state: ", storyState);
+
     });
 
+    document.getElementById("modelsSelect").style.position = "absolute";
+    document.getElementById("modelsSelect").style.zIndex = "10";
 
-    //document.getElementById("defaultCanvas0").style.position = "absolute";
-    //document.getElementById("modelsSelect").style.position = "absolute";
+    document.getElementById("modelsSelect").style.top = $("#hd").height()+"px";
 
     console.log("end setup");
   };
@@ -330,33 +334,35 @@ const sketch = function(p) {
   * Helpers.
   */
   function retryMagic() {
-    p.stroke('white');
-    p.strokeWeight(6);
+    if(autoDraw){
+      p.stroke('white');
+      p.strokeWeight(6);
 
-    // Undo the previous line the model drew.
-    for (let i = 0; i < lastModelDrawing.length; i++) {
-      p.line(...lastModelDrawing[i]);
+      // Undo the previous line the model drew.
+      for (let i = 0; i < lastModelDrawing.length; i++) {
+        p.line(...lastModelDrawing[i]);
+      }
+
+      // Undo the previous human drawn.
+      for (let i = 0; i < lastHumanDrawing.length; i++) {
+        p.line(...lastHumanDrawing[i]);
+      }
+
+
+
+      p.strokeWeight(3.0);
+      p.stroke(currentColor);
+
+      resetCanvas();
+
+      // Redraw the human drawing.
+      for (let i = 0; i < lastHumanDrawing.length; i++) {
+        p.line(...lastHumanDrawing[i]);
+      }
+
+      // Start again.
+      encodeStrokes(lastHumanStroke);
     }
-
-    // Undo the previous human drawn.
-    for (let i = 0; i < lastHumanDrawing.length; i++) {
-      p.line(...lastHumanDrawing[i]);
-    }
-
-
-
-    p.strokeWeight(3.0);
-    p.stroke(currentColor);
-
-    resetCanvas();
-
-    // Redraw the human drawing.
-    for (let i = 0; i < lastHumanDrawing.length; i++) {
-      p.line(...lastHumanDrawing[i]);
-    }
-
-    // Start again.
-    encodeStrokes(lastHumanStroke);
   }
 
   function restart() {
