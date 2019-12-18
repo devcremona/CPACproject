@@ -9,6 +9,10 @@ var storyStates = {
 };
 var storyState = storyStates.DRAW_AVATAR;
 var lastDrawPosition = 0;
+var dog = new Audio("sound/dog.wav");
+var cat = new Audio("sound/cat.wav");
+var bike = new Audio("sound/bike.wav");
+var angel = new Audio("sound/angel.wav");
 
 const sketch = function(p) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
@@ -351,6 +355,22 @@ const sketch = function(p) {
 
     lastModelDrawing = [];
     modelIsActive = true;
+  }
+
+  function playSound(s){
+    switch(s){
+      case 'cat':
+      cat.play();
+      break;
+      case 'dog':
+      dog.play();
+      break;
+      case 'bike':
+      bike.play();
+      break;
+      case 'angel':
+      angel.play();
+    }
   }
 
   /*
