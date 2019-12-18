@@ -195,6 +195,7 @@ const sketch = function(p) {
     document.getElementById("modelsSelect").style.zIndex = "10";
 
     document.getElementById("modelsSelect").style.top = $("#hd").height()+"px";
+    document.getElementById("hd").style.zIndex = 10;
 
     console.log("end setup");
   };
