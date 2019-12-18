@@ -71,7 +71,7 @@ const sketch = function(p) {
     presentList.pop(); // no show the angel into the presentList box
     console.log(presentList);
     selectModels.innerHTML = presentList.map(m => `<option>${m}</option>`).join('');
-    //selectModels.selectedIndex = 1;
+    //selectModels.selectedIndex = 3;
     selectModels.addEventListener('change', () => initModel(selectModels.selectedIndex));
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
@@ -92,7 +92,7 @@ const sketch = function(p) {
 
       if(storyState == storyStates.DRAW_ANGEL){
         var angel = imageFromCanvas("defaultCanvas0", "angel");
-        playSound(availableModels[selectModels.selectedIndex]);
+        playSound("angel");
 
         addImage("../images/boxCover.png","presentTop","sketch");
         document.getElementById("presentTop").style.position = "absolute";
@@ -127,7 +127,51 @@ const sketch = function(p) {
       if(storyState == storyStates.DRAW_PRESENT){
         var present = imageFromCanvas("defaultCanvas0", "present");
         //moveDraw(present.id, $("#presentBox").position().left, $("#presentBox").position().top, function(){})
-        playSound(availableModels[selectModels.selectedIndex]);
+        var closeBoxAnimationDuration = 800;
+        $({rotation: -45}).animate({rotation: 0}, {
+            duration: closeBoxAnimationDuration,
+            easing: 'linear',
+            step: function () {
+                $("#presentTop").css({transform: 'rotate(' + this.rotation + 'deg)'});
+                console.log(this.rotation);
+            }
+        });
+
+        endAnimationDuration = 2000;
+        setTimeout(function(){
+          var duration = endAnimationDuration;
+          avatarTop = $("#avatar").position().top;
+          avatarLeft = $("#avatar").position().left;
+
+          plusX = 350;
+          plusY = 150;
+
+          coordEndAngel = [$("#angel").position().left+plusX, $("#angel").position().top+plusY];
+          //coordEndPresent = [avatarLeft-200, avatarTop+100];
+          coordEndPresentTop = [$("#presentTop").position().left+plusX, $("#presentTop").position().top+plusY];
+          coordEndPresentBox = [$("#presentBox").position().left+plusX, $("#presentBox").position().top+plusY];
+
+          moveDraw(document.getElementById("angel").id, coordEndAngel[0], coordEndAngel[1], duration, function(){});
+          //moveDraw(document.getElementById("present").id, coordEndPresent[0], coordEndPresent[1], duration, function(){});
+          $("#present").animate({opacity:"0"},100);
+          $("#presentTop").animate({left:""+coordEndPresentTop[0]+"px", top:""+coordEndPresentTop[1]+"px"},duration, function(){});
+          $("#presentBox").animate({left:""+coordEndPresentBox[0]+"px", top:""+coordEndPresentBox[1]+"px"},duration, function(){});
+
+          setTimeout(function(){
+            $({rotation: 0}).animate({rotation: -45}, {
+                duration: closeBoxAnimationDuration,
+                easing: 'linear',
+                step: function () {
+                    $("#presentTop").css({transform: 'rotate(' + this.rotation + 'deg)'});
+                    console.log(this.rotation);
+                }
+            });
+            setTimeout(function(){
+              playSound(availableModels[selectModels.selectedIndex]);
+            },closeBoxAnimationDuration);
+          },endAnimationDuration+400);
+
+        },closeBoxAnimationDuration+400);
       }
 
       //Clear the transparent canvas that is above all the other elements

@@ -29,7 +29,7 @@ function moveDraw(objID, xEnd, yEnd, duration, callback){
   //Initialize object position as canvas position
   document.getElementById(objID).style.left=$("#defaultCanvas0").position().left+"px";
   document.getElementById(objID).style.top=$("#defaultCanvas0").position().top+"px";
-  
+
   //Move the object
   $("#"+objID).animate({left:""+xEnd+"px", top:""+yEnd+"px"},duration, callback);
 }
@@ -72,7 +72,7 @@ function playSound(s){
     case 'dog':
     dog.play();
     break;
-    case 'bike':
+    case 'bicycle':
     bike.play();
     break;
     case 'angel':
