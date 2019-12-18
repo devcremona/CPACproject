@@ -69,8 +69,8 @@ function playSound(s){
     case 'cat':
     cat.play();
     break;
-    case 'dog':
-    dog.play();
+    case 'pig':
+    pig.play();
     break;
     case 'bicycle':
     bike.play();
