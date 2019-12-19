@@ -46,10 +46,13 @@ a:hover {
 }
 
 header {
-  background-color: #F19CC5;
+  background-color: #c00900;
   width: 100%;
   padding: 0 20px;
   border-bottom: 8px solid var(--secondary);
+}
+#textField{
+  color:white;
 }
 
 #splash {
@@ -94,6 +97,7 @@ header .wrapper {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
 }
 
 header .top {

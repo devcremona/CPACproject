@@ -120,7 +120,7 @@ const sketch = function(p) {
         $("#presentBox").animate({opacity:"1"},800, function(){
           storyState = storyStates.DRAW_PRESENT;
           console.log("storyState: ", storyState);
-          document.getElementById("textField").innerHTML = "Now select you present and draw a circle!";
+          document.getElementById("textField").innerHTML = "Select you present, draw a circle and click done...";
           $("#modelsSelect").animate({opacity:"1"},700);
         });
 

@@ -10,6 +10,6 @@ function moveAvatar() {
   console.log("screen width: ", screenWidth, "\nscreen height", screenHeight, "\ntarget position avatar: ", targetPositionAvatar);
   moveDraw(img.id,$("#"+img.id).position().left+(targetPositionAvatar[0]-avatarPosition[0]),$("#"+img.id).position().top+(targetPositionAvatar[1]-avatarPosition[1]),duration, function() {
     autoDraw = true;
-    document.getElementById("textField").innerHTML = "Now draw a small circle and watch the magic!";
+    document.getElementById("textField").innerHTML = "Draw a small circle, look the magic and click done... ";
   });
 }
