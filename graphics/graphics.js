@@ -52,14 +52,6 @@ const sketch = function(p) {
     selectModels.addEventListener('change', () => initModel(selectModels.selectedIndex));
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
-    btnHelp.addEventListener('click', () => {
-      splash.classList.remove('hidden');
-      splashIsOpen = true;
-    });
-    btnGo.addEventListener('click', () => {
-      splashIsOpen = false;
-      splash.classList.add('hidden');
-    });
     btnSave.addEventListener('click', () => {
       p.saveCanvas('magic-sketchpad', 'jpg');
     });
