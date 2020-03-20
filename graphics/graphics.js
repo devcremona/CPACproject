@@ -31,7 +31,7 @@ const sketch = function(p) {
   let lastModelDrawing = []; // the actual sequence of lines that the model drew, so that we can erase them.
 
   // Don't record mouse events when the splash is open.
-  let splashIsOpen = true;
+  let splashIsOpen = false;
 
   /*
    * Main p5 code
