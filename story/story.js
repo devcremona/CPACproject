@@ -88,11 +88,8 @@ function setSitua1(situa1){
     case 0: choicesUser[STATUS_STORY_ENUM.OGGETTO] = GIOCO_LIST; break;
     case 1: choicesUser[STATUS_STORY_ENUM.OGGETTO] = CIBO_LIST; break;
     case 2: choicesUser[STATUS_STORY_ENUM.OGGETTO] = SETE_LIST; break;
-    default: status=""; break;
+    default: break;
   }
-
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.OGGETTO] = situa3;
 };
 
 
@@ -121,7 +118,7 @@ function setObject(obj){
 * @param status {enum}: the current status
 * @return {enum} the new current status (the next one)
 */
-function setNextStatus(currentStatus){
+function setNextStatus(){
   var status
   switch(currentStatus){
     case STATUS_STORY_ENUM.DOVE: status=STATUS_STORY_ENUM.METEO; break;
@@ -135,7 +132,8 @@ function setNextStatus(currentStatus){
     case STATUS_STORY_ENUM.FINALE: status=STATUS_STORY_ENUM.RECAP; break;
     default: status=""; break;
   }
-  return status
+  currentStatus = status
+  return currentStatus
 };
 
 // ============================================================================
@@ -156,6 +154,6 @@ function getCurrentStatus(){
 * @param status {enum}: the current status
 * @return {array} array of choices
 */
-function getChoices(status){
-  return choicesUser[status]
+function getChoices(){
+  return choicesUser[currentStatus]
 };
