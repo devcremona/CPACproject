@@ -1,5 +1,5 @@
 
-const sketch = function(p) {
+const sketch = function(sketch) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
   const availableModels = ['bird', 'ant','ambulance','angel','alarm_clock','antyoga','backpack','barn','basket','bear','bee','beeflower','bicycle','book','brain','bridge','bulldozer','bus','butterfly','cactus','calendar','castle','cat','catbus','catpig','chair','couch','crab','crabchair','crabrabbitfacepig','cruise_ship','diving_board','dog','dogbunny','dolphin','duck','elephant','elephantpig','everything','eye','face','fan','fire_hydrant','firetruck','flamingo','flower','floweryoga','frog','frogsofa','garden','hand','hedgeberry','hedgehog','helicopter','kangaroo','key','lantern','lighthouse','lion','lionsheep','lobster','map','mermaid','monapassport','monkey','mosquito','octopus','owl','paintbrush','palm_tree','parrot','passport','peas','penguin','pig','pigsheep','pineapple','pool','postcard','power_outlet','rabbit','rabbitturtle','radio','radioface','rain','rhinoceros','rifle','roller_coaster','sandwich','scorpion','sea_turtle','sheep','skull','snail','snowflake','speedboat','spider','squirrel','steak','stove','strawberry','swan','swing_set','the_mona_lisa','tiger','toothbrush','toothpaste','tractor','trombone','truck','whale','windmill','yoga','yogabicycle'];
   let model;
@@ -36,13 +36,13 @@ const sketch = function(p) {
   /*
    * Main p5 code
    */
-  p.setup = function() {
+  sketch.setup = function() {
     // Initialize the canvas.
     const containerSize = document.getElementById('sketch').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
-    p.createCanvas(screenWidth, screenHeight);
-    p.frameRate(60);
+    sketch.createCanvas(screenWidth, screenHeight);
+    sketch.frameRate(60);
 
     restart();
     initModel(22);  // Cat!
@@ -61,37 +61,37 @@ const sketch = function(p) {
       splash.classList.add('hidden');
     });
     btnSave.addEventListener('click', () => {
-      p.saveCanvas('magic-sketchpad', 'jpg');
+      sketch.saveCanvas('magic-sketchpad', 'jpg');
     });
   };
 
-  p.windowResized = function () {
+  sketch.windowResized = function () {
     console.log('resize canvas');
     const containerSize = document.getElementById('sketch').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
-    p.resizeCanvas(screenWidth, screenHeight);
+    sketch.resizeCanvas(screenWidth, screenHeight);
   };
 
   /*
   * Human is drawing.
   */
-  p.mousePressed = function () {
-    if (!splashIsOpen && p.isInBounds()) {
-      x = startX = p.mouseX;
-      y = startY = p.mouseY;
+  sketch.mousePressed = function () {
+    if (!splashIsOpen && sketch.isInBounds()) {
+      x = startX = sketch.mouseX;
+      y = startY = sketch.mouseY;
       userPen = 1; // down!
 
       modelIsActive = false;
       currentRawLine = [];
       lastHumanDrawing = [];
       previousUserPen = userPen;
-      p.stroke(currentColor);
+      sketch.stroke(currentColor);
     }
   }
 
-  p.mouseReleased = function () {
-    if (!splashIsOpen && p.isInBounds()) {
+  sketch.mouseReleased = function () {
+    if (!splashIsOpen && sketch.isInBounds()) {
       userPen = 0;  // Up!
       const currentRawLineSimplified = model.simplifyLine(currentRawLine);
 
@@ -106,16 +106,16 @@ const sketch = function(p) {
     }
   }
 
-  p.mouseDragged = function () {
-    if (!splashIsOpen && !modelIsActive && p.isInBounds()) {
-      const dx0 = p.mouseX - x;
-      const dy0 = p.mouseY - y;
+  sketch.mouseDragged = function () {
+    if (!splashIsOpen && !modelIsActive && sketch.isInBounds()) {
+      const dx0 = sketch.mouseX - x;
+      const dy0 = sketch.mouseY - y;
       if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area.
         dx = dx0;
         dy = dy0;
         userPen = 1;
         if (previousUserPen == 1) {
-          p.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
+          sketch.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
           lastHumanDrawing.push([x, y, x+dx, y+dy]);
         }
         x += dx;
@@ -130,7 +130,7 @@ const sketch = function(p) {
  /*
   * Model is drawing.
   */
-  p.draw = function() {
+  sketch.draw = function() {
     if (!modelLoaded || !modelIsActive) {
       return;
     }
@@ -148,7 +148,7 @@ const sketch = function(p) {
     } else {
       // Only draw on the paper if the pen is still touching the paper.
       if (previousPen[PEN.DOWN] === 1) {
-        p.line(x, y, x+dx, y+dy);
+        sketch.line(x, y, x+dx, y+dy);
         lastModelDrawing.push([x, y, x+dx, y+dy]);
       }
       // Update.
@@ -158,33 +158,33 @@ const sketch = function(p) {
     }
   };
 
-  p.isInBounds = function () {
-    return p.mouseX >= 0 && p.mouseY >= 0 && p.mouseX < p.width && p.mouseY < p.height;
+  sketch.isInBounds = function () {
+    return sketch.mouseX >= 0 && sketch.mouseY >= 0 && sketch.mouseX < sketch.width && sketch.mouseY < sketch.height;
   }
 
   /*
   * Helpers.
   */
   function retryMagic() {
-    p.stroke('white');
-    p.strokeWeight(6);
+    sketch.stroke('white');
+    sketch.strokeWeight(6);
 
     // Undo the previous line the model drew.
     for (let i = 0; i < lastModelDrawing.length; i++) {
-      p.line(...lastModelDrawing[i]);
+      sketch.line(...lastModelDrawing[i]);
     }
 
     // Undo the previous human drawn.
     for (let i = 0; i < lastHumanDrawing.length; i++) {
-      p.line(...lastHumanDrawing[i]);
+      sketch.line(...lastHumanDrawing[i]);
     }
 
-    p.strokeWeight(3.0);
-    p.stroke(currentColor);
+    sketch.strokeWeight(3.0);
+    sketch.stroke(currentColor);
 
     // Redraw the human drawing.
     for (let i = 0; i < lastHumanDrawing.length; i++) {
-      p.line(...lastHumanDrawing[i]);
+      sketch.line(...lastHumanDrawing[i]);
     }
 
     // Start again.
@@ -192,12 +192,12 @@ const sketch = function(p) {
   }
 
   function restart() {
-    p.background(255, 255, 255, 255);
-    p.strokeWeight(3.0);
+    sketch.background(255, 255, 255, 255);
+    sketch.strokeWeight(3.0);
 
     // Start drawing in the middle-ish of the screen
-    startX = x = p.width / 2.0;
-    startY = y = p.height / 3.0;
+    startX = x = sketch.width / 2.0;
+    startY = y = sketch.height / 3.0;
 
     // Reset the user drawing state.
     userPen = 1;
@@ -208,6 +208,8 @@ const sketch = function(p) {
     // Reset the model drawing state.
     modelIsActive = false;
     previousPen = [0, 1, 0];
+
+    sketch.windowResized();
   };
 
   function initModel(index) {
@@ -284,7 +286,7 @@ const sketch = function(p) {
   function randomColorIndex() {
     return Math.floor(Math.random() * COLORS.length);
   }
-  p.updateCurrentColor = function(index) {
+  sketch.updateCurrentColor = function(index) {
     currentColor = COLORS[index].hex;
   }
 

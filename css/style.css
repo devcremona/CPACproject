@@ -183,6 +183,11 @@ select {
 }
 
 #sketch {
+  background-image: url("https://static.tildacdn.com/tild6632-3862-4565-b231-343736656162/1bb1156e37fc3b86ae4d.jpg");
+
+  background-position: bottom; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
   flex-grow: 1;
   overflow: hidden;
 }
