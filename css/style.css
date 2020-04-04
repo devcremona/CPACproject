@@ -41,11 +41,10 @@ a:hover {
   color: var(--primary);
 }
 
-header {
+footer {
   background-color: #F19CC5;
   width: 100%;
-  padding: 0 20px;
-  border-bottom: 8px solid var(--secondary);
+  padding: 6px 10px 6px 10px;
 }
 
 #splash {
@@ -85,14 +84,14 @@ header {
   pointer-events: none;
 }
 
-header .wrapper {
+footer .wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-header .top {
+footer .top {
   height: 84px;
 }
 
@@ -101,7 +100,6 @@ header .top {
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  padding-bottom: 14px;
   flex-wrap: wrap;
   max-width: 1000px;
 }
@@ -221,7 +219,7 @@ select {
     height: auto;
   }
 
-  header .top {
+  footer .top {
     flex-direction: column;
     margin-bottom: 14px;
     height: auto;

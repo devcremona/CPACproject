@@ -36,11 +36,13 @@
         </div>
       </div>
 
-      <header>
-        <div class="wrapper top">
-          <div>
-            <h1></h1>
-          </div>
+
+      <div><img id="loadingGif" style="display:none;" src="https://thumbs.gfycat.com/AdventurousBetterAmethystsunbird-max-1mb.gif"></div>
+      <div id="sketchContainer" class="loading"></div>
+
+
+      <footer>
+        <div class="wrapper">
           <div class="controls">
             <button class="box" id="btnClear" alt="clear drawing">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
@@ -57,11 +59,6 @@
             <button class="box" id="btnHelp" alt="show help" style="display:none;">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
             </button>
-          </div>
-        </div>
-        <div class="wrapper">
-          <div>
-            <h1></h1>
           </div>
           <div id="colorsContainer">
             <button data-index="0" style="background-color: rgb(0, 0, 0)" class="active" onclick="changeColor(event)"></button>
@@ -84,8 +81,6 @@
             <button data-index="17" style="background-color: rgb(158, 158, 158)" onclick="changeColor(event)"></button>
           </div>
         </div>
-      </header>
-      <div><img id="loadingGif" style="display:none;" src="https://thumbs.gfycat.com/AdventurousBetterAmethystsunbird-max-1mb.gif"></div>
-      <div id="sketchContainer" class="loading"></div>
+      </footer>
   </body>
 </html>
