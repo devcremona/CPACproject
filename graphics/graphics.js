@@ -39,7 +39,7 @@ const sketch = function(sketch) {
    */
   sketch.setup = function() {
 
-    // Initialize the canvas.
+    // Initialize the canvas
     const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
@@ -48,7 +48,7 @@ const sketch = function(sketch) {
     document.getElementById('sketchCanvas').style.position = 'fixed'; //Set the canvas position to fixed (in order to superpose other elements)
     sketch.frameRate(60);
 
-    //Set the properties for the loading gif to be shown properly
+    //Loading gif: Set the style properties for the loading gif to be shown properly and on the center
     loadingGifStyle = document.getElementById('loadingGif').style;
     loadingGifStyle.position = 'absolute';
     loadingGifStyle.zIndex = 10;
@@ -57,25 +57,30 @@ const sketch = function(sketch) {
     loadingGifStyle.marginTop = "-"+document.getElementById('loadingGif').height/2+"px";
     loadingGifStyle.marginLeft = "-"+document.getElementById('loadingGif').width/2+"px";
 
-    //Reset the canvas
+    //Reset the canvas (the following function is called always on the press of clear button)
     restart();
-    loadModel(22);  // Cat!
 
-    selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
-    selectModels.selectedIndex = 22;
+    //Load the model with a certain index
+    initialModelIndex = 22  //Cat
+    loadModel(initialModelIndex);
+
+    //Populate the drop down menu with all the available models
+    selectModels.innerHTML = availableModels.map(listElement => `<option>${listElement}</option>`).join('');
+    selectModels.selectedIndex = initialModelIndex; //Set the dropdown menu to the initial model
+
+    //Set the callbacks for the buttons on the canvas
     selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
-    btnHelp.addEventListener('click', () => {
+
+    //Set the callbacks for the buttons to move back and forth from the splash screen
+    btnHelp.addEventListener('click', () => { //Go to the spash screen
       splash.classList.remove('hidden');
       splashIsOpen = true;
     });
-    btnGo.addEventListener('click', () => {
+    btnGo.addEventListener('click', () => { //From splash to the sketch
       splashIsOpen = false;
       splash.classList.add('hidden');
-    });
-    btnSave.addEventListener('click', () => {
-      sketch.saveCanvas('magic-sketchpad', 'jpg');
     });
   };
 
@@ -206,7 +211,7 @@ const sketch = function(sketch) {
   }
 
   function restart() {
-    sketch.background(255, 255, 255, 255);
+    sketch.background(255, 255, 255, 0);
     sketch.strokeWeight(3.0);
 
     // Start drawing in the middle-ish of the screen
@@ -223,7 +228,7 @@ const sketch = function(sketch) {
     modelIsActive = false;
     previousPen = [0, 1, 0];
 
-    sketch.windowResized(); //Needed to clear completely the canvas
+    sketch.windowResized(); //Needed to clear completely the transparent canvas
   };
 
   function loadModel(index) {
@@ -300,12 +305,6 @@ const sketch = function(sketch) {
     { name: 'grey', hex: '#9E9E9E'}
   ];
 
-  function randomColor() {
-    return COLORS[Math.floor(Math.random() * COLORS.length)].hex
-  }
-  function randomColorIndex() {
-    return Math.floor(Math.random() * COLORS.length);
-  }
   sketch.updateCurrentColor = function(index) {
     currentColor = COLORS[index].hex;
   }
@@ -313,6 +312,8 @@ const sketch = function(sketch) {
 };
 
 const p5Sketch = new p5(sketch, 'sketchContainer');
+
+//Listener linked to each button associated to the colors
 function changeColor(event){
   const btn = event.target;
   p5Sketch.updateCurrentColor(btn.dataset.index);
