@@ -182,7 +182,7 @@ select {
   width: 100%;
 }
 
-#sketch {
+#sketchContainer {
   background-image: url("https://static.tildacdn.com/tild6632-3862-4565-b231-343736656162/1bb1156e37fc3b86ae4d.jpg");
 
   background-position: bottom; /* Center the image */
@@ -191,7 +191,7 @@ select {
   flex-grow: 1;
   overflow: hidden;
 }
-#sketch.loading {
+#sketchContainer.loading {
   pointer-events: none;
   opacity: 0.3;
   filter: blur(3px);

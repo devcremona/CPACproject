@@ -38,7 +38,7 @@ const sketch = function(sketch) {
    */
   sketch.setup = function() {
     // Initialize the canvas.
-    const containerSize = document.getElementById('sketch').getBoundingClientRect();
+    const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
     sketch.createCanvas(screenWidth, screenHeight);
@@ -67,7 +67,7 @@ const sketch = function(sketch) {
 
   sketch.windowResized = function () {
     console.log('resize canvas');
-    const containerSize = document.getElementById('sketch').getBoundingClientRect();
+    const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
     sketch.resizeCanvas(screenWidth, screenHeight);
@@ -214,7 +214,7 @@ const sketch = function(sketch) {
 
   function initModel(index) {
     modelLoaded = false;
-    document.getElementById('sketch').classList.add('loading');
+    document.getElementById('sketchContainer').classList.add('loading');
 
     if (model) {
       model.dispose();
@@ -223,7 +223,7 @@ const sketch = function(sketch) {
     model = new ms.SketchRNN(`${BASE_URL}${availableModels[index]}.gen.json`);
     model.initialize().then(() => {
       modelLoaded = true;
-      document.getElementById('sketch').classList.remove('loading');
+      document.getElementById('sketchContainer').classList.remove('loading');
       console.log(`🤖${availableModels[index]} loaded.`);
       model.setPixelFactor(5.0);  // Bigger -> large outputs
     });
@@ -292,7 +292,7 @@ const sketch = function(sketch) {
 
 };
 
-const p5Sketch = new p5(sketch, 'sketch');
+const p5Sketch = new p5(sketch, 'sketchContainer');
 function changeColor(event){
   const btn = event.target;
   p5Sketch.updateCurrentColor(btn.dataset.index);
