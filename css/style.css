@@ -193,8 +193,12 @@ select {
 }
 #sketchContainer.loading {
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.6;
   filter: blur(3px);
+}
+
+#loadingGif {
+  filter: invert(90%);
 }
 
 @media screen and (max-width: 700px) {

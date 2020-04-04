@@ -33,23 +33,37 @@ const sketch = function(sketch) {
   // Don't record mouse events when the splash is open.
   let splashIsOpen = false;
 
+
   /*
    * Main p5 code
    */
   sketch.setup = function() {
+
     // Initialize the canvas.
     const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
-    sketch.createCanvas(screenWidth, screenHeight);
+    canvas = sketch.createCanvas(screenWidth, screenHeight);
+    canvas.id('sketchCanvas'); //Rename the canvas id
+    document.getElementById('sketchCanvas').style.position = 'fixed'; //Set the canvas position to fixed (in order to superpose other elements)
     sketch.frameRate(60);
 
+    //Set the properties for the loading gif to be shown properly
+    loadingGifStyle = document.getElementById('loadingGif').style;
+    loadingGifStyle.position = 'absolute';
+    loadingGifStyle.zIndex = 10;
+    loadingGifStyle.top = '50%';
+    loadingGifStyle.left = '50%';
+    loadingGifStyle.marginTop = "-"+document.getElementById('loadingGif').height/2+"px";
+    loadingGifStyle.marginLeft = "-"+document.getElementById('loadingGif').width/2+"px";
+
+    //Reset the canvas
     restart();
-    initModel(22);  // Cat!
+    loadModel(22);  // Cat!
 
     selectModels.innerHTML = availableModels.map(m => `<option>${m}</option>`).join('');
     selectModels.selectedIndex = 22;
-    selectModels.addEventListener('change', () => initModel(selectModels.selectedIndex));
+    selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
     btnHelp.addEventListener('click', () => {
@@ -66,7 +80,7 @@ const sketch = function(sketch) {
   };
 
   sketch.windowResized = function () {
-    console.log('resize canvas');
+    //console.log('resize canvas');
     const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
@@ -107,7 +121,7 @@ const sketch = function(sketch) {
   }
 
   sketch.mouseDragged = function () {
-    if (!splashIsOpen && !modelIsActive && sketch.isInBounds()) {
+    if (!splashIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds()) {
       const dx0 = sketch.mouseX - x;
       const dy0 = sketch.mouseY - y;
       if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area.
@@ -209,23 +223,29 @@ const sketch = function(sketch) {
     modelIsActive = false;
     previousPen = [0, 1, 0];
 
-    sketch.windowResized();
+    sketch.windowResized(); //Needed to clear completely the canvas
   };
 
-  function initModel(index) {
+  function loadModel(index) {
     modelLoaded = false;
     document.getElementById('sketchContainer').classList.add('loading');
+    document.getElementById('loadingGif').style.display = 'block'; //Display loading gif
+
 
     if (model) {
-      model.dispose();
+      model.dispose(); //Clear the model object
     }
 
+    // loads the TensorFlow.js version of sketch-rnn model, with the model's weights.
     model = new ms.SketchRNN(`${BASE_URL}${availableModels[index]}.gen.json`);
+
+    //Actually initialize the model, and set a callback to run at the end of the initialization
     model.initialize().then(() => {
       modelLoaded = true;
       document.getElementById('sketchContainer').classList.remove('loading');
+      document.getElementById('loadingGif').style.display = 'none'; //Hide loading gif
       console.log(`🤖${availableModels[index]} loaded.`);
-      model.setPixelFactor(5.0);  // Bigger -> large outputs
+      model.setPixelFactor(5.0);  // Smaller -> larger outputs
     });
   };
 
