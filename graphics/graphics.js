@@ -1,3 +1,4 @@
+debug = [];
 
 const sketch = function(sketch) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
@@ -21,7 +22,7 @@ const sketch = function(sketch) {
 
   // Human drawing.
   let currentRawLine = [];
-  let userPen = 0; // above = 0 or below = 1 the paper.
+  let userPen = 0; // above = 0 or below = 1 the paper. (0= pen not drawing, 1=pen is drawing)
   let previousUserPen = 0;
   let currentColor = 'black';
 
@@ -101,7 +102,7 @@ const sketch = function(sketch) {
       y = startY = sketch.mouseY;
       userPen = 1; // down!
 
-      modelIsActive = false;
+      modelIsActive = false; //Machine learning in pause while i'm drawing
       currentRawLine = [];
       lastHumanDrawing = [];
       previousUserPen = userPen;
@@ -129,7 +130,7 @@ const sketch = function(sketch) {
     if (!splashIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds()) {
       const dx0 = sketch.mouseX - x;
       const dy0 = sketch.mouseY - y;
-      if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area.
+      if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
         dx = dx0;
         dy = dy0;
         userPen = 1;
@@ -189,14 +190,16 @@ const sketch = function(sketch) {
     sketch.strokeWeight(6);
 
     // Undo the previous line the model drew.
-    for (let i = 0; i < lastModelDrawing.length; i++) {
-      sketch.line(...lastModelDrawing[i]);
+    /*for (let i = 0; i < lastModelDrawing.length; i++) {
+      sketch.line(...lastModelDrawing[i]); //"..." used to pass from [1,2,3] to 1,2,3
     }
 
     // Undo the previous human drawn.
     for (let i = 0; i < lastHumanDrawing.length; i++) {
       sketch.line(...lastHumanDrawing[i]);
-    }
+    }*/
+
+    sketch.clear();
 
     sketch.strokeWeight(3.0);
     sketch.stroke(currentColor);
