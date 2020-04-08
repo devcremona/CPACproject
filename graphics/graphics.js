@@ -100,6 +100,7 @@ const sketch = function(sketch) {
     });
     btnDone.addEventListener('click', ()=> {
       document.getElementById('infoMessage').innerHTML = 'Done: work in progress...';
+      loadModel(12);
     });
 
     //Set the callbacks for the drawing buttons
@@ -330,6 +331,7 @@ const sketch = function(sketch) {
     userPen = 1;
     previousUserPen = 0;
     currentRawLine = [];
+    lastHumanDrawing = [];
     strokes = [];
 
     // Reset the model drawing state.
@@ -341,7 +343,7 @@ const sketch = function(sketch) {
 
   function loadModel(index) {
     modelLoaded = false;
-    document.getElementById('sketchContainer').classList.add('loading');
+    document.getElementById('app').classList.add('loading');
     document.getElementById('loadingGif').style.display = 'block'; //Display loading gif
 
 
@@ -355,7 +357,7 @@ const sketch = function(sketch) {
     //Actually initialize the model, and set a callback to run at the end of the initialization
     model.initialize().then(() => {
       modelLoaded = true;
-      document.getElementById('sketchContainer').classList.remove('loading');
+      document.getElementById('app').classList.remove('loading');
       document.getElementById('loadingGif').style.display = 'none'; //Hide loading gif
       console.log(`🤖${availableModels[index]} loaded.`);
       model.setPixelFactor(5.0);  // Smaller -> larger outputs
