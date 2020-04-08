@@ -59,7 +59,7 @@ const sketch = function(sketch) {
     loadingGifStyle.marginLeft = "-"+document.getElementById('loadingGif').width/2+"px";
 
     //Reset the canvas (the following function is called always on the press of clear button)
-    restart();
+    restart(0); //0: called at startup
 
     //Load the model with a certain index
     initialModelIndex = 22  //Cat
@@ -68,11 +68,18 @@ const sketch = function(sketch) {
     //Populate the drop down menu with all the available models
     /*selectModels.innerHTML = availableModels.map(listElement => `<option>${listElement}</option>`).join('');
     selectModels.selectedIndex = initialModelIndex; //Set the dropdown menu to the initial model
-
-    //Set the callbacks for the buttons on the canvas
     selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));*/
-    btnClear.addEventListener('click', restart);
-    btnRetry.addEventListener('click', retryMagic);
+
+    //Set the callbacks for the buttons
+    btnClear.addEventListener('click', () => {
+      restart(1); //1: called after cleck event
+    });
+    btnMagic.addEventListener('click', () => {
+      doMagic();
+    });
+    btnDone.addEventListener('click', ()=> {
+      document.getElementById('infoMessage').innerHTML = 'You clicked on Done!';
+    });
 
     //Set the callbacks for the buttons to move back and forth from the splash screen
     btnHelp.addEventListener('click', () => { //Go to the spash screen
@@ -99,6 +106,8 @@ const sketch = function(sketch) {
   */
   sketch.mousePressed = function () {
     if (!splashIsOpen && sketch.isInBounds()) {
+      document.getElementById('infoMessage').innerHTML = 'Drawing in progress...';
+
       x = startX = sketch.mouseX;
       y = startY = sketch.mouseY;
       userPen = 1; // down!
@@ -118,9 +127,8 @@ const sketch = function(sketch) {
 
       // If it's an accident...ignore it.
       if (currentRawLineSimplified.length > 1) {
-        // Encode this line as a stroke, and feed it to the model.
+        // Encode this line as a stroke used to feed to the model
         lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
-        encodeStrokes(lastHumanStroke);
       }
       currentRawLine = [];
       previousUserPen = userPen;
@@ -187,12 +195,12 @@ const sketch = function(sketch) {
   /*
   * Helpers.
   */
-  function retryMagic() {
-    sketch.stroke('white');
+  function doMagic() {
+    /*sketch.stroke('white');
     sketch.strokeWeight(6);
 
     // Undo the previous line the model drew.
-    /*for (let i = 0; i < lastModelDrawing.length; i++) {
+    for (let i = 0; i < lastModelDrawing.length; i++) {
       sketch.line(...lastModelDrawing[i]); //"..." used to pass from [1,2,3] to 1,2,3
     }
 
@@ -200,6 +208,8 @@ const sketch = function(sketch) {
     for (let i = 0; i < lastHumanDrawing.length; i++) {
       sketch.line(...lastHumanDrawing[i]);
     }*/
+
+    document.getElementById('infoMessage').innerHTML = 'Look at the magic!';
 
     sketch.clear();
 
@@ -215,7 +225,12 @@ const sketch = function(sketch) {
     encodeStrokes(lastHumanStroke);
   }
 
-  function restart() {
+  function restart(flag) {
+
+    if(flag==1){
+      document.getElementById('infoMessage').innerHTML = 'everything was perfectly clean!';
+    }
+
     sketch.background(255, 255, 255, 0);
     sketch.strokeWeight(3.0);
 
