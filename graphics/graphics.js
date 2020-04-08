@@ -25,14 +25,21 @@ const sketch = function(sketch) {
   let userPen = 0; // above = 0 or below = 1 the paper. (0= pen not drawing, 1=pen is drawing)
   let previousUserPen = 0;
   let currentColor = 'black';
+  let currentStrokeWeight = 3.0;
 
   // Keep track of everyone's last attempts to that we can reverse them.
-  let lastHumanStroke;  // encode the human's drawing as a sequence of [dx, dy, penState] strokes
-  let lastHumanDrawing; // the actual sequence of lines that the human drew, so we can replay them.
+  let lastHumanStroke = [];  // encode the human's drawing as a sequence of [dx, dy, penState] strokes
+  let lastHumanDrawing = []; // the actual sequence of lines that the human drew, so we can replay them.
   let lastModelDrawing = []; // the actual sequence of lines that the model drew, so that we can erase them.
 
   // Don't record mouse events when the splash is open.
   let splashIsOpen = false;
+
+  //Eraser variables
+  let eraserTransparentColor = sketch.color(0,0,0,0); //Black (0,0,0,..), transparent (..,..,..,0)
+  let eraserRadius = 20;
+  let eraserStrokeWeight = 1;
+  let eraserActive = false;
 
 
   /*
@@ -65,26 +72,67 @@ const sketch = function(sketch) {
     initialModelIndex = 22  //Cat
     loadModel(initialModelIndex);
 
+    sketch.stroke(currentColor);
+
     //Populate the drop down menu with all the available models
     /*selectModels.innerHTML = availableModels.map(listElement => `<option>${listElement}</option>`).join('');
     selectModels.selectedIndex = initialModelIndex; //Set the dropdown menu to the initial model
     selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));*/
 
-    //Set the callbacks for the buttons
+    //Set the callbacks for the navigation buttons
     btnClear.addEventListener('click', () => {
       restart(1); //1: called after cleck event
+
+      eraserActive = false;
+
+      btnPencil.classList.add('active');
+      btnEraser.classList.remove('active');
+
+      sketch.fill(currentColor);
+      sketch.stroke(currentColor);
+      sketch.strokeWeight(currentStrokeWeight);
+
+      //Update pixels state
+      updatePixelsState();
     });
     btnMagic.addEventListener('click', () => {
       doMagic();
     });
     btnDone.addEventListener('click', ()=> {
-      document.getElementById('infoMessage').innerHTML = 'You clicked on Done!';
+      document.getElementById('infoMessage').innerHTML = 'Done: work in progress...';
+    });
+
+    //Set the callbacks for the drawing buttons
+    btnEraser.addEventListener('click', () => {
+      eraserActive = true;
+
+      btnPencil.classList.remove('active');
+      btnEraser.classList.add('active');
+
+      sketch.noFill();
+      sketch.stroke("gray");
+      sketch.strokeWeight(eraserStrokeWeight);
+    });
+
+    btnPencil.addEventListener('click', () => {
+      eraserActive = false;
+
+      btnPencil.classList.add('active');
+      btnEraser.classList.remove('active');
+
+      sketch.fill(currentColor);
+      sketch.stroke(currentColor);
+      sketch.strokeWeight(currentStrokeWeight);
+    });
+
+    colorPalette.addEventListener('click', () => {
+      document.getElementById('infoMessage').innerHTML = 'Colors: work in progress...';
     });
 
     //Set the callbacks for the buttons to move back and forth from the splash screen
     btnHelp.addEventListener('click', () => { //Go to the spash screen
       splash.classList.remove('hidden');
-      splash.style.display= "block"; //Just for debug, at the end we can remove it
+      splash.style.display= 'block'; //Just for debug, at the end we can remove it
       splashIsOpen = true;
     });
     btnGo.addEventListener('click', () => { //From splash to the sketch
@@ -113,30 +161,37 @@ const sketch = function(sketch) {
       userPen = 1; // down!
 
       modelIsActive = false; //Machine learning in pause while i'm drawing
-      currentRawLine = [];
-      lastHumanDrawing = [];
+      //currentRawLine = [];
+      //lastHumanDrawing = [];
       previousUserPen = userPen;
-      sketch.stroke(currentColor);
     }
   }
 
   sketch.mouseReleased = function () {
-    if (!splashIsOpen && sketch.isInBounds()) {
-      userPen = 0;  // Up!
-      const currentRawLineSimplified = model.simplifyLine(currentRawLine);
+    updatePixelsState(); //Refresh the current pixels, actually save the last drawings
+    if (!splashIsOpen) {
 
-      // If it's an accident...ignore it.
-      if (currentRawLineSimplified.length > 1) {
-        // Encode this line as a stroke used to feed to the model
-        lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
+      if(sketch.isInBounds()){ //Need to be moved to click of Done button
+        userPen = 0;  // Up!
+        const currentRawLineSimplified = model.simplifyLine(currentRawLine);
+
+        // If it's an accident...ignore it.
+        if (currentRawLineSimplified.length > 1) {
+          // Encode this line as a stroke used to feed to the model
+          lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
+        }
+        currentRawLine = [];
+        previousUserPen = userPen;
       }
-      currentRawLine = [];
-      previousUserPen = userPen;
+
+      if(eraserActive){
+        erase();
+      }
     }
   }
 
   sketch.mouseDragged = function () {
-    if (!splashIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds()) {
+    if (!splashIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds() && !eraserActive) {
       const dx0 = sketch.mouseX - x;
       const dy0 = sketch.mouseY - y;
       if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
@@ -153,6 +208,11 @@ const sketch = function(sketch) {
       }
       previousUserPen = userPen;
     }
+    else if(!splashIsOpen && !modelIsActive && modelLoaded && eraserActive) {
+      erase(); //Erase the pixels (set to transparent)
+      sketch.ellipse(sketch.mouseX, sketch.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
+    }
+
     return false;
   }
 
@@ -192,9 +252,37 @@ const sketch = function(sketch) {
     return sketch.mouseX >= 0 && sketch.mouseY >= 0 && sketch.mouseX < sketch.width && sketch.mouseY < sketch.height-footerHeght;
   }
 
+
+
   /*
   * Helpers.
   */
+
+  //Function needed to make the eraser work properly (avoid unupdated pixels)
+  function updatePixelsState(){ //Is sufficient to update 1 pixel to save all the canvas state correctly
+
+    //Get the first pixel of the canvas
+    pixelColor = sketch.get(0,0);
+    //Set it as identical to what it get
+    sketch.set(0,0,pixelColor);
+
+    //Refresh the canvas
+    sketch.updatePixels();
+  }
+
+
+  //Function used by the eraser
+  function erase(){
+    for (var xE=sketch.mouseX-eraserRadius; xE<sketch.mouseX+eraserRadius; xE++) {
+      for (var yE=sketch.mouseY-eraserRadius; yE<sketch.mouseY+eraserRadius; yE++) {
+        if ((sketch.dist(xE,yE, sketch.mouseX, sketch.mouseY) < eraserRadius) && xE > 0 && xE <= sketch.width) {
+          sketch.set(xE,yE,eraserTransparentColor);
+        }
+      }
+    }
+    sketch.updatePixels(); //Refresh the canvas pixels after modification to actually show them
+  }
+
   function doMagic() {
     /*sketch.stroke('white');
     sketch.strokeWeight(6);
@@ -213,7 +301,7 @@ const sketch = function(sketch) {
 
     sketch.clear();
 
-    sketch.strokeWeight(3.0);
+    sketch.strokeWeight(currentStrokeWeight);
     sketch.stroke(currentColor);
 
     // Redraw the human drawing.
@@ -232,7 +320,7 @@ const sketch = function(sketch) {
     }
 
     sketch.background(255, 255, 255, 0);
-    sketch.strokeWeight(3.0);
+    sketch.strokeWeight(currentStrokeWeight);
 
     // Start drawing in the middle-ish of the screen
     startX = x = sketch.width / 2.0;

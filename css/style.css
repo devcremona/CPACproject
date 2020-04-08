@@ -12,18 +12,22 @@ html, body {
 }
 
 body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Caveat Brush';
+  font-size: 24px;
   -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: column;
   --primary: #4545CC;
   --secondary: #8EE3C8;
+  --bottom-margin: 10px;
 }
 
 * { box-sizing: border-box; }
 
 
-/* Help Style */
+/* Help Button Style */
+/*-----------------------------------------------------------------------------*/
+
 #btnHelp{
   position: fixed;
   right: 15px;
@@ -37,20 +41,20 @@ body {
 
 #footer{
   position: fixed;
-  bottom: 0;
+  bottom: var(--bottom-margin);
   width: 100%;
   display: inline-flex;
-  padding: 10px 0px 10px 0px;
 }
 
 #navigation-tools{
   position: fixed;
   left: 15px;
+  bottom: var(--bottom-margin);
   }
 
 #infoMessage{
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 0 auto; /* Center the DIV horizontally */
   text-align: center;
   width: 500px;
@@ -60,6 +64,7 @@ body {
 #graphic-tools{
   position: fixed;
   right: 15px;
+  bottom: var(--bottom-margin);
 }
 
 .iconify{ /* Buttons */
@@ -67,6 +72,18 @@ body {
   height: 30px;
   text-align: center;
   cursor: pointer;
+}
+
+#btnEraser.active{
+  border-radius: 20%;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+#btnPencil.active{
+  border-radius: 20%;
+  border-color: black;
+  border-bottom-style: outset;
 }
 
 
