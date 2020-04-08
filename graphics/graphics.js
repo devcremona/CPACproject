@@ -66,17 +66,18 @@ const sketch = function(sketch) {
     loadModel(initialModelIndex);
 
     //Populate the drop down menu with all the available models
-    selectModels.innerHTML = availableModels.map(listElement => `<option>${listElement}</option>`).join('');
+    /*selectModels.innerHTML = availableModels.map(listElement => `<option>${listElement}</option>`).join('');
     selectModels.selectedIndex = initialModelIndex; //Set the dropdown menu to the initial model
 
     //Set the callbacks for the buttons on the canvas
-    selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));
+    selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));*/
     btnClear.addEventListener('click', restart);
     btnRetry.addEventListener('click', retryMagic);
 
     //Set the callbacks for the buttons to move back and forth from the splash screen
     btnHelp.addEventListener('click', () => { //Go to the spash screen
       splash.classList.remove('hidden');
+      splash.style.display= "block"; //Just for debug, at the end we can remove it
       splashIsOpen = true;
     });
     btnGo.addEventListener('click', () => { //From splash to the sketch
@@ -179,7 +180,8 @@ const sketch = function(sketch) {
   };
 
   sketch.isInBounds = function () {
-    return sketch.mouseX >= 0 && sketch.mouseY >= 0 && sketch.mouseX < sketch.width && sketch.mouseY < sketch.height;
+    footerHeght = document.getElementById("footer").clientHeight;
+    return sketch.mouseX >= 0 && sketch.mouseY >= 0 && sketch.mouseX < sketch.width && sketch.mouseY < sketch.height-footerHeght;
   }
 
   /*
