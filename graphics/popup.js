@@ -1,12 +1,22 @@
 function openPopup() {
 
+  //Reset previous choices
+  $( '#choicesDiv' ).children().remove();
+
+
   //Get narration text from story.js and set text
   narrationText.innerHTML = getNarration()[0];
 
   //Get choices list from story.js and populate the list
   choices = getChoices();
-  choicesList.innerHTML = choices.map(listElement => `<option>${listElement}</option>`).join('');
-  choicesList.selectedIndex = -1; //Set the dropdown menu to the initial wallpaper
+
+  /*choicesList.innerHTML = choices.map(listElement => `<option>${listElement}</option>`).join('');
+  choicesList.selectedIndex = -1; //Set the dropdown menu to the initial wallpaper  */
+
+  //Generate dynamically buttons for the choices
+  for (var i = 0; i < choices.length; i++){
+      $( '#choicesDiv' ).append( '<div class="choiceButton" id=choice'+i+'">'+choices[i]+'</div>' );
+  }
 
   //Show the popup
   infoMessage.innerHTML = 'Done: popup opened!';
@@ -14,24 +24,61 @@ function openPopup() {
   popupContent.classList.remove('hidden');
   popupIsOpen = true;
 
+  //Get the divs of the choices in an array
+  choicesDivs = $( '#choicesDiv' ).children().toArray();
+
   switch(getCurrentStatus()){
     case STATUS_STORY_ENUM.DOVE:
-      choicesList.addEventListener('change', changeBackground);
+      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+
+        //Set active just the clicked choice
+        choicesDivs.forEach(element => element.classList.remove('active'));
+        event.toElement.classList.add('active');
+
+        changeBackground(event);
+      }
+      ));
       break;
     case STATUS_STORY_ENUM.METEO:
-      choicesList.addEventListener('change', changeBackground);
+      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+
+        //Set active just the clicked choice
+        choicesDivs.forEach(element => element.classList.remove('active'));
+        event.toElement.classList.add('active');
+
+        changeBackground(event);
+      }
+      ));
       break;
     case STATUS_STORY_ENUM.PROTAGONISTA:
+      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
 
+        //Set active just the clicked choice
+        choicesDivs.forEach(element => element.classList.remove('active'));
+        event.toElement.classList.add('active');
+
+        //Set the user choice
+        setUserChoice(getCurrentStatus(),event.toElement.innerHTML);
+      }));
       break;
     case STATUS_STORY_ENUM.NOME:
-      choicesList.style.display = 'none';
-      textField.style.display = 'inline';
+      choicesDiv.style.display = 'none';
+      characterNameField.style.display = 'inline';
       break;
     default:
-      textField.style.display = 'none';
-      choicesList.style.display = 'inline';
-      //Draw something
+      characterNameField.style.display = 'none';
+      choicesDiv.style.display = 'inline-flex';
+
+      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+
+        //Set active just the clicked choice
+        choicesDivs.forEach(element => element.classList.remove('active'));
+        event.toElement.classList.add('active');
+
+        //Set the user choice
+        setUserChoice(getCurrentStatus(),choices.indexOf(event.toElement.innerHTML));
+      }));
+
       break;
     case STATUS_STORY_ENUM.FINALE:
       //
@@ -42,19 +89,23 @@ function openPopup() {
 }
 
 
-function changeBackground() {
-    switch(choicesList.selectedIndex) {
+function changeBackground(event) {
+    switch(choices.indexOf(event.toElement.innerHTML)) {
       case 0:
-        sketchContainer.style.backgroundImage = 'url("https://www.pixelstalk.net/wp-content/uploads/2015/01/Landscape-color-drawing-wallpaper.jpg")';
+        setUserChoice(getCurrentStatus(), choices[0]);
+        sketchContainer.style.backgroundImage = 'url("https://steemitimages.com/0x0/https://res.cloudinary.com/hpiynhbhq/image/upload/v1518361364/uz0lt1d2yjdknpdenelq.jpg")';
         break;
       case 1:
+        setUserChoice(getCurrentStatus(), choices[1]);
         sketchContainer.style.backgroundImage = 'url("https://static.tildacdn.com/tild6632-3862-4565-b231-343736656162/1bb1156e37fc3b86ae4d.jpg")';
         break;
       case 2:
-        sketchContainer.style.backgroundImage = 'url("https://www.wallpaperup.com/uploads/wallpapers/2014/01/07/219034/81aa9088c07cece411d3140467bc8ce2-700.jpg")';
+        setUserChoice(getCurrentStatus(), choices[2]);
+        sketchContainer.style.backgroundImage = 'url("https://cutewallpaper.org/21/landscape-drawing-wallpaper/Drawing-Wallpaper-Coloring-Size-Of-Axe-Cross-Room-Hd-2-.jpg")';
         break;
       case 3:
-        sketchContainer.style.backgroundImage = 'url("https://paintingvalley.com/drawings/small-village-drawing-27.jpg")';
+        setUserChoice(getCurrentStatus(), choices[3]);
+        sketchContainer.style.backgroundImage = 'url("https://www.freegreatpicture.com/files/200/12254-fantasy-landscape.jpg")';
         break;
     }
 }

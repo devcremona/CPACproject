@@ -3,10 +3,21 @@ function setListeners() {
   //POPUP
   //==============================================================================
   btnConfirmPopup.addEventListener('click', () => { // When the user clicks on x, close the popup
-    choicesList.removeEventListener('change', changeBackground);
-
-    if(getCurrentStatus()==STATUS_STORY_ENUM.PROTAGONISTA){
-      loadModel(choicesList.selectedIndex);
+    switch (getCurrentStatus()) {
+      case STATUS_STORY_ENUM.DOVE:
+        choicesDivs.forEach(element => element.removeEventListener('click', changeBackground));
+        break;
+      case STATUS_STORY_ENUM.METEO:
+          choicesDivs.forEach(element => element.removeEventListener('click', changeBackground));
+        break;
+      case STATUS_STORY_ENUM.PROTAGONISTA:
+        loadModel(choices.indexOf(getChoices()));
+        break;
+      case STATUS_STORY_ENUM.NOME:
+        setUserChoice(getCurrentStatus(), characterNameField.value);
+        break;
+      default:
+        break;
     }
 
     popup.classList.add('hidden');

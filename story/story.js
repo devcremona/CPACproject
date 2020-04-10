@@ -71,7 +71,7 @@ var objectStory = "Y"
 * @return {Boolean}: if the set is correct
 */
 function setUserChoice(status, object){
-  ret = True
+  ret = true
   switch(status){
     case STATUS_STORY_ENUM.DOVE: setPlace(object); break;
     case STATUS_STORY_ENUM.METEO: setMeteo(object); break;

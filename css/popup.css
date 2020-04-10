@@ -23,7 +23,7 @@
 #popupContent {
   text-align: center;
   font-size: 50px;
-  background-color: #FFFFFF;
+  background-color: rgba(255,255,255,0.8);
   border-radius: 30px;
   margin: auto;
   padding: 20px;
@@ -42,14 +42,34 @@
   font-size: 28px;
   font-weight: bold;
 }
-/*#btnClosePopup:hover,
-#btnClosePopup:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}*/
 
 #textField {
   display: none;
   margin:auto;
+}
+
+#choicesDiv {
+  display: inline-flex;
+  font-size: 30px;
+  padding: 40px;
+}
+
+.choiceButton {
+  margin: 0px 30px 0px 30px;
+  padding: 10px;
+  border-radius: 30%;
+  border-width:2px;
+  border-style:solid;
+  border-color:black;
+}
+
+.choiceButton.active {
+  background-color: rgba(255,255,255,1);
+}
+
+.choiceButton:hover,
+.choiceButton:focus {
+  background-color: rgba(255,255,255,1);
+  text-decoration: none;
+  cursor: pointer;
 }
