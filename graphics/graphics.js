@@ -42,13 +42,17 @@ const sketch = function(sketch) {
   let eraserActive = false;
 
 
+//Popup variables
+popupIsOpen = false;
+
+
   /*
    * Main p5 code
    */
   sketch.setup = function() {
 
     // Initialize the canvas
-    const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
+    const containerSize = sketchContainer.getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
     canvas = sketch.createCanvas(screenWidth, screenHeight);
@@ -57,13 +61,13 @@ const sketch = function(sketch) {
     sketch.frameRate(60);
 
     //Loading gif: Set the style properties for the loading gif to be shown properly and on the center
-    loadingGifStyle = document.getElementById('loadingGif').style;
+    loadingGifStyle = loadingGif.style;
     loadingGifStyle.position = 'absolute';
     loadingGifStyle.zIndex = 10;
     loadingGifStyle.top = '50%';
     loadingGifStyle.left = '50%';
-    loadingGifStyle.marginTop = "-"+document.getElementById('loadingGif').height/2+"px";
-    loadingGifStyle.marginLeft = "-"+document.getElementById('loadingGif').width/2+"px";
+    loadingGifStyle.marginTop = "-"+loadingGif.height/2+"px";
+    loadingGifStyle.marginLeft = "-"+loadingGif.width/2+"px";
 
     //Reset the canvas (the following function is called always on the press of clear button)
     restart(0); //0: called at startup
@@ -79,7 +83,26 @@ const sketch = function(sketch) {
     selectModels.selectedIndex = initialModelIndex; //Set the dropdown menu to the initial model
     selectModels.addEventListener('change', () => loadModel(selectModels.selectedIndex));*/
 
+    //Set the callback for the popup buttons
+    //......................................
+    btnClosePopup.addEventListener('click', () => { // When the user clicks on x, close the popup
+      popup.classList.add('hidden');
+      popupContent.classList.add('hidden');
+      popupIsOpen = false;
+      infoMessage.innerHTML = 'popup closed!';
+    });
+
+    window.onclick = (event) => { // When the user clicks anywhere outside of the popup, close it
+      if (event.target == popup) {
+        popup.classList.add('hidden');
+        popupContent.classList.add('hidden');
+        popupIsOpen = false;
+        infoMessage.innerHTML = 'popup closed!';
+      }
+    }
+
     //Set the callbacks for the navigation buttons
+    //............................................
     btnClear.addEventListener('click', () => {
       restart(1); //1: called after cleck event
 
@@ -99,11 +122,14 @@ const sketch = function(sketch) {
       doMagic();
     });
     btnDone.addEventListener('click', ()=> {
-      document.getElementById('infoMessage').innerHTML = 'Done: work in progress...';
-      loadModel(12);
+      infoMessage.innerHTML = 'Done: popup opened!';
+      popup.classList.remove('hidden');
+      popupContent.classList.remove('hidden');
+      popupIsOpen = true;
     });
 
     //Set the callbacks for the drawing buttons
+    //..........................................
     btnEraser.addEventListener('click', () => {
       eraserActive = true;
 
@@ -127,13 +153,13 @@ const sketch = function(sketch) {
     });
 
     colorPalette.addEventListener('click', () => {
-      document.getElementById('infoMessage').innerHTML = 'Colors: work in progress...';
+      infoMessage.innerHTML = 'Colors: work in progress...';
     });
 
     //Set the callbacks for the buttons to move back and forth from the splash screen
+    //...............................................................................
     btnHelp.addEventListener('click', () => { //Go to the spash screen
       splash.classList.remove('hidden');
-      splash.style.display= 'block'; //Just for debug, at the end we can remove it
       splashIsOpen = true;
     });
     btnGo.addEventListener('click', () => { //From splash to the sketch
@@ -144,7 +170,7 @@ const sketch = function(sketch) {
 
   sketch.windowResized = function () {
     //console.log('resize canvas');
-    const containerSize = document.getElementById('sketchContainer').getBoundingClientRect();
+    const containerSize = sketchContainer.getBoundingClientRect();
     const screenWidth = Math.floor(containerSize.width);
     const screenHeight = Math.floor(containerSize.height);
     sketch.resizeCanvas(screenWidth, screenHeight);
@@ -154,8 +180,8 @@ const sketch = function(sketch) {
   * Human is drawing.
   */
   sketch.mousePressed = function () {
-    if (!splashIsOpen && sketch.isInBounds()) {
-      document.getElementById('infoMessage').innerHTML = 'Drawing in progress...';
+    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds()) {
+      infoMessage.innerHTML = 'Drawing in progress...';
 
       x = startX = sketch.mouseX;
       y = startY = sketch.mouseY;
@@ -170,7 +196,7 @@ const sketch = function(sketch) {
 
   sketch.mouseReleased = function () {
     updatePixelsState(); //Refresh the current pixels, actually save the last drawings
-    if (!splashIsOpen) {
+    if (!splashIsOpen && !popupIsOpen) {
 
       if(sketch.isInBounds()){ //Need to be moved to click of Done button
         userPen = 0;  // Up!
@@ -192,7 +218,7 @@ const sketch = function(sketch) {
   }
 
   sketch.mouseDragged = function () {
-    if (!splashIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds() && !eraserActive) {
+    if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds() && !eraserActive) {
       const dx0 = sketch.mouseX - x;
       const dy0 = sketch.mouseY - y;
       if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
@@ -209,7 +235,7 @@ const sketch = function(sketch) {
       }
       previousUserPen = userPen;
     }
-    else if(!splashIsOpen && !modelIsActive && modelLoaded && eraserActive) {
+    else if(!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && eraserActive) {
       erase(); //Erase the pixels (set to transparent)
       sketch.ellipse(sketch.mouseX, sketch.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
     }
@@ -249,8 +275,7 @@ const sketch = function(sketch) {
   };
 
   sketch.isInBounds = function () {
-    footerHeght = document.getElementById("footer").clientHeight;
-    return sketch.mouseX >= 0 && sketch.mouseY >= 0 && sketch.mouseX < sketch.width && sketch.mouseY < sketch.height-footerHeght;
+    return sketch.mouseX >= 0 && sketch.mouseY >= 0 && sketch.mouseX < sketch.width && sketch.mouseY < sketch.height-footer.clientHeight;
   }
 
 
@@ -298,7 +323,7 @@ const sketch = function(sketch) {
       sketch.line(...lastHumanDrawing[i]);
     }*/
 
-    document.getElementById('infoMessage').innerHTML = 'Look at the magic!';
+    infoMessage.innerHTML = 'Look at the magic!';
 
     sketch.clear();
 
@@ -317,7 +342,7 @@ const sketch = function(sketch) {
   function restart(flag) {
 
     if(flag==1){
-      document.getElementById('infoMessage').innerHTML = 'everything was perfectly clean!';
+      infoMessage.innerHTML = 'everything was perfectly clean!';
     }
 
     sketch.background(255, 255, 255, 0);
@@ -343,8 +368,8 @@ const sketch = function(sketch) {
 
   function loadModel(index) {
     modelLoaded = false;
-    document.getElementById('app').classList.add('loading');
-    document.getElementById('loadingGif').style.display = 'block'; //Display loading gif
+    app.classList.add('loading');
+    loadingGif.style.display = 'block'; //Display loading gif
 
 
     if (model) {
@@ -357,8 +382,8 @@ const sketch = function(sketch) {
     //Actually initialize the model, and set a callback to run at the end of the initialization
     model.initialize().then(() => {
       modelLoaded = true;
-      document.getElementById('app').classList.remove('loading');
-      document.getElementById('loadingGif').style.display = 'none'; //Hide loading gif
+      app.classList.remove('loading');
+      loadingGif.style.display = 'none'; //Hide loading gif
       console.log(`🤖${availableModels[index]} loaded.`);
       model.setPixelFactor(5.0);  // Smaller -> larger outputs
     });
