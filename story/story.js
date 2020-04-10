@@ -65,6 +65,61 @@ var objectStory = "Y"
 // ============================================================================
 
 /**
+* set the current story choice of the user
+* @param status {STATUS_STORY_ENUM}: the current status of the story
+* @param object {object}: specific set for that status (string/int)
+* @return {Boolean}: if the set is correct
+*/
+function setUserChoice(status, object){
+  ret = True
+  switch(status){
+    case STATUS_STORY_ENUM.DOVE: setPlace(object); break;
+    case STATUS_STORY_ENUM.METEO: setMeteo(object); break;
+    case STATUS_STORY_ENUM.PROTAGONISTA: setMainCharacter(object); break;
+    case STATUS_STORY_ENUM.NOME: setNameCharacter(object); break;
+    case STATUS_STORY_ENUM.SITUA1: setSitua1(object); break;
+    case STATUS_STORY_ENUM.OGGETTO: setObject(object); break;
+    case STATUS_STORY_ENUM.SITUA2: setSitua2(object); break;
+    case STATUS_STORY_ENUM.SITUA3: setSitua3(object); break;
+    case STATUS_STORY_ENUM.FINALE: setFinale(object); break;
+    default: ret = False; break;
+  }
+  return ret
+}
+
+//----------------------------
+// private set
+
+/**
+* set place of the story
+* @param place {string}: the desired place
+*/
+function setPlace(place){
+  //update choicesUser
+  choicesUser[STATUS_STORY_ENUM.DOVE] = place;
+}
+
+
+/**
+* set meteo of the story
+* @param meteo {string}: the desired meteo
+*/
+function setMeteo(meteo){
+  //update choicesUser
+  choicesUser[STATUS_STORY_ENUM.METEO] = meteo;
+}
+
+/**
+* set main character of the story
+* @param character {string}: the desired main character
+*/
+function setMainCharacter(character){
+  //update choicesUser
+  choicesUser[STATUS_STORY_ENUM.PROTAGONISTA] = character;
+}
+
+
+/**
 * set name of main character
 * @param name {string}: the desired name
 */
@@ -89,6 +144,8 @@ function setNameCharacter(name){
   //update choicesUser
   choicesUser[STATUS_STORY_ENUM.SITUA3] = situa3;
 };
+
+
 
 
 
@@ -117,6 +174,23 @@ function setSitua1(situa1){
   }
 };
 
+/**
+* set object chosen
+* @param object {string}: the selected object
+*/
+function setObject(obj){
+  objectStory = obj;
+
+  // change the choices according the name
+  situa3 = choicesUser[STATUS_STORY_ENUM.SITUA3]
+  for (let i=0; i<situa3.length; i++) {
+    situa3[i] = situa3[i].replace("Y", obj);
+  } // if the replace not found return the original sentence
+
+  //update choicesUser
+  choicesUser[STATUS_STORY_ENUM.SITUA3] = situa3;
+};
+
 
 /**
 * set situa2 chosen
@@ -138,23 +212,25 @@ function setSitua2(situa2){
 };
 
 
-
 /**
-* set object chosen
-* @param object {string}: the selected object
+* set situa2 chosen
+* @param situa3 {int}: [0, 1, 2] correspond if the user selected ["Rubare", "Condividere", "Fare amicizia"]
 */
-function setObject(obj){
-  objectStory = obj;
-
-  // change the choices according the name
-  situa3 = choicesUser[STATUS_STORY_ENUM.SITUA3]
-  for (let i=0; i<situa3.length; i++) {
-    situa3[i] = situa3[i].replace("Y", obj);
-  } // if the replace not found return the original sentence
-
+function setSitua3(situa3){
   //update choicesUser
   choicesUser[STATUS_STORY_ENUM.SITUA3] = situa3;
-};
+}
+
+
+/**
+* set the end of the story
+* @param finale {audio object}: children registration of the story end
+*/
+function setFinale(finale){
+  //update choicesUser
+  choicesUser[STATUS_STORY_ENUM.FINALE] = finale;
+}
+
 
 
 
