@@ -1,3 +1,6 @@
+/* General Document Style */
+/*-----------------------------------------------------------------------------*/
+
 html, body {
   height: 100%;
   width: 100%;
@@ -9,15 +12,130 @@ html, body {
 }
 
 body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Caveat Brush';
+  font-size: 24px;
   -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: column;
   --primary: #4545CC;
   --secondary: #8EE3C8;
+  --bottom-margin: 10px;
 }
 
 * { box-sizing: border-box; }
+
+
+/* General App Style */
+
+#app{
+  height:100%;
+}
+
+#app.loading {
+  pointer-events: none;
+  opacity: 0.6;
+  filter: blur(3px);
+}
+
+#loadingGif {
+  filter: invert(90%);
+}
+
+
+
+/* Help Button Style */
+/*-----------------------------------------------------------------------------*/
+
+#btnHelp{
+  position: fixed;
+  right: 15px;
+  top: 10px;
+  z-index: 2;
+}
+
+
+/* Footer Style */
+/*-----------------------------------------------------------------------------*/
+
+#footer{
+  position: fixed;
+  bottom: var(--bottom-margin);
+  width: 100%;
+  display: inline-flex;
+}
+
+#navigation-tools{
+  position: fixed;
+  left: 15px;
+  bottom: var(--bottom-margin);
+  }
+
+#infoMessage{
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 auto; /* Center the DIV horizontally */
+  text-align: center;
+  width: 500px;
+  padding: 5px 5px 5px 5px;
+}
+
+#graphic-tools{
+  position: fixed;
+  right: 15px;
+  bottom: var(--bottom-margin);
+}
+
+.iconify{ /* Buttons */
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#btnEraser.active{
+  border-radius: 20%;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+#btnPencil.active{
+  border-radius: 20%;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+
+
+/* Canvas Style */
+/*-----------------------------------------------------------------------------*/
+
+#loaded {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+#loaded.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+#sketchContainer {
+  background-image: url("https://static.tildacdn.com/tild6632-3862-4565-b231-343736656162/1bb1156e37fc3b86ae4d.jpg");
+
+  background-position: bottom; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  flex-grow: 1;
+  overflow: hidden;
+  height:100%;
+}
+
+
+
+
+/* Splash Screen Style */
+/*-----------------------------------------------------------------------------*/
 
 h1 {
   color: var(--primary);
@@ -41,13 +159,6 @@ a:hover {
   color: var(--primary);
 }
 
-header {
-  background-color: #F19CC5;
-  width: 100%;
-  padding: 0 20px;
-  border-bottom: 8px solid var(--secondary);
-}
-
 #splash {
   background-color: #F19CC5;
   position: absolute;
@@ -67,130 +178,18 @@ header {
   transform: translate3d(0, -200%, 0);
 }
 
-#splash .content {
+#splash.content {
   color: white;
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
   text-align: center;
 }
-#loaded {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-}
-#loaded.hidden {
-  display: none;
-  pointer-events: none;
-}
 
-header .wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
 
-header .top {
-  height: 84px;
-}
 
-#colorsContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 14px;
-  flex-wrap: wrap;
-  max-width: 1000px;
-}
-
-#colorsContainer button {
-  min-width: 30px;
-  min-height: 30px;
-  border: 4px solid transparent;
-  border-radius: 50%;
-  margin: 4px 2px;
-  padding: 0;
-  will-change: transform;
-  transition: transform 0.2 ease;
-}
-#colorsContainer button.active {
-  border: 4px solid white;
-}
-#colorsContainer button:hover {
-  transform: scale(1.4);
-}
-
-.controls {
-  display: flex;
-  flex-direction: row;
-}
-
-.box {
-  border: solid var(--primary) 2px;
-  color: var(--primary);
-  fill: var(--primary);
-  background: white;
-  box-shadow: 4px 4px 0 var(--primary);
-  height: 40px;
-  border-radius: 5px;
-  transition: top 0.2s ease;
-  position: relative;
-  top: 0;
-  vertical-align: middle;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: inherit;
-  font-weight: bold;
-  margin: 0 4px;
-}
-
-.big {
-  margin: 24px 0;
-  font-size: 24px;
-  padding: 14px 32px;
-  height: auto;
-}
-
-.box:active {
-  top: 4px;
-  box-shadow: none;
-}
-
-.select-wrapper {
-  display: inline-block;
-  width: 255px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 4px;
-}
-
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-transform: lowercase;
-  font-family: inherit;
-  font-size: 22px;
-  background: transparent;
-  border: none;
-  color: var(--primary);
-  width: 100%;
-}
-
-#sketch {
-  flex-grow: 1;
-  overflow: hidden;
-}
-#sketch.loading {
-  pointer-events: none;
-  opacity: 0.3;
-  filter: blur(3px);
-}
+/* Media queries */
+/*----------------------------------------------------------------------------*/
 
 @media screen and (max-width: 700px) {
   h1 {
@@ -204,29 +203,3 @@ select {
   #splash {
     padding: 24px;
   }
-  .box {
-    height: 40px;
-    margin: 0 4px;
-  }
-  .big {
-    height: auto;
-  }
-
-  header .top {
-    flex-direction: column;
-    margin-bottom: 14px;
-    height: auto;
-  }
-  .controls {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .controls .select-wrapper {
-    min-width: 0;
-    font-size: 20px;
-    flex-grow: 1;
-  }
-}
