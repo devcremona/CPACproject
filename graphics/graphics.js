@@ -2,7 +2,7 @@ debug = [];
 
 const sketch = function(sketch) {
   const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
-  const availableModels = ['bird', 'ant','ambulance','angel','alarm_clock','antyoga','backpack','barn','basket','bear','bee','beeflower','bicycle','book','brain','bridge','bulldozer','bus','butterfly','cactus','calendar','castle','cat','catbus','catpig','chair','couch','crab','crabchair','crabrabbitfacepig','cruise_ship','diving_board','dog','dogbunny','dolphin','duck','elephant','elephantpig','everything','eye','face','fan','fire_hydrant','firetruck','flamingo','flower','floweryoga','frog','frogsofa','garden','hand','hedgeberry','hedgehog','helicopter','kangaroo','key','lantern','lighthouse','lion','lionsheep','lobster','map','mermaid','monapassport','monkey','mosquito','octopus','owl','paintbrush','palm_tree','parrot','passport','peas','penguin','pig','pigsheep','pineapple','pool','postcard','power_outlet','rabbit','rabbitturtle','radio','radioface','rain','rhinoceros','rifle','roller_coaster','sandwich','scorpion','sea_turtle','sheep','skull','snail','snowflake','speedboat','spider','squirrel','steak','stove','strawberry','swan','swing_set','the_mona_lisa','tiger','toothbrush','toothpaste','tractor','trombone','truck','whale','windmill','yoga','yogabicycle'];
+  const availableModels = ['dog','cat'];
   let model;
 
   // Model
@@ -73,7 +73,7 @@ popupIsOpen = false;
     restart(0); //0: called at startup
 
     //Load the model with a certain index
-    initialModelIndex = 22  //Cat
+    initialModelIndex = 1  //Cat
     loadModel(initialModelIndex);
 
     sketch.stroke(currentColor);
@@ -85,21 +85,18 @@ popupIsOpen = false;
 
     //Set the callback for the popup buttons
     //......................................
-    btnClosePopup.addEventListener('click', () => { // When the user clicks on x, close the popup
+    btnConfirmPopup.addEventListener('click', () => { // When the user clicks on x, close the popup
+      choicesList.removeEventListener('change', changeBackground);
+
+      if(getCurrentStatus()==STATUS_STORY_ENUM.PROTAGONISTA){
+        loadModel(choicesList.selectedIndex);
+      }
+
       popup.classList.add('hidden');
       popupContent.classList.add('hidden');
       popupIsOpen = false;
       infoMessage.innerHTML = 'popup closed!';
     });
-
-    window.onclick = (event) => { // When the user clicks anywhere outside of the popup, close it
-      if (event.target == popup) {
-        popup.classList.add('hidden');
-        popupContent.classList.add('hidden');
-        popupIsOpen = false;
-        infoMessage.innerHTML = 'popup closed!';
-      }
-    }
 
     //Set the callbacks for the navigation buttons
     //............................................
@@ -122,10 +119,15 @@ popupIsOpen = false;
       doMagic();
     });
     btnDone.addEventListener('click', ()=> {
+
+      //Open popup
       infoMessage.innerHTML = 'Done: popup opened!';
       popup.classList.remove('hidden');
       popupContent.classList.remove('hidden');
       popupIsOpen = true;
+
+      setNextStatus();
+      nextStepStoryPopup();
     });
 
     //Set the callbacks for the drawing buttons
@@ -386,8 +388,50 @@ popupIsOpen = false;
       loadingGif.style.display = 'none'; //Hide loading gif
       console.log(`🤖${availableModels[index]} loaded.`);
       model.setPixelFactor(5.0);  // Smaller -> larger outputs
+
+      //Open the popup for the first time
+      if(getCurrentStatus()==STATUS_STORY_ENUM.DOVE){
+        popup.classList.remove('hidden');
+        popupContent.classList.remove('hidden');
+        popupIsOpen = true;
+        nextStepStoryPopup();
+      }
     });
   };
+
+
+  function nextStepStoryPopup() { //Very temporary code
+    //Get current data from story.js and set the values of the popup
+
+    narrationText.innerHTML = getNarration()[0];
+
+    choices = getChoices();
+    choicesList.innerHTML = choices.map(listElement => `<option>${listElement}</option>`).join('');
+    choicesList.selectedIndex = -1; //Set the dropdown menu to the initial wallpaper
+
+    if(getCurrentStatus()==STATUS_STORY_ENUM.DOVE){
+      choicesList.addEventListener('change', changeBackground);
+    }
+  }
+
+
+  function changeBackground() {
+      switch(choicesList.selectedIndex) {
+        case 0:
+          sketchContainer.style.backgroundImage = 'url("https://www.pixelstalk.net/wp-content/uploads/2015/01/Landscape-color-drawing-wallpaper.jpg")';
+          break;
+        case 1:
+          sketchContainer.style.backgroundImage = 'url("https://static.tildacdn.com/tild6632-3862-4565-b231-343736656162/1bb1156e37fc3b86ae4d.jpg")';
+          break;
+        case 2:
+          sketchContainer.style.backgroundImage = 'url("https://www.wallpaperup.com/uploads/wallpapers/2014/01/07/219034/81aa9088c07cece411d3140467bc8ce2-700.jpg")';
+          break;
+        case 3:
+          sketchContainer.style.backgroundImage = 'url("https://paintingvalley.com/drawings/small-village-drawing-27.jpg")';
+          break;
+      }
+  }
+
 
   function encodeStrokes(sequence) {
     if (sequence.length <= 5) {

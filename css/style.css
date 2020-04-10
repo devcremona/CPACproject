@@ -79,6 +79,8 @@ body {
 
 
 #popupContent {
+  text-align: center;
+  font-size: 50px;
   background-color: #FFFFFF;
   border-radius: 30px;
   margin: auto;
@@ -88,7 +90,7 @@ body {
   transition: 0.5s transform;
 }
 #popupContent.hidden {
-  transform: translate3d(0, -200%, 0);
+  transform: translate3d(0, -500%, 0);
   transition: 0.5s transform;
 }
 
@@ -174,8 +176,7 @@ body {
 }
 
 #sketchContainer {
-  background-image: url("https://static.tildacdn.com/tild6632-3862-4565-b231-343736656162/1bb1156e37fc3b86ae4d.jpg");
-
+  background-color: darkgray;
   background-position: bottom; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
