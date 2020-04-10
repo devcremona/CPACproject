@@ -1,0 +1,68 @@
+/* Splash Screen Style */
+/*-----------------------------------------------------------------------------*/
+
+h1 {
+  color: var(--primary);
+  font-size: 60px;
+}
+
+p {
+  padding: 24px 0;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  border-bottom: 4px solid var(--secondary);
+}
+a:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+#splash {
+  background-color: #F19CC5;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px;
+  border-top: 10px solid var(--secondary);
+  overflow: auto;
+  transition: 1s transform;
+  transform: translate3d(0, 0, 0);
+  z-index: 2;
+}
+
+#splash.hidden {
+  transform: translate3d(0, -200%, 0);
+}
+
+#splash.content {
+  color: white;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+/* Media queries */
+/*----------------------------------------------------------------------------*/
+
+@media screen and (max-width: 700px) {
+  h1 {
+    font-size: 32px;
+  }
+  p {
+    padding: 14px 0;
+    text-align: left;
+    font-size: 18px;
+  }
+  #splash {
+    padding: 24px;
+  }

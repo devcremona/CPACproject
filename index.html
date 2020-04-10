@@ -1,19 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="css/document.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/canvas.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/splash.css">
+
+    <!-- Font style -->
     <link href='https://fonts.googleapis.com/css?family=Caveat Brush' rel='stylesheet'>
+
+    <!-- External libraries -->
     <script src="https://code.iconify.design/1/1.0.5/iconify.min.js"></script> <!--icons-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@magenta/sketch@0.1.3/dist/magentasketch.min.js"></script>
 
-    <script src="graphics/graphics.js"></script>
+    <!-- Graphics Scripts -->
+    <script src="graphics/engine.js"></script>
+    <script src="graphics/variables.js"></script>
+    <script src="graphics/colors.js"></script>
+    <script src="graphics/engineHelpers.js"></script>
+    <script src="graphics/eraser.js"></script>
+    <script src="graphics/popup.js"></script>
+    <script src="graphics/listeners.js"></script>
+
+    <!-- Story Scripts -->
     <script src="story/story.js"></script>
+
+    <!-- Machine learning Scripts -->
+    <script src="ML/ML.js"></script>
+
+    <!-- Title of the app -->
     <title>Draw me a story</title>
   </head>
 
@@ -51,6 +78,7 @@
               <!--<span id="btnClosePopup">&times;</span>     x to close the popup-->
               <div id="narrationText">Narration Text here</div>
               <div><select id="choicesList"></select></div>
+              <div><input type="text" id="textField" style="display:none"></div>
               <div class="iconify" id="btnConfirmPopup" data-icon="ic:baseline-done-outline"></div>
             </div>
           </div>

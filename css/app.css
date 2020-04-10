@@ -1,0 +1,16 @@
+/* General App Style */
+/*-----------------------------------------------------------------------------*/
+
+#app{
+  height:100%;
+}
+
+#app.loading {
+  pointer-events: none;
+  opacity: 0.6;
+  filter: blur(3px);
+}
+
+#loadingGif {
+  filter: invert(90%);
+}

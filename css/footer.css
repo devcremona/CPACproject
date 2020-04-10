@@ -1,0 +1,49 @@
+/* Footer Style */
+/*-----------------------------------------------------------------------------*/
+
+#footer{
+  position: fixed;
+  bottom: var(--bottom-margin);
+  width: 100%;
+  display: inline-flex;
+}
+
+#navigation-tools{
+  position: fixed;
+  left: 15px;
+  bottom: var(--bottom-margin);
+  }
+
+#infoMessage{
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 auto; /* Center the DIV horizontally */
+  text-align: center;
+  width: 500px;
+  padding: 5px 5px 5px 5px;
+}
+
+#graphic-tools{
+  position: fixed;
+  right: 15px;
+  bottom: var(--bottom-margin);
+}
+
+.iconify{ /* Buttons */
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#btnEraser.active{
+  border-radius: 20%;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+#btnPencil.active{
+  border-radius: 20%;
+  border-color: black;
+  border-bottom-style: outset;
+}

@@ -1,0 +1,55 @@
+/* Popup Style */
+/*-----------------------------------------------------------------------------*/
+
+#popup {
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  padding-top: 180px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  transition: 0.5s background-color;
+}
+#popup.hidden {
+  background-color: rgba(0,0,0,0);
+  z-index: -1;
+  transition: 0.5s background-color, 0.5s z-index;
+}
+
+
+#popupContent {
+  text-align: center;
+  font-size: 50px;
+  background-color: #FFFFFF;
+  border-radius: 30px;
+  margin: auto;
+  padding: 20px;
+  width: 80%;
+  transform: translate3d(0, 0, 0);
+  transition: 0.5s transform;
+}
+#popupContent.hidden {
+  transform: translate3d(0, -500%, 0);
+  transition: 0.5s transform;
+}
+
+#btnClosePopup {
+  color: #AAAAAA;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+/*#btnClosePopup:hover,
+#btnClosePopup:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}*/
+
+#textField {
+  display: none;
+  margin:auto;
+}
