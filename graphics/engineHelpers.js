@@ -58,7 +58,12 @@ function loadModel(index) {
   }
 
   // loads the TensorFlow.js version of sketch-rnn model, with the model's weights.
+
+  //Use default trained models
   model = new ms.SketchRNN(`${BASE_URL}${availableModels[index]}.gen.json`);
+
+  //Use custom trained model of sheep
+  //model = new ms.SketchRNN(`../ML/models/sheep.gen.json`);
 
   //Actually initialize the model, and set a callback to run at the end of the initialization
   model.initialize().then(() => {

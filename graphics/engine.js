@@ -30,7 +30,7 @@ const sketch = function(sketch) {
     restart(0); //0: called at startup
 
     //Load the model with a certain index
-    initialModelIndex = 1  //Cat
+    initialModelIndex = 1;  //0: Cat  1:Sheep
     loadModel(initialModelIndex);
 
     sketch.stroke(currentColor);
