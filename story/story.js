@@ -19,7 +19,7 @@ const STATUS_STORY_ENUM = {
 };
 
 // choices for the users
-var choicesUser = {
+var choices = {
   [STATUS_STORY_ENUM.DOVE]: ["Lago", "Città", "Bosco", "Collina", "Fattoria"],
   [STATUS_STORY_ENUM.METEO]: ["Di sole", "Nuvolosa", "Di pioggia", "Era notte"],
   [STATUS_STORY_ENUM.PROTAGONISTA]: ["Cane", "Gatto"],
@@ -52,13 +52,15 @@ var narrationPC = {
   [STATUS_STORY_ENUM.RECAP]: ["Bravissimo", "Fine", "Che bella storia", "Grazie"]
 };
 
+var userChoice = [];
+
 // ============================================================================
 // VARIABLES
 // ============================================================================
 
 var currentStatus = STATUS_STORY_ENUM.DOVE;
 var nameCharacter = "X";
-var objectStory = "Y"
+var objectStory = "Y";
 
 // ============================================================================
 // SET FUNCTIONS
@@ -95,8 +97,8 @@ function setUserChoice(status, object){
 * @param place {string}: the desired place
 */
 function setPlace(place){
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.DOVE] = place;
+  //update choices
+  userChoice[STATUS_STORY_ENUM.DOVE] = place;
 }
 
 
@@ -105,8 +107,8 @@ function setPlace(place){
 * @param meteo {string}: the desired meteo
 */
 function setMeteo(meteo){
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.METEO] = meteo;
+  //update choices
+  userChoice[STATUS_STORY_ENUM.METEO] = meteo;
 }
 
 /**
@@ -114,8 +116,8 @@ function setMeteo(meteo){
 * @param character {string}: the desired main character
 */
 function setMainCharacter(character){
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.PROTAGONISTA] = character;
+  //update choices
+  userChoice[STATUS_STORY_ENUM.PROTAGONISTA] = character;
 }
 
 
@@ -124,49 +126,53 @@ function setMainCharacter(character){
 * @param name {string}: the desired name
 */
 function setNameCharacter(name){
+
   nameCharacter = name;
+  userChoice[STATUS_STORY_ENUM.NOME] = nameCharacter;
 
   // change the choices according the name
-  situa1 = choicesUser[STATUS_STORY_ENUM.SITUA1]
+  situa1 = choices[STATUS_STORY_ENUM.SITUA1]
   for (let i=0; i<situa1.length; i++) {
     situa1[i] = situa1[i].replace("X", name);
   }
 
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.SITUA1] = situa1;
+  //update choices
+  choices[STATUS_STORY_ENUM.SITUA1] = situa1;
 
   // change the choices according the name
-  situa3 = choicesUser[STATUS_STORY_ENUM.SITUA3]
+  situa3 = choices[STATUS_STORY_ENUM.SITUA3]
   for (let i=0; i<situa3.length; i++) {
     situa3[i] = situa3[i].replace("X", name);
   } // if the replace not found return the original sentence
 
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.SITUA3] = situa3;
+  //update choices
+  choices[STATUS_STORY_ENUM.SITUA3] = situa3;
 };
 
 
 
-
+//@param situa1 {int}: [0, 1, 2] correspond if the user selected ["X vuole giocare", "X ha fame", "X ha sete"]
 
 /**
 * set situa1 chosen
-* @param situa1 {int}: [0, 1, 2] correspond if the user selected ["X vuole giocare", "X ha fame", "X ha sete"]
+* @param situa1 {string}: correspond if the user selected ["X vuole giocare", "X ha fame", "X ha sete"]
 */
 function setSitua1(situa1){
+  situa = choices[STATUS_STORY_ENUM.SITUA1]
+  userChoice[STATUS_STORY_ENUM.SITUA1] = situa1
   switch(situa1){
-    case 0: {
-        choicesUser[STATUS_STORY_ENUM.OGGETTO] = GIOCO_LIST;
+    case situa[0]: {
+        choices[STATUS_STORY_ENUM.OGGETTO] = GIOCO_LIST;
         narrationPC[STATUS_STORY_ENUM.OGGETTO] = ["Con che cosa vuole giocare?"];
       }
       break;
-    case 1: {
-      choicesUser[STATUS_STORY_ENUM.OGGETTO] = CIBO_LIST;
+    case situa[1]: {
+      choices[STATUS_STORY_ENUM.OGGETTO] = CIBO_LIST;
       narrationPC[STATUS_STORY_ENUM.OGGETTO] = ["Cosa vuole mangiare?"];
       }
       break;
-    case 2: {
-      choicesUser[STATUS_STORY_ENUM.OGGETTO] = SETE_LIST;
+    case situa[2]: {
+      choices[STATUS_STORY_ENUM.OGGETTO] = SETE_LIST;
       narrationPC[STATUS_STORY_ENUM.OGGETTO] = ["Cosa vuole bere?"];
       }
       break;
@@ -180,25 +186,27 @@ function setSitua1(situa1){
 */
 function setObject(obj){
   objectStory = obj;
+  userChoice[STATUS_STORY_ENUM.OGGETTO] = objectStory;
 
   // change the choices according the name
-  situa3 = choicesUser[STATUS_STORY_ENUM.SITUA3]
+  situa3 = choices[STATUS_STORY_ENUM.SITUA3]
   for (let i=0; i<situa3.length; i++) {
     situa3[i] = situa3[i].replace("Y", obj);
   } // if the replace not found return the original sentence
 
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.SITUA3] = situa3;
+  //update choices
+  choices[STATUS_STORY_ENUM.SITUA3] = situa3;
 };
 
 
 /**
 * set situa2 chosen
-* @param situa2 {int}: [0, 1, 2] correspond if the user selected ["Uccellino", "Apetta", "Granchietto", "Anatroccolo"]
+* @param situa2 {string}: correspond if the user selected ["Uccellino", "Apetta", "Granchietto", "Anatroccolo"]
 */
-function setSitua2(situa2){
-  character = choicesUser[STATUS_STORY_ENUM.SITUA2][situa2]
+function setSitua2(character){
+  // character = choices[STATUS_STORY_ENUM.SITUA2][situa2]
   character = character.toLowerCase();
+  userChoice[STATUS_STORY_ENUM.SITUA2] = character;
 
   // change the narrations according the name
   narr_situa3 = narrationPC[STATUS_STORY_ENUM.SITUA3]
@@ -214,11 +222,11 @@ function setSitua2(situa2){
 
 /**
 * set situa2 chosen
-* @param situa3 {int}: [0, 1, 2] correspond if the user selected ["Rubare", "Condividere", "Fare amicizia"]
+* @param situa3 {string}: correspond if the user selected ["Rubare", "Condividere", "Fare amicizia"]
 */
 function setSitua3(situa3){
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.SITUA3] = situa3;
+  //update choices
+  userChoice[STATUS_STORY_ENUM.SITUA3] = situa3;
 }
 
 
@@ -227,8 +235,8 @@ function setSitua3(situa3){
 * @param finale {audio object}: children registration of the story end
 */
 function setFinale(finale){
-  //update choicesUser
-  choicesUser[STATUS_STORY_ENUM.FINALE] = finale;
+  //update choices
+  choices[STATUS_STORY_ENUM.FINALE] = finale;
 }
 
 
@@ -284,5 +292,5 @@ function getNarration(){
 * @return {array} array of choices
 */
 function getChoices(){
-  return choicesUser[currentStatus]
+  return choices[currentStatus]
 };
