@@ -29,13 +29,11 @@ const sketch = function(sketch) {
     //Reset the canvas (the following function is called always on the press of clear button)
     restart(0); //0: called at startup
 
-    //Load the model with a certain index
-    initialModelIndex = 1;  //0: Cat  1:Sheep
-    loadModel(initialModelIndex);
-
     sketch.stroke(currentColor);
 
     setListeners();
+
+    openPopup();
   };
 
 
@@ -54,6 +52,7 @@ const sketch = function(sketch) {
     // If we finished the previous drawing, start a new one.
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
+      infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
       modelIsActive = false;
     } else {
       // Only draw on the paper if the pen is still touching the paper.
@@ -72,7 +71,7 @@ const sketch = function(sketch) {
 
   sketch.mousePressed = function () { //Human drawing
     if (!splashIsOpen && !popupIsOpen && sketch.isInBounds()) {
-      infoMessage.innerHTML = 'Drawing in progress...';
+      console.log('Drawing in progress...');
 
       x = startX = sketch.mouseX;
       y = startY = sketch.mouseY;

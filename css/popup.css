@@ -43,6 +43,11 @@
   font-weight: bold;
 }*/
 
+#btnStartRecording,
+#btnStopRecording {
+  display: none;
+}
+
 #textField {
   display: none;
   margin:auto;
