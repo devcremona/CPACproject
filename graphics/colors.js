@@ -22,7 +22,8 @@ const COLORS = [
 //Listener for each button associated to the colors
 function changeColor(event){
   const btn = event.target;
-  sketchContext.updateCurrentColor(btn.dataset.index);
+  sketchContext.updateCurrentColor(index=btn.dataset.index);
   document.querySelector('.active').classList.remove('active');
   btn.classList.add('active');
+  colors.classList.remove('visible');
 }

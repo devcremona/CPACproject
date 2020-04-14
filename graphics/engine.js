@@ -155,8 +155,13 @@ const sketch = function(sketch) {
 
 
 
-  sketch.updateCurrentColor = function(index) {
-    currentColor = COLORS[index].hex;
+  sketch.updateCurrentColor = function(index=-1, hex='#000000') {
+    if(index>0){
+      currentColor = COLORS[index].hex;
+    } else {
+      currentColor = hex;
+    }
+    sketch.stroke(currentColor);
   }
 
 };

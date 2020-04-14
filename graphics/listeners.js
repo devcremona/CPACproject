@@ -103,7 +103,16 @@ function setListeners() {
   });
 
   colorPalette.addEventListener('click', function() {
-    console.log('Colors: work in progress...');
+    colors.classList.toggle('visible');
+  });
+
+  btnCustomColor.addEventListener('click', function() {
+    document.getElementById('customColor').click();
+  });
+
+  customColor.addEventListener('input', function(event) {
+    sketchContext.updateCurrentColor(index=-1,hex=event.target.value.toUpperCase());
+    colors.classList.toggle('visible');
   });
 
 
