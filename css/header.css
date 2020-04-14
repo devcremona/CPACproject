@@ -3,7 +3,7 @@
 
 #btnHelp{
   position: fixed;
-  right: 15px;
-  top: 10px;
+  right: 0.5vw;
+  top: var(--bottom-margin);
   z-index: 2;
 }
