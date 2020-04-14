@@ -294,3 +294,11 @@ function getNarration(){
 function getChoices(){
   return choices[currentStatus]
 };
+
+/**
+* return the string chosen by the user at the specific status of the story
+* @return {string} the user choice related to the specified status
+*/
+function getUserChoice(status){
+  return userChoice[status]
+};
