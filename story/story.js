@@ -20,7 +20,7 @@ const STATUS_STORY_ENUM = {
 
 // choices for the users
 var choicesUser = {
-  [STATUS_STORY_ENUM.DOVE]: ["Lago", "Città", "Bosco", "Prato"],
+  [STATUS_STORY_ENUM.DOVE]: ["Lago", "Città", "Bosco", "Collina", "Fattoria"],
   [STATUS_STORY_ENUM.METEO]: ["Di sole", "Nuvolosa", "Di pioggia", "Era notte"],
   [STATUS_STORY_ENUM.PROTAGONISTA]: ["Cane", "Gatto"],
   [STATUS_STORY_ENUM.NOME]: [],
