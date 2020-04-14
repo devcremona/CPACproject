@@ -66,7 +66,7 @@ function loadModel(index) {
   //model = new ms.SketchRNN(`../ML/models/sheep.gen.json`);
 
   //Actually initialize the model, and set a callback to run at the end of the initialization
-  model.initialize().then(() => {
+  model.initialize().then(function() {
     modelLoaded = true;
     app.classList.remove('loading');
     loadingGif.style.display = 'none'; //Hide loading gif

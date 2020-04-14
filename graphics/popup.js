@@ -29,37 +29,43 @@ function openPopup() {
 
   switch(getCurrentStatus()){
     case STATUS_STORY_ENUM.DOVE:
-      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+      choicesDivs.forEach(
+        function(choiceDiv,index){
+          choiceDiv.addEventListener('click', function callback() {
+            //Set active just the clicked choice
+            choicesDivs.forEach(function(element){ element.classList.remove('active') });
+            choiceDiv.classList.add('active');
 
-        //Set active just the clicked choice
-        choicesDivs.forEach(element => element.classList.remove('active'));
-        event.toElement.classList.add('active');
-
-        changeBackground(event);
-      }
-      ));
+            changeBackground(choiceDiv);
+          });
+        }
+      );
       break;
     case STATUS_STORY_ENUM.METEO:
-      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+      choicesDivs.forEach(
+        function(choiceDiv,index){
+          choiceDiv.addEventListener('click', function callback() {
+            //Set active just the clicked choice
+            choicesDivs.forEach(function(element){ element.classList.remove('active') });
+            choiceDiv.classList.add('active');
 
-        //Set active just the clicked choice
-        choicesDivs.forEach(element => element.classList.remove('active'));
-        event.toElement.classList.add('active');
-
-        changeBackground(event);
-      }
-      ));
+            changeBackground(choiceDiv);
+          });
+        }
+      );
       break;
     case STATUS_STORY_ENUM.PROTAGONISTA:
-      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+      choicesDivs.forEach(
+        function(choiceDiv,index){
+          choiceDiv.addEventListener('click', function callback() {
+            //Set active just the clicked choice
+            choicesDivs.forEach(function(element){ element.classList.remove('active') });
+            choiceDiv.classList.add('active');
 
-        //Set active just the clicked choice
-        choicesDivs.forEach(element => element.classList.remove('active'));
-        event.toElement.classList.add('active');
-
-        //Set the user choice
-        setUserChoice(getCurrentStatus(),event.toElement.innerHTML);
-      }));
+            setUserChoice(getCurrentStatus(),choiceDiv.innerHTML);
+          });
+        }
+      );
       break;
     case STATUS_STORY_ENUM.NOME:
       choicesDiv.style.display = 'none';
@@ -69,16 +75,19 @@ function openPopup() {
       characterNameField.style.display = 'none';
       choicesDiv.style.display = 'inline-flex';
 
-      choicesDivs.forEach(element => element.addEventListener('click', (event)=>{
+      choicesDivs.forEach(
+        function(choiceDiv,index){
+          choiceDiv.addEventListener('click', function callback() {
 
-        //Set active just the clicked choice
-        choicesDivs.forEach(element => element.classList.remove('active'));
-        event.toElement.classList.add('active');
+            //Set active just the clicked choice
+            choicesDivs.forEach(function(element){ element.classList.remove('active') });
+            choiceDiv.classList.add('active');
 
-        //Set the user choice
-        setUserChoice(getCurrentStatus(),choices.indexOf(event.toElement.innerHTML));
-      }));
-
+            //Set the user choice
+            setUserChoice(getCurrentStatus(),choices.indexOf(choiceDiv.innerHTML));
+          });
+        }
+      );
       break;
     case STATUS_STORY_ENUM.FINALE:
       //
@@ -89,8 +98,8 @@ function openPopup() {
 }
 
 
-function changeBackground(event) {
-    switch(choices.indexOf(event.toElement.innerHTML)) {
+function changeBackground(choiceDiv) {
+    switch(choices.indexOf(choiceDiv.innerHTML)) {
       case 0:
         setUserChoice(getCurrentStatus(), choices[0]);
         sketchContainer.style.backgroundImage = 'url("https://steemitimages.com/0x0/https://res.cloudinary.com/hpiynhbhq/image/upload/v1518361364/uz0lt1d2yjdknpdenelq.jpg")';

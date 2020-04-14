@@ -2,13 +2,13 @@ function setListeners() {
 
   //POPUP
   //==============================================================================
-  btnConfirmPopup.addEventListener('click', () => { // When the user clicks on x, close the popup
+  btnConfirmPopup.addEventListener('click', function() { // When the user clicks on x, close the popup
     switch (getCurrentStatus()) {
       case STATUS_STORY_ENUM.DOVE:
-        choicesDivs.forEach(element => element.removeEventListener('click', changeBackground));
+        choicesDivs.forEach(function(element) { element.removeEventListener('click', changeBackground) });
         break;
       case STATUS_STORY_ENUM.METEO:
-          choicesDivs.forEach(element => element.removeEventListener('click', changeBackground));
+          choicesDivs.forEach(function (element) { element.removeEventListener('click', changeBackground) });
         break;
       case STATUS_STORY_ENUM.PROTAGONISTA:
         loadModel(choices.indexOf(getChoices()));
@@ -29,7 +29,7 @@ function setListeners() {
 
   //NAVIGATION
   //==============================================================================
-  btnClear.addEventListener('click', () => {
+  btnClear.addEventListener('click', function() {
     restart(1); //1: called after cleck event
 
     eraserActive = false;
@@ -44,10 +44,10 @@ function setListeners() {
     //Update pixels state
     updatePixelsState();
   });
-  btnMagic.addEventListener('click', () => {
+  btnMagic.addEventListener('click', function() {
     doMagic();
   });
-  btnDone.addEventListener('click', ()=> {
+  btnDone.addEventListener('click', function() {
     setNextStatus();
     openPopup();
   });
@@ -55,18 +55,18 @@ function setListeners() {
 
   //DRAWING
   //==============================================================================
-  btnEraser.addEventListener('click', () => {
+  btnEraser.addEventListener('click', function() {
     eraserActive = true;
 
     btnPencil.classList.remove('active');
     btnEraser.classList.add('active');
 
     sketchContext.noFill();
-    sketchContext.stroke('red');
+    sketchContext.stroke(eraserStrokeColor);
     sketchContext.strokeWeight(eraserStrokeWeight);
   });
 
-  btnPencil.addEventListener('click', () => {
+  btnPencil.addEventListener('click', function() {
     eraserActive = false;
 
     btnPencil.classList.add('active');
@@ -77,19 +77,19 @@ function setListeners() {
     sketchContext.strokeWeight(currentStrokeWeight);
   });
 
-  colorPalette.addEventListener('click', () => {
+  colorPalette.addEventListener('click', function() {
     infoMessage.innerHTML = 'Colors: work in progress...';
   });
 
 
   //SPLASH
   //==============================================================================
-  btnHelp.addEventListener('click', () => { //Go to the spash screen
+  btnHelp.addEventListener('click', function() { //Go to the spash screen
     splash.classList.remove('hidden');
     splashIsOpen = true;
   });
 
-  btnGo.addEventListener('click', () => { //From splash to the sketch
+  btnGo.addEventListener('click', function() { //From splash to the sketch
     splashIsOpen = false;
     splash.classList.add('hidden');
   });
