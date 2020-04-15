@@ -26,4 +26,16 @@ function changeColor(event){
   document.querySelector('.active').classList.remove('active');
   btn.classList.add('active');
   colors.classList.remove('visible');
+  graphicToolsOpen = false;
+
+  //Reactivate pencil
+  eraserActive = false;
+
+  btnPencil.classList.add('active');
+  btnEraser.classList.remove('active');
+  colorPalette.classList.remove('active');
+
+  sketchContext.fill(currentColor);
+  sketchContext.stroke(currentColor);
+  sketchContext.strokeWeight(currentStrokeWeight);
 }

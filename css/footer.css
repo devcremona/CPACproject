@@ -42,6 +42,7 @@
   height: 0px;
   opacity: 0;
   z-index: 3;
+  /*font-size: 1.7vw;*/
 }
 #colors button {
   width: 2vw;
@@ -60,6 +61,12 @@
 #colors.visible {
   height: 40vh;
   opacity: 1;
+}
+
+#colorPalette.active{
+  border-radius: 7px;
+  border-color: black;
+  border-bottom-style: outset;
 }
 
 
@@ -92,8 +99,55 @@
   border-bottom-style: outset;
 }
 
+#eraser{
+  position: absolute;
+  bottom: 0px;
+  right: 38px;
+  width: 38px;
+  display: block;
+}
+
+#eraserRadiusSlider{
+  transform: rotate(270deg) translateX(-200%);
+  width: 105px;
+  height: 73px;
+  margin-bottom: 36px;
+  margin-left: -30px;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+#eraserRadiusSlider.visible{
+  transform: rotate(270deg) translateX(0);
+  opacity: 1;
+}
+
+
+
 #btnPencil.active{
   border-radius: 7px;
   border-color: black;
   border-bottom-style: outset;
+}
+
+#pencil{
+  position: absolute;
+  bottom: 0px;
+  width: 38px;
+  display: block;
+}
+
+#pencilRadiusSlider{
+  transform: rotate(270deg) translateX(-200%);
+  width: 105px;
+  height: 73px;
+  margin-bottom: 36px;
+  margin-left: -30px;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+#pencilRadiusSlider.visible{
+  transform: rotate(270deg) translateX(0);
+  opacity: 1;
 }
