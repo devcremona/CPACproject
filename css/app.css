@@ -14,3 +14,7 @@
 #loadingGif {
   filter: invert(90%);
 }
+
+.inactive {
+  filter: invert(60%);
+}

@@ -1,30 +1,53 @@
+function confirmPopupCallback() { // When the user clicks on x, close the popup
+  switch (getCurrentStatus()) {
+    case STATUS_STORY_ENUM.DOVE:
+    case STATUS_STORY_ENUM.METEO:
+    case STATUS_STORY_ENUM.SITUA1:
+      //Auto re-call popup
+      setNextStatus();
+      setTimeout(openPopup,500);
+      break;
+
+    case STATUS_STORY_ENUM.PROTAGONISTA:
+      loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
+      break;
+
+    case STATUS_STORY_ENUM.NOME:
+      setUserChoice(getCurrentStatus(), characterNameField.value);
+    default:
+      infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
+      break;
+
+    case STATUS_STORY_ENUM.SITUA3: //Handler of the last situation "animation"
+      //Handle animation
+      //Call the popup at the end of the animation
+      infoMessage.innerHTML = 'animation: work in progress...';
+      break;
+
+    case STATUS_STORY_ENUM.FINALE:
+      choicesDiv.innerHTML = '';
+      //Auto re-call popup
+      setNextStatus();
+      setTimeout(openPopup,500);
+      break;
+
+    case STATUS_STORY_ENUM.RECAP:
+      infoMessage.innerHTML = getUserChoice(getCurrentStatus())+'!';
+  }
+
+  //Close popup
+  popup.classList.add('hidden');
+  popupContent.classList.add('hidden');
+  popupIsOpen = false;
+
+}
+
+
 function setListeners() {
 
   //POPUP
   //==============================================================================
-  btnConfirmPopup.addEventListener('click', function() { // When the user clicks on x, close the popup
-    switch (getCurrentStatus()) {
-      case STATUS_STORY_ENUM.DOVE:
-        choicesDivs.forEach(function(element) { element.removeEventListener('click', changeBackground) });
-        break;
-      case STATUS_STORY_ENUM.METEO:
-          choicesDivs.forEach(function (element) { element.removeEventListener('click', changeBackground) });
-        break;
-      case STATUS_STORY_ENUM.PROTAGONISTA:
-        loadModel(choices.indexOf(getChoices()));
-        break;
-      case STATUS_STORY_ENUM.NOME:
-        setUserChoice(getCurrentStatus(), characterNameField.value);
-        break;
-      default:
-        break;
-    }
-
-    popup.classList.add('hidden');
-    popupContent.classList.add('hidden');
-    popupIsOpen = false;
-    infoMessage.innerHTML = 'popup closed!';
-  });
+  btnConfirmPopup.addEventListener('click',confirmPopupCallback);
 
 
   //NAVIGATION
@@ -48,7 +71,9 @@ function setListeners() {
     doMagic();
   });
   btnDone.addEventListener('click', function() {
-    setNextStatus();
+    if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
+      setNextStatus();
+    }
     openPopup();
   });
 
@@ -78,7 +103,16 @@ function setListeners() {
   });
 
   colorPalette.addEventListener('click', function() {
-    infoMessage.innerHTML = 'Colors: work in progress...';
+    colors.classList.toggle('visible');
+  });
+
+  btnCustomColor.addEventListener('click', function() {
+    document.getElementById('customColor').click();
+  });
+
+  customColor.addEventListener('input', function(event) {
+    sketchContext.updateCurrentColor(index=-1,hex=event.target.value.toUpperCase());
+    colors.classList.toggle('visible');
   });
 
 
