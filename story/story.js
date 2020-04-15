@@ -21,7 +21,7 @@ const STATUS_STORY_ENUM = {
 // choices for the users
 var choices = {
   [STATUS_STORY_ENUM.DOVE]: ["Lago", "Città", "Bosco", "Collina", "Fattoria"],
-  [STATUS_STORY_ENUM.METEO]: ["Di sole", "Nuvolosa", "Di pioggia", "Era notte"],
+  [STATUS_STORY_ENUM.METEO]: ["Di sole", "Nuvolosa", "Di pioggia", "Buia"],
   [STATUS_STORY_ENUM.PROTAGONISTA]: ["Cane", "Gatto"],
   [STATUS_STORY_ENUM.NOME]: [],
   [STATUS_STORY_ENUM.SITUA1]: ["X vuole giocare", "X ha fame", "X ha sete"],
@@ -33,26 +33,40 @@ var choices = {
 };
 
 // list of possibilities
-const GIOCO_LIST = ["Palla", "Acquilone", "Strumento musicale"];
-const CIBO_LIST = ["Hamburger", "Torta", "Pizza", "Mela"];
-const SETE_LIST = ["Bottiglia",  "Succo", "Ciotola", "Fontanella"];
+const GIOCO_LIST = ["Pallone", "Acquilone", "Strumento musicale"];
+const CIBO_LIST = ["Bistecca", "Torta", "Pizza", "Mela"];
+const SETE_LIST = ["Bottiglia", "Ciotola", "Fontanella"];
 
 // sentences for the narration to visualize to the screen
 // narrationPC
 var narrationPC = {
-  [STATUS_STORY_ENUM.DOVE]: ["C’era una volta… ma dove?"],
-  [STATUS_STORY_ENUM.METEO]: ["Ed era una giornata…"],
+  [STATUS_STORY_ENUM.DOVE]: ["C'era una volta... ma dove?"],
+  [STATUS_STORY_ENUM.METEO]: ["Ed era una giornata..."],
   [STATUS_STORY_ENUM.PROTAGONISTA]: ["Ma chi è il protagonista della storia?"],
   [STATUS_STORY_ENUM.NOME]: ["Come si chiama?"],
   [STATUS_STORY_ENUM.SITUA1]: ["Adesso cosa succede?"],
   [STATUS_STORY_ENUM.OGGETTO]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
   [STATUS_STORY_ENUM.SITUA2]: ["Ma ad un certo punto… Arriva un"],
-  [STATUS_STORY_ENUM.SITUA3]: ["Ma personaggio2 vorrebbe…"],
+  [STATUS_STORY_ENUM.SITUA3]: ["Ma personaggio2 vorrebbe..."],
   [STATUS_STORY_ENUM.FINALE]: ["Ora raccontami tu come finisce questa storia!"],
   [STATUS_STORY_ENUM.RECAP]: ["Bravissimo", "Fine", "Che bella storia", "Grazie"]
 };
 
 var userChoice = [];
+
+// sentences for the narration to reproduce
+var narrationVoice = {
+  [STATUS_STORY_ENUM.DOVE]: "C'era una volta, in un bellissimo ...",
+  [STATUS_STORY_ENUM.METEO]: "durante una giornata ...",
+  [STATUS_STORY_ENUM.PROTAGONISTA]: "un simpatico ...",
+  [STATUS_STORY_ENUM.NOME]: "di nome ...",
+  [STATUS_STORY_ENUM.SITUA1]: "X ...",
+  [STATUS_STORY_ENUM.OGGETTO]: "con ...",
+  [STATUS_STORY_ENUM.SITUA2]: "Ad un certo punto arriva un piccolo ...",
+  [STATUS_STORY_ENUM.SITUA3]: "ma personaggio2 vorrebbe tanto ...",
+  [STATUS_STORY_ENUM.FINALE]: "All'improvviso però ...",
+  [STATUS_STORY_ENUM.RECAP]: ""
+};
 
 // ============================================================================
 // VARIABLES
@@ -65,6 +79,7 @@ var objectStory = "Y";
 // ============================================================================
 // SET FUNCTIONS
 // ============================================================================
+
 
 /**
 * set the current story choice of the user
@@ -99,6 +114,13 @@ function setUserChoice(status, object){
 function setPlace(place){
   //update choices
   userChoice[STATUS_STORY_ENUM.DOVE] = place;
+
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.DOVE] = narrationVoice[STATUS_STORY_ENUM.DOVE].replace("...", place.toLowerCase());
+  if (place[place.length-1] != "o"){
+    narrationVoice[STATUS_STORY_ENUM.DOVE] = narrationVoice[STATUS_STORY_ENUM.DOVE].replace("un bellissimo", "una bellissima");
+  }
+  narrationVoice[STATUS_STORY_ENUM.DOVE] += ",";
 }
 
 
@@ -109,6 +131,10 @@ function setPlace(place){
 function setMeteo(meteo){
   //update choices
   userChoice[STATUS_STORY_ENUM.METEO] = meteo;
+
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.METEO] = narrationVoice[STATUS_STORY_ENUM.METEO].replace("...", meteo.toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.METEO] += ",";
 }
 
 /**
@@ -118,6 +144,9 @@ function setMeteo(meteo){
 function setMainCharacter(character){
   //update choices
   userChoice[STATUS_STORY_ENUM.PROTAGONISTA] = character;
+
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.PROTAGONISTA] = narrationVoice[STATUS_STORY_ENUM.PROTAGONISTA].replace("...", character.toLowerCase());
 }
 
 
@@ -147,6 +176,10 @@ function setNameCharacter(name){
 
   //update choices
   choices[STATUS_STORY_ENUM.SITUA3] = situa3;
+
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.NOME] = narrationVoice[STATUS_STORY_ENUM.NOME].replace("...", nameCharacter.toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.NOME] += ".";
 };
 
 
@@ -162,16 +195,25 @@ function setSitua1(situa1){
   userChoice[STATUS_STORY_ENUM.SITUA1] = situa1
   switch(situa1){
     case situa[0]: {
+        // add to the narrations
+        narrationVoice[STATUS_STORY_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NOME] + " ha tanta voglia di giocare con un bellissimo "
+
         choices[STATUS_STORY_ENUM.OGGETTO] = GIOCO_LIST;
         narrationPC[STATUS_STORY_ENUM.OGGETTO] = ["Con che cosa vuole giocare?"];
       }
       break;
     case situa[1]: {
+      // add to the narrations
+      narrationVoice[STATUS_STORY_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NOME] + " non ci vede più dalla fame e vorrebbe mangiare una grandissima "
+
       choices[STATUS_STORY_ENUM.OGGETTO] = CIBO_LIST;
       narrationPC[STATUS_STORY_ENUM.OGGETTO] = ["Cosa vuole mangiare?"];
       }
       break;
     case situa[2]: {
+      // add to the narrations
+      narrationVoice[STATUS_STORY_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NOME] + " ha una sete incredibile! E vorrebbe bere da una freschissima "
+
       choices[STATUS_STORY_ENUM.OGGETTO] = SETE_LIST;
       narrationPC[STATUS_STORY_ENUM.OGGETTO] = ["Cosa vuole bere?"];
       }
@@ -187,6 +229,10 @@ function setSitua1(situa1){
 function setObject(obj){
   objectStory = obj;
   userChoice[STATUS_STORY_ENUM.OGGETTO] = objectStory;
+
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.OGGETTO] = objectStory.toLowerCase();
+  narrationVoice[STATUS_STORY_ENUM.OGGETTO] += ".";
 
   // change the choices according the name
   situa3 = choices[STATUS_STORY_ENUM.SITUA3]
@@ -208,11 +254,19 @@ function setSitua2(character){
   character = character.toLowerCase();
   userChoice[STATUS_STORY_ENUM.SITUA2] = character;
 
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2].replace("...", character.toLowerCase());
+  if (character[character.length-1] != "o"){
+    narrationVoice[STATUS_STORY_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2].replace("un piccolo", "una piccola");
+  }
+  narrationVoice[STATUS_STORY_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2] += ",";
+
   // change the narrations according the name
   narr_situa3 = narrationPC[STATUS_STORY_ENUM.SITUA3]
   for (let i=0; i<narr_situa3.length; i++) {
     narr_situa3[i] = narr_situa3[i].replace("personaggio2", character);
   } // if the replace not found return the original sentence
+  narrationVoice[STATUS_STORY_ENUM.SITUA3] = narrationVoice[STATUS_STORY_ENUM.SITUA3].replace("personaggio2", character.toLowerCase());
 
   //update narrations
   narrationPC[STATUS_STORY_ENUM.SITUA3] = narr_situa3;
@@ -227,6 +281,10 @@ function setSitua2(character){
 function setSitua3(situa3){
   //update choices
   userChoice[STATUS_STORY_ENUM.SITUA3] = situa3;
+
+  // add to the narrations
+  narrationVoice[STATUS_STORY_ENUM.SITUA3] = narrationVoice[STATUS_STORY_ENUM.SITUA3].replace("...", situa3.toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.SITUA3] += ".";
 }
 
 
@@ -302,3 +360,12 @@ function getChoices(){
 function getUserChoice(status){
   return userChoice[status]
 };
+
+
+
+// first usage to test the narration... (based on status ??)
+/**
+for (i = 0; i < Object.keys(narrationVoice).length; i++) {
+  speak(narrationVoice[i])
+}
+*/
