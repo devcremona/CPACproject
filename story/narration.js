@@ -97,3 +97,11 @@ function speak(text){
   // Queue this utterance.
 	window.speechSynthesis.speak(msg);
 }
+
+/**
+* stop all active speach and Queue
+*/
+function speakStop(){
+  // removes all utterances from the utterance queue.
+  window.speechSynthesis.cancel();
+}
