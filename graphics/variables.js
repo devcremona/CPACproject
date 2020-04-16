@@ -44,3 +44,6 @@ let eraserStrokeColor = 'black';
 
 //Popup variables
 popupIsOpen = false;
+
+//Graphic tools variables
+graphicToolsOpen = false;

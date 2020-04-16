@@ -115,8 +115,14 @@
                 <div class="iconify" id="btnCustomColor" data-icon="gridicons:customize"></div>
                 <input type="color" id="customColor" value="#636363" style="display:none">
               </div>
-              <div class="iconify active" id="btnPencil" data-icon="bx:bxs-pencil"></div>
-              <div class="iconify" id="btnEraser" data-icon="jam:rubber"></div>
+              <div id="pencil">
+                <input type="range" id="pencilRadiusSlider" value='3' min='1' max='30'>
+                <div class="iconify active" id="btnPencil" data-icon="bx:bxs-pencil"></div>
+              </div>
+              <div id="eraser">
+                <input type="range" id="eraserRadiusSlider" value='20' min='5' max='60'>
+                <div class="iconify" id="btnEraser" data-icon="jam:rubber"></div>
+              </div>
               <div class="iconify" id="colorPalette" data-icon="ion:color-palette"></div>
             </div>
           </div>

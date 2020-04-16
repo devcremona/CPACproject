@@ -69,8 +69,15 @@ const sketch = function(sketch) {
 
 
 
-  sketch.mousePressed = function () { //Human drawing
-    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds()) {
+  sketch.mousePressed = function (e) { //Human drawing
+    if (!document.getElementById('pencilRadiusSlider').contains(e.target) && !document.getElementById('eraserRadiusSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('colorPalette').contains(e.target)){
+      pencilRadiusSlider.classList.remove('visible');
+      eraserRadiusSlider.classList.remove('visible');
+      colors.classList.remove('visible');
+      graphicToolsOpen = false;
+    }
+
+    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen) {
       console.log('Drawing in progress...');
 
       x = startX = sketch.mouseX;
@@ -87,7 +94,7 @@ const sketch = function(sketch) {
 
 
   sketch.mouseDragged = function () {
-    if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds() && !eraserActive) {
+    if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds() && !eraserActive && !graphicToolsOpen) {
       const dx0 = sketch.mouseX - x;
       const dy0 = sketch.mouseY - y;
       if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
@@ -104,7 +111,7 @@ const sketch = function(sketch) {
       }
       previousUserPen = userPen;
     }
-    else if(!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && eraserActive) {
+    else if(!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && eraserActive && !graphicToolsOpen) {
       erase(); //Erase the pixels (set to transparent)
       sketch.ellipse(sketch.mouseX, sketch.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
     }
@@ -116,7 +123,7 @@ const sketch = function(sketch) {
 
   sketch.mouseReleased = function () {
     updatePixelsState(); //Refresh the current pixels, actually save the last drawings
-    if (!splashIsOpen && !popupIsOpen) {
+    if (!splashIsOpen && !popupIsOpen && !graphicToolsOpen) {
 
       if(sketch.isInBounds()){ //Need to be moved to click of Done button
         userPen = 0;  // Up!
@@ -131,7 +138,7 @@ const sketch = function(sketch) {
         previousUserPen = userPen;
       }
 
-      if(eraserActive){
+      if(eraserActive && !graphicToolsOpen){
         erase();
       }
     }
