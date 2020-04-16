@@ -303,24 +303,24 @@ function setFinale(finale){
 /**
 * set the next status to the story
 * @param status {enum}: the current status
-* @return {enum} the new current status (the next one)
+* @return {bool} return True if the story has to go automatic ahead
 */
 function setNextStatus(){
-  var status
+  var goAhead = false
   switch(currentStatus){
-    case STATUS_STORY_ENUM.DOVE: status=STATUS_STORY_ENUM.METEO; break;
-    case STATUS_STORY_ENUM.METEO: status=STATUS_STORY_ENUM.PROTAGONISTA; break;
-    case STATUS_STORY_ENUM.PROTAGONISTA: status=STATUS_STORY_ENUM.NOME; break;
-    case STATUS_STORY_ENUM.NOME: status=STATUS_STORY_ENUM.SITUA1; break;
-    case STATUS_STORY_ENUM.SITUA1: status=STATUS_STORY_ENUM.OGGETTO; break;
-    case STATUS_STORY_ENUM.OGGETTO: status=STATUS_STORY_ENUM.SITUA2; break;
-    case STATUS_STORY_ENUM.SITUA2: status=STATUS_STORY_ENUM.SITUA3; break;
-    case STATUS_STORY_ENUM.SITUA3: status=STATUS_STORY_ENUM.FINALE; break;
-    case STATUS_STORY_ENUM.FINALE: status=STATUS_STORY_ENUM.RECAP; break;
-    default: status=""; break;
+    case STATUS_STORY_ENUM.DOVE: { currentStatus=STATUS_STORY_ENUM.METEO; goAhead = true } break;
+    case STATUS_STORY_ENUM.METEO: { currentStatus=STATUS_STORY_ENUM.PROTAGONISTA; goAhead = true }; break;
+    case STATUS_STORY_ENUM.PROTAGONISTA: { currentStatus=STATUS_STORY_ENUM.NOME; goAhead = false }; break;
+    case STATUS_STORY_ENUM.NOME: { currentStatus=STATUS_STORY_ENUM.SITUA1; goAhead = false }; break;
+    case STATUS_STORY_ENUM.SITUA1: { currentStatus=STATUS_STORY_ENUM.OGGETTO; goAhead = true }; break;
+    case STATUS_STORY_ENUM.OGGETTO: { currentStatus=STATUS_STORY_ENUM.SITUA2; goAhead = false }; break;
+    case STATUS_STORY_ENUM.SITUA2: { currentStatus=STATUS_STORY_ENUM.SITUA3; goAhead = false }; break;
+    case STATUS_STORY_ENUM.SITUA3: { currentStatus=STATUS_STORY_ENUM.FINALE; goAhead = false }; break;
+    case STATUS_STORY_ENUM.FINALE: { currentStatus=STATUS_STORY_ENUM.RECAP; goAhead = false }; break;
+    default: { currentStatus=""; goAhead = false } break;
   }
-  currentStatus = status
-  return currentStatus
+
+  return  goAhead
 };
 
 // ============================================================================
