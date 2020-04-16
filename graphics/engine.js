@@ -31,8 +31,20 @@ const sketch = function(sketch) {
 
     sketch.stroke(currentColor);
 
-    speak("");
-    setVoice("Google italiano",rate=1.1,volume=1);
+    //Speech language setting
+    setTimeout(function(){
+      //Search the last voice of the current language
+      for(i=0; i<getVoices().length; i++){
+          if(getVoices()[i][1]=='it-IT'){
+              voiceNameITA=getVoices()[i][0];
+          }
+          if(getVoices()[i][1]=='en-US'){
+              voiceNameENG=getVoices()[i][0];
+          }
+      }
+      //Set the voice just found (currently overwritten inside openPopup() and confirm popup listener)
+      setVoice(voiceNameITA,rate=1.1);
+    },1);
 
     setListeners();
 

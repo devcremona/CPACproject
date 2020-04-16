@@ -25,7 +25,7 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
       setUserChoice(getCurrentStatus(), characterNameField.value);
     default:
       infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
-      setVoice("Google US English",rate=1.1);
+      setVoice(voiceNameENG,rate=1.1);
       speak(infoMessage.innerHTML);
       break;
 

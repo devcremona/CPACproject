@@ -11,7 +11,7 @@ function openPopup() {
 
   //Get narration text from story.js and set text
   narrationText.innerHTML = getNarration()[0];
-  setVoice("Google italiano",rate=1.1);
+  setVoice(voiceNameITA,rate=1.1);
   speak(narrationText.innerHTML);
 
   //Get choices list from story.js and populate the list
