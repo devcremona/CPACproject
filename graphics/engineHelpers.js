@@ -1,6 +1,7 @@
 function doMagic() {
 
-  infoMessage.innerHTML = 'Look at the magic! WOOOOOOOOOOAAAHHH';
+  infoMessage.innerHTML = 'Look at the magic! WOW';
+  speak(infoMessage.innerHTML);
 
   sketchContext.clear();
 
