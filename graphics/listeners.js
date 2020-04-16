@@ -1,4 +1,13 @@
 function confirmPopupCallback() { // When the user clicks on x, close the popup
+
+  //Stop synth speech
+  speakStop();
+
+  //Close popup
+  popup.classList.add('hidden');
+  popupContent.classList.add('hidden');
+  popupIsOpen = false;
+
   switch (getCurrentStatus()) {
     case STATUS_STORY_ENUM.DOVE:
     case STATUS_STORY_ENUM.METEO:
@@ -36,12 +45,6 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
     case STATUS_STORY_ENUM.RECAP:
       infoMessage.innerHTML = getUserChoice(getCurrentStatus())+'!';
   }
-
-  //Close popup
-  popup.classList.add('hidden');
-  popupContent.classList.add('hidden');
-  popupIsOpen = false;
-
 }
 
 
@@ -86,16 +89,21 @@ function setListeners() {
 
     //Opens slider
     if(btnPencil.classList.contains('active')){
-      pencilRadiusSlider.classList.toggle('visible');
+      pencilSliderContainer.classList.toggle('visible');
       graphicToolsOpen = !graphicToolsOpen;
+      if(sketchContext.mouseDragged == undefined){
+        sketchContext.mouseDragged = sketchMouseDraggedListener;
+      } else {
+        sketchContext.mouseDragged = undefined;
+      }
     }
 
     eraserActive = false;
 
-    colorPalette.classList.remove('active');
+    btnColors.classList.remove('active');
     colors.classList.remove('visible');
     btnEraser.classList.remove('active');
-    eraserRadiusSlider.classList.remove('visible');
+    eraserSliderContainer.classList.remove('visible');
     btnPencil.classList.add('active');
 
     sketchContext.fill(currentColor);
@@ -104,7 +112,7 @@ function setListeners() {
 
   });
 
-  pencilRadiusSlider.addEventListener('input', function(event){
+  pencilSlider.addEventListener('input', function(event){
     currentStrokeWeight = event.target.value;
     sketchContext.strokeWeight(currentStrokeWeight);
   });
@@ -114,15 +122,20 @@ function setListeners() {
 
     //Opens slider
     if(btnEraser.classList.contains('active')){
-      eraserRadiusSlider.classList.toggle('visible');
+      eraserSliderContainer.classList.toggle('visible');
       graphicToolsOpen = !graphicToolsOpen;
+      if(sketchContext.mouseDragged == undefined){
+        sketchContext.mouseDragged = sketchMouseDraggedListener;
+      } else {
+        sketchContext.mouseDragged = undefined;
+      }
     }
 
     eraserActive = true;
 
     btnPencil.classList.remove('active');
-    pencilRadiusSlider.classList.remove('visible');
-    colorPalette.classList.remove('active');
+    pencilSliderContainer.classList.remove('visible');
+    btnColors.classList.remove('active');
     colors.classList.remove('visible');
     btnEraser.classList.add('active');
 
@@ -131,17 +144,23 @@ function setListeners() {
     sketchContext.strokeWeight(eraserStrokeWeight);
   });
 
-  eraserRadiusSlider.addEventListener('input', function(event){
+  eraserSlider.addEventListener('input', function(event){
     eraserRadius = parseInt(event.target.value);
   });
 
 
-  colorPalette.addEventListener('click', function() {
+  btnColors.addEventListener('click', function() {
     btnPencil.classList.remove('active');
-    pencilRadiusSlider.classList.remove('visible');
+    pencilSliderContainer.classList.remove('visible');
     btnEraser.classList.remove('active');
-    eraserRadiusSlider.classList.remove('visible');
-    colorPalette.classList.add('active');
+    eraserSliderContainer.classList.remove('visible');
+
+    if(btnColors.classList.contains('active')){
+      btnColors.classList.remove('active');
+      btnPencil.classList.add('active');
+    } else {
+      btnColors.classList.add('active');
+    }
 
     colors.classList.toggle('visible');
     graphicToolsOpen = !graphicToolsOpen;
@@ -161,11 +180,17 @@ function setListeners() {
 
     btnPencil.classList.add('active');
     btnEraser.classList.remove('active');
-    colorPalette.classList.remove('active');
+    btnColors.classList.remove('active');
 
     sketchContext.fill(currentColor);
     sketchContext.stroke(currentColor);
     sketchContext.strokeWeight(currentStrokeWeight);
+
+    if(currentColor!='#000000'){
+      btnColors.style.backgroundColor = currentColor;
+    } else {
+      btnColors.style.backgroundColor = 'rgba(0,0,0,0)';
+    }
   });
 
 
