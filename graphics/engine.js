@@ -31,7 +31,12 @@ const sketch = function(sketch) {
 
     sketch.stroke(currentColor);
 
+    speak("");
+    setVoice("Google italiano",rate=1.1,volume=1);
+
     setListeners();
+
+    //loadModel(0);
 
     openPopup();
   };
@@ -53,6 +58,7 @@ const sketch = function(sketch) {
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
       infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
+      speak(infoMessage.innerHTML);
       modelIsActive = false;
     } else {
       // Only draw on the paper if the pen is still touching the paper.

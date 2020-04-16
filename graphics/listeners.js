@@ -16,6 +16,8 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
       setUserChoice(getCurrentStatus(), characterNameField.value);
     default:
       infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
+      setVoice("Google US English",rate=1.1);
+      speak(infoMessage.innerHTML);
       break;
 
     case STATUS_STORY_ENUM.SITUA3: //Handler of the last situation "animation"
@@ -177,5 +179,6 @@ function setListeners() {
   btnGo.addEventListener('click', function() { //From splash to the sketch
     splashIsOpen = false;
     splash.classList.add('hidden');
+    openPopup();
   });
 }
