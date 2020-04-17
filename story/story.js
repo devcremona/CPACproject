@@ -301,7 +301,7 @@ function setFinale(finale){
 /**
 * set the next status to the story
 * @param status {enum}: the current status
-* @return {bool} return True if the story has to go automatic ahead
+* @return return the new current status
 */
 function setNextStatus(){
   switch(currentStatus){
