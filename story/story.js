@@ -298,29 +298,25 @@ function setFinale(finale){
 }
 
 
-
-
 /**
 * set the next status to the story
 * @param status {enum}: the current status
 * @return {bool} return True if the story has to go automatic ahead
 */
 function setNextStatus(){
-  var goAhead = false
   switch(currentStatus){
-    case STATUS_STORY_ENUM.DOVE: { currentStatus=STATUS_STORY_ENUM.METEO; goAhead = true } break;
-    case STATUS_STORY_ENUM.METEO: { currentStatus=STATUS_STORY_ENUM.PROTAGONISTA; goAhead = true }; break;
-    case STATUS_STORY_ENUM.PROTAGONISTA: { currentStatus=STATUS_STORY_ENUM.NOME; goAhead = false }; break;
-    case STATUS_STORY_ENUM.NOME: { currentStatus=STATUS_STORY_ENUM.SITUA1; goAhead = false }; break;
-    case STATUS_STORY_ENUM.SITUA1: { currentStatus=STATUS_STORY_ENUM.OGGETTO; goAhead = true }; break;
-    case STATUS_STORY_ENUM.OGGETTO: { currentStatus=STATUS_STORY_ENUM.SITUA2; goAhead = false }; break;
-    case STATUS_STORY_ENUM.SITUA2: { currentStatus=STATUS_STORY_ENUM.SITUA3; goAhead = false }; break;
-    case STATUS_STORY_ENUM.SITUA3: { currentStatus=STATUS_STORY_ENUM.FINALE; goAhead = false }; break;
-    case STATUS_STORY_ENUM.FINALE: { currentStatus=STATUS_STORY_ENUM.RECAP; goAhead = false }; break;
-    default: { currentStatus=""; goAhead = false } break;
+    case STATUS_STORY_ENUM.DOVE: currentStatus=STATUS_STORY_ENUM.METEO; break;
+    case STATUS_STORY_ENUM.METEO: currentStatus=STATUS_STORY_ENUM.PROTAGONISTA; break;
+    case STATUS_STORY_ENUM.PROTAGONISTA: currentStatus=STATUS_STORY_ENUM.NOME; break;
+    case STATUS_STORY_ENUM.NOME: currentStatus=STATUS_STORY_ENUM.SITUA1; break;
+    case STATUS_STORY_ENUM.SITUA1: currentStatus=STATUS_STORY_ENUM.OGGETTO; break;
+    case STATUS_STORY_ENUM.OGGETTO: currentStatus=STATUS_STORY_ENUM.SITUA2; break;
+    case STATUS_STORY_ENUM.SITUA2: currentStatus=STATUS_STORY_ENUM.SITUA3; break;
+    case STATUS_STORY_ENUM.SITUA3: currentStatus=STATUS_STORY_ENUM.FINALE; break;
+    case STATUS_STORY_ENUM.FINALE: currentStatus=STATUS_STORY_ENUM.RECAP; break;
+    default: currentStatus=""; break;
   }
-
-  return  goAhead
+  return  currentStatus
 };
 
 // ============================================================================
@@ -334,6 +330,29 @@ function setNextStatus(){
 function getCurrentStatus(){
   return currentStatus
 };
+
+
+/**
+* get if the status after the param one has to be automatic
+* @param status {enum}: the status
+* @return {bool} return True if the story has to go automatic ahead from the specified status
+*/
+function isAutomaticStoryAhead(status){
+  var goAhead = false
+  switch(status){
+    case STATUS_STORY_ENUM.DOVE: goAhead = true; break;
+    case STATUS_STORY_ENUM.METEO: goAhead = true; break;
+    case STATUS_STORY_ENUM.PROTAGONISTA: goAhead = false; break;
+    case STATUS_STORY_ENUM.NOME: goAhead = false; break;
+    case STATUS_STORY_ENUM.SITUA1: goAhead = true; break;
+    case STATUS_STORY_ENUM.OGGETTO: goAhead = false; break;
+    case STATUS_STORY_ENUM.SITUA2: goAhead = false; break;
+    case STATUS_STORY_ENUM.SITUA3: goAhead = false; break;
+    case STATUS_STORY_ENUM.FINALE: goAhead = false; break;
+    default: goAhead = false; break;
+  }
+  return  goAhead
+}
 
 /**
 * return the list for the narrations at the current status
