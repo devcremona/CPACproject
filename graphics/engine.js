@@ -31,8 +31,20 @@ const sketch = function(sketch) {
 
     sketch.stroke(currentColor);
 
-    speak("");
-    setVoice("Google italiano",rate=1.1,volume=1);
+    //Speech language setting
+    setTimeout(function(){
+      //Search the last voice of the current language
+      for(i=0; i<getVoices().length; i++){
+          if(getVoices()[i][1]=='it-IT'){
+              voiceNameITA=getVoices()[i][0];
+          }
+          if(getVoices()[i][1]=='en-US'){
+              voiceNameENG=getVoices()[i][0];
+          }
+      }
+      //Set the voice just found (currently overwritten inside openPopup() and confirm popup listener)
+      setVoice(voiceNameITA,rate=1.1);
+    },1);
 
     setListeners();
 
@@ -76,11 +88,12 @@ const sketch = function(sketch) {
 
 
   sketch.mousePressed = function (e) { //Human drawing
-    if (!document.getElementById('pencilRadiusSlider').contains(e.target) && !document.getElementById('eraserRadiusSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('colorPalette').contains(e.target)){
-      pencilRadiusSlider.classList.remove('visible');
-      eraserRadiusSlider.classList.remove('visible');
+    if (!document.getElementById('pencilSlider').contains(e.target) && !document.getElementById('eraserSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('btnColors').contains(e.target)){
+      pencilSliderContainer.classList.remove('visible');
+      eraserSliderContainer.classList.remove('visible');
       colors.classList.remove('visible');
       graphicToolsOpen = false;
+      sketchContext.mouseDragged = sketchMouseDraggedListener;
     }
 
     if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen) {
@@ -99,31 +112,7 @@ const sketch = function(sketch) {
 
 
 
-  sketch.mouseDragged = function () {
-    if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketch.isInBounds() && !eraserActive && !graphicToolsOpen) {
-      const dx0 = sketch.mouseX - x;
-      const dy0 = sketch.mouseY - y;
-      if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
-        dx = dx0;
-        dy = dy0;
-        userPen = 1;
-        if (previousUserPen == 1) {
-          sketch.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
-          lastHumanDrawing.push([x, y, x+dx, y+dy]);
-        }
-        x += dx;
-        y += dy;
-        currentRawLine.push([x, y]);
-      }
-      previousUserPen = userPen;
-    }
-    else if(!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && eraserActive && !graphicToolsOpen) {
-      erase(); //Erase the pixels (set to transparent)
-      sketch.ellipse(sketch.mouseX, sketch.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
-    }
-
-    return false;
-  }
+  sketch.mouseDragged = sketchMouseDraggedListener;
 
 
 
@@ -178,6 +167,34 @@ const sketch = function(sketch) {
   }
 
 };
+
+
+
+function sketchMouseDraggedListener() {
+  if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketchContext.isInBounds() && !eraserActive && !graphicToolsOpen) {
+    const dx0 = sketchContext.mouseX - x;
+    const dy0 = sketchContext.mouseY - y;
+    if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
+      dx = dx0;
+      dy = dy0;
+      userPen = 1;
+      if (previousUserPen == 1) {
+        sketchContext.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
+        lastHumanDrawing.push([x, y, x+dx, y+dy]);
+      }
+      x += dx;
+      y += dy;
+      currentRawLine.push([x, y]);
+    }
+    previousUserPen = userPen;
+  }
+  else if(!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && eraserActive && !graphicToolsOpen) {
+    erase(); //Erase the pixels (set to transparent)
+    sketchContext.ellipse(sketchContext.mouseX, sketchContext.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
+  }
+
+  return false;
+}
 
 
 

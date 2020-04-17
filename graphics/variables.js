@@ -47,3 +47,7 @@ popupIsOpen = false;
 
 //Graphic tools variables
 graphicToolsOpen = false;
+
+//Voice variables
+let voiceNameITA;
+let voiceNameENG;
