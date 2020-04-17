@@ -11,6 +11,7 @@ function openPopup() {
 
   //Get narration text from story.js and set text
   narrationText.innerHTML = getNarration()[0];
+  infoMessage.innerHTML = getNarration()[0];
   setVoice(voiceNameITA,rate=1.1);
   speak(narrationText.innerHTML);
 

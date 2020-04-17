@@ -9,41 +9,33 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   popupIsOpen = false;
 
   switch (getCurrentStatus()) {
-    case STATUS_STORY_ENUM.DOVE:
-    case STATUS_STORY_ENUM.METEO:
-    case STATUS_STORY_ENUM.SITUA1:
-      //Auto re-call popup
-      setNextStatus();
-      setTimeout(openPopup,500);
-      break;
-
     case STATUS_STORY_ENUM.PROTAGONISTA:
       loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
       break;
 
     case STATUS_STORY_ENUM.NOME:
       setUserChoice(getCurrentStatus(), characterNameField.value);
-    default:
-      infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
-      setVoice(voiceNameENG,rate=1.1);
-      speak(infoMessage.innerHTML);
-      break;
 
-    case STATUS_STORY_ENUM.SITUA3: //Handler of the last situation "animation"
-      //Handle animation
-      //Call the popup at the end of the animation
-      infoMessage.innerHTML = 'animation: work in progress...';
+    default:
+      if(isAutomaticStoryAhead(getCurrentStatus())){
+        //Auto re-call popup after set next status
+        setNextStatus();
+        setTimeout(openPopup,500);
+      } else {
+        //loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
+        infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
+        setVoice(voiceNameENG,rate=1.1);
+        speak(infoMessage.innerHTML);
+      }
       break;
 
     case STATUS_STORY_ENUM.FINALE:
-      choicesDiv.innerHTML = '';
-      //Auto re-call popup
-      setNextStatus();
-      setTimeout(openPopup,500);
+      infoMessage.innerHTML = '';
       break;
 
     case STATUS_STORY_ENUM.RECAP:
-      infoMessage.innerHTML = getUserChoice(getCurrentStatus())+'!';
+      infoMessage.innerHTML = 'The End!';
+      break;
   }
 }
 
@@ -73,12 +65,14 @@ function setListeners() {
     updatePixelsState();
   });
   btnMagic.addEventListener('click', function() {
+    speakStop();
     doMagic();
   });
   btnDone.addEventListener('click', function() {
     if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
       setNextStatus();
     }
+    speakStop();
     openPopup();
   });
 
