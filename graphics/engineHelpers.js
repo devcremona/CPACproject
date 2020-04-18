@@ -1,6 +1,8 @@
 function doMagic() {
 
-  infoMessage.innerHTML = 'Look at the magic!';
+  infoMessage.innerHTML = 'Look at the magic! WOW';
+  speakStop();
+  speak(infoMessage.innerHTML);
 
   sketchContext.clear();
 
@@ -21,7 +23,7 @@ function doMagic() {
 function restart(flag) {
 
   if(flag==1){
-    infoMessage.innerHTML = 'everything was perfectly clean!';
+    console.log('everything was perfectly clean!');
   }
 
   sketchContext.background(255, 255, 255, 0);
@@ -68,7 +70,7 @@ function loadModel(index) {
   //model = new ms.SketchRNN('https://storage.googleapis.com/quickdraw-models/sketchRNN/models/sheep.gen.json');
     
   //Actually initialize the model, and set a callback to run at the end of the initialization
-  model.initialize().then(() => {
+  model.initialize().then(function() {
     modelLoaded = true;
     app.classList.remove('loading');
     loadingGif.style.display = 'none'; //Hide loading gif
@@ -76,10 +78,11 @@ function loadModel(index) {
     model.setPixelFactor(5.0);  // Smaller -> larger outputs
 
     //Open the popup for the first time
-    if(getCurrentStatus()==STATUS_STORY_ENUM.DOVE){
+    if(getCurrentStatus()==STATUS_STORY_ENUM.PROTAGONISTA){
       popup.classList.remove('hidden');
       popupContent.classList.remove('hidden');
       popupIsOpen = true;
+      setNextStatus();
       openPopup();
     }
   });

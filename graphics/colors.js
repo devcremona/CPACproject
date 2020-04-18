@@ -22,7 +22,28 @@ const COLORS = [
 //Listener for each button associated to the colors
 function changeColor(event){
   const btn = event.target;
-  sketchContext.updateCurrentColor(btn.dataset.index);
-  document.querySelector('.active').classList.remove('active');
+  sketchContext.updateCurrentColor(index=btn.dataset.index);
+  $( '#colors' ).children().toArray().forEach(function(item) {
+    item.classList.remove('active');
+  });
   btn.classList.add('active');
+  colors.classList.remove('visible');
+  graphicToolsOpen = false;
+
+  //Reactivate pencil
+  eraserActive = false;
+
+  btnPencil.classList.add('active');
+  btnEraser.classList.remove('active');
+  btnColors.classList.remove('active');
+
+  sketchContext.fill(currentColor);
+  sketchContext.stroke(currentColor);
+  sketchContext.strokeWeight(currentStrokeWeight);
+
+  if(currentColor!='#000000'){
+    btnColors.style.backgroundColor = currentColor;
+  } else {
+    btnColors.style.backgroundColor = 'rgba(0,0,0,0)';
+  }
 }

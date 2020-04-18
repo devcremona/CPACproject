@@ -4,7 +4,7 @@
 #popup {
   position: fixed; /* Stay in place */
   z-index: 3; /* Sit on top */
-  padding-top: 180px; /* Location of the box */
+  padding-top: 17vh; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -22,12 +22,12 @@
 
 #popupContent {
   text-align: center;
-  font-size: 50px;
+  font-size: 4vw;
   background-color: rgba(255,255,255,0.8);
   border-radius: 30px;
   margin: auto;
-  padding: 20px;
-  width: 80%;
+  padding: 2vw;
+  width: 72vw;
   transform: translate3d(0, 0, 0);
   transition: 0.5s transform;
 }
@@ -36,11 +36,16 @@
   transition: 0.5s transform;
 }
 
-#btnClosePopup {
+/*#btnClosePopup {
   color: #AAAAAA;
   float: right;
   font-size: 28px;
   font-weight: bold;
+}*/
+
+#btnStartRecording,
+#btnStopRecording {
+  display: none;
 }
 
 #textField {
@@ -50,13 +55,13 @@
 
 #choicesDiv {
   display: inline-flex;
-  font-size: 30px;
-  padding: 40px;
+  font-size: 2vw;
+  padding: 3vw;
 }
 
 .choiceButton {
-  margin: 0px 30px 0px 30px;
-  padding: 10px;
+  margin: 0px 2vw 0px 2vw;
+  padding: 1vw;
   border-radius: 30%;
   border-width:2px;
   border-style:solid;

@@ -40,6 +40,14 @@ let eraserTransparentColor; //Black (0,0,0,..), transparent (..,..,..,0)
 let eraserRadius = 20;
 let eraserStrokeWeight = 1;
 let eraserActive = false;
+let eraserStrokeColor = 'black';
 
 //Popup variables
 popupIsOpen = false;
+
+//Graphic tools variables
+graphicToolsOpen = false;
+
+//Voice variables
+let voiceNameITA;
+let voiceNameENG;

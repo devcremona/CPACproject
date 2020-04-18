@@ -10,7 +10,7 @@
 
 #navigation-tools{
   position: fixed;
-  left: 15px;
+  left: 0.5vw;
   bottom: var(--bottom-margin);
   }
 
@@ -19,31 +19,189 @@
   border-radius: 10px;
   margin: 0 auto; /* Center the DIV horizontally */
   text-align: center;
-  width: 500px;
+  width: 50vw;
   padding: 5px 5px 5px 5px;
 }
 
-#graphic-tools{
+#drawing-tools{
   position: fixed;
-  right: 15px;
+  display: inline-flex;
+  right: 0.5vw;
   bottom: var(--bottom-margin);
+  text-align: right;
 }
 
-.iconify{ /* Buttons */
+
+/* Pencil and eraser*/
+/* ----------------------------------------------------------------------------*/
+#btnEraser,
+#btnPencil{
+  bottom:0px;
+  position:absolute;
+  right:0px;
+}
+
+#btnEraser.active,
+#btnPencil.active{
+  border-radius: 7px;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+#eraser,
+#pencil{
+  --var-slider-width: 10px;
+  --var-slider-height: 180px;
+  position: relative;
+  margin-right:3px;
+  margin-left:3px;
+}
+
+
+#eraserSlider,
+#pencilSlider{
+
+  transform: rotate(-90deg) translateX(calc(-1 * var(--var-slider-height) + 25px - var(--var-slider-width))) translateY(calc(15px - 1 / 2 * var(--var-slider-width)));
+  transform-origin: top left;
+  cursor: pointer;
+  margin: 0px;
+  writing-mode: none; /* IE */
+  -webkit-appearance: none;
+  width: var(--var-slider-height);
+  height: var(--var-slider-width);
+  border-radius: 5px;
+}
+
+#eraserSlider::-webkit-slider-thumb,
+#pencilSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: calc(var(--var-slider-width) + 15px);
+  height: calc(var(--var-slider-width) + 15px);
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+  margin: 0px;
+}
+
+#eraserSlider::-moz-range-thumb,
+#pencilSlider::-moz-range-thumb {
+  width: calc(var(--var-slider-width) + 15px);
+  height: calc(var(--var-slider-width) + 15px);
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+  margin: 0px;
+}
+
+#eraserSlider.visible,
+#pencilSlider.visible{
+  opacity: 1;
+}
+
+#eraserSliderContainer,
+#pencilSliderContainer{
+  height:0px;
   width: 30px;
-  height: 30px;
+  margin-bottom: 55px;
+  opacity:0;
+  transition: 0.5s all ease;
+}
+
+#eraserSliderContainer.visible,
+#pencilSliderContainer.visible{
+  height: var(--var-slider-height);
+  opacity: 1;
+}
+
+
+
+
+/* Colors Manager */
+/* ----------------------------------------------------------------------------*/
+#colorsManager{
+   width: 30px;
+   position: relative;
+}
+
+
+#colors{
+  width: 114px;
+  height: 0px;
+  position: absolute;
+  bottom: 33px;
+  right:0px;
+  transition: 0.5s all ease;
+  background-color: rgba(250,250,250,0.3);
+  border-radius: 20px;
+  overflow: hidden;
+  padding:10px;
+  opacity:0;
+  font-size-adjust: 0.35; /*Just for firefox*/
+}
+
+
+
+#colors.visible {
+  height: 40vh;
+  opacity: 1;
+}
+
+#colors button {
+  width: 2vw;
+  height: 2vw;
+  border: 0.3vw solid transparent;
+  border-radius: 50%;
+  padding: 0;
+}
+#colors button.active {
+  border: 0.3vw solid white;
+}
+#colors button:hover {
+  transform: scale(1.3);
+}
+
+
+
+#btnColors{
+  position:absolute;
+  bottom:0px;
+  right:0px;
+  background-color: rgba(0,0,0,0);
+  border-radius: 50%;
+}
+
+#btnColors.active{
+  border-radius: 7px;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+
+
+
+ /* Buttons */
+ /*----------------------------------------------------------------------------*/
+.iconify{
+  width: 4vw;
+  height: 4vw;
   text-align: center;
   cursor: pointer;
 }
 
-#btnEraser.active{
-  border-radius: 20%;
-  border-color: black;
-  border-bottom-style: outset;
+
+/* Media Query */
+/*----------------------------------------------------------------------------*/
+@media screen and (min-width: 800px) {
+ .iconify {
+    width: 30px;
+    height: 30px;
+  }
 }
 
-#btnPencil.active{
-  border-radius: 20%;
-  border-color: black;
-  border-bottom-style: outset;
+@media screen and (min-width: 1700px) {
+ .iconify {
+    width: 40px;
+    height: 40px;
+  }
 }
