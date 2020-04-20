@@ -99,7 +99,7 @@ function setUserChoice(status, object){
     case STATUS_STORY_ENUM.SITUA2: setSitua2(object); break;
     case STATUS_STORY_ENUM.SITUA3: setSitua3(object); break;
     case STATUS_STORY_ENUM.RECORDING: setFinale(object); break;
-    default: ret = False; break;
+    default: ret = false; break;
   }
   return ret
 }
@@ -341,7 +341,7 @@ function isAutomaticStoryAhead(status){
     case STATUS_STORY_ENUM.WHERE: goAhead = true; break;
     case STATUS_STORY_ENUM.WEATHER: goAhead = true; break;
     case STATUS_STORY_ENUM.CHARACTER: goAhead = false; break;
-    case STATUS_STORY_ENUM.NAME: goAhead = false; break;
+    case STATUS_STORY_ENUM.NAME: goAhead = true; break;
     case STATUS_STORY_ENUM.SITUA1: goAhead = true; break;
     case STATUS_STORY_ENUM.OBJECT: goAhead = false; break;
     case STATUS_STORY_ENUM.SITUA2: goAhead = false; break;
