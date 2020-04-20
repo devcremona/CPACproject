@@ -7,7 +7,7 @@
 // current status of the Story
 const STATUS_STORY_ENUM = {
   WHERE: 0,
-  METEO: 1,
+  WEATHER: 1,
   CHARACTER: 2,
   NAME: 3,
   SITUA1: 4,
@@ -21,7 +21,7 @@ const STATUS_STORY_ENUM = {
 // choices for the users
 var choices = {
   [STATUS_STORY_ENUM.WHERE]: ["Lake", "City", "Forest", "Hill", "Farm"],
-  [STATUS_STORY_ENUM.METEO]: ["Sunny", "Cloudy", "Rainy", "Dark"],
+  [STATUS_STORY_ENUM.WEATHER]: ["Sunny", "Cloudy", "Rainy", "Dark"],
   [STATUS_STORY_ENUM.CHARACTER]: ["Dog", "Cat"],
   [STATUS_STORY_ENUM.NAME]: [],
   [STATUS_STORY_ENUM.SITUA1]: ["X wants to play", "X is hungry", "X is thirsty"],
@@ -41,7 +41,7 @@ const THIRST_LIST = ["Bottle", "Bowl", "Fountain"];
 // narrationPC
 var narrationPC = {
   [STATUS_STORY_ENUM.WHERE]: ["Once upon a time... but where?"],
-  [STATUS_STORY_ENUM.METEO]: ["and it was a day..."],
+  [STATUS_STORY_ENUM.WEATHER]: ["and it was a day..."],
   [STATUS_STORY_ENUM.CHARACTER]: ["But who is the protagonist of the story?"],
   [STATUS_STORY_ENUM.NAME]: ["What's its name?"],
   [STATUS_STORY_ENUM.SITUA1]: ["Now what happens?"],
@@ -57,7 +57,7 @@ var userChoice = [];
 // sentences for the narration to reproduce
 var narrationVoice = {
   [STATUS_STORY_ENUM.WHERE]: "Once upon a time, in a beautilul ...",
-  [STATUS_STORY_ENUM.METEO]: "on a ... day",
+  [STATUS_STORY_ENUM.WEATHER]: "on a ... day",
   [STATUS_STORY_ENUM.CHARACTER]: "there was a very nice ...",
   [STATUS_STORY_ENUM.NAME]: "named ...",
   [STATUS_STORY_ENUM.SITUA1]: "X ...",
@@ -91,7 +91,7 @@ function setUserChoice(status, object){
   ret = true
   switch(status){
     case STATUS_STORY_ENUM.WHERE: setPlace(object); break;
-    case STATUS_STORY_ENUM.METEO: setMeteo(object); break;
+    case STATUS_STORY_ENUM.WEATHER: setMeteo(object); break;
     case STATUS_STORY_ENUM.CHARACTER: setMainCharacter(object); break;
     case STATUS_STORY_ENUM.NAME: setNameCharacter(object); break;
     case STATUS_STORY_ENUM.SITUA1: setSitua1(object); break;
@@ -130,11 +130,11 @@ function setPlace(place){
 */
 function setMeteo(meteo){
   //update choices
-  userChoice[STATUS_STORY_ENUM.METEO] = meteo;
+  userChoice[STATUS_STORY_ENUM.WEATHER] = meteo;
 
   // add to the narrations
-  narrationVoice[STATUS_STORY_ENUM.METEO] = narrationVoice[STATUS_STORY_ENUM.METEO].replace("...", meteo.toLowerCase());
-  narrationVoice[STATUS_STORY_ENUM.METEO] += ",";
+  narrationVoice[STATUS_STORY_ENUM.WEATHER] = narrationVoice[STATUS_STORY_ENUM.WEATHER].replace("...", meteo.toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.WEATHER] += ",";
 }
 
 /**
@@ -303,8 +303,8 @@ function setFinale(final){
 */
 function setNextStatus(){
   switch(currentStatus){
-    case STATUS_STORY_ENUM.WHERE: currentStatus=STATUS_STORY_ENUM.METEO; break;
-    case STATUS_STORY_ENUM.METEO: currentStatus=STATUS_STORY_ENUM.CHARACTER; break;
+    case STATUS_STORY_ENUM.WHERE: currentStatus=STATUS_STORY_ENUM.WEATHER; break;
+    case STATUS_STORY_ENUM.WEATHER: currentStatus=STATUS_STORY_ENUM.CHARACTER; break;
     case STATUS_STORY_ENUM.CHARACTER: currentStatus=STATUS_STORY_ENUM.NAME; break;
     case STATUS_STORY_ENUM.NAME: currentStatus=STATUS_STORY_ENUM.SITUA1; break;
     case STATUS_STORY_ENUM.SITUA1: currentStatus=STATUS_STORY_ENUM.OBJECT; break;
@@ -339,7 +339,7 @@ function isAutomaticStoryAhead(status){
   var goAhead = false
   switch(status){
     case STATUS_STORY_ENUM.WHERE: goAhead = true; break;
-    case STATUS_STORY_ENUM.METEO: goAhead = true; break;
+    case STATUS_STORY_ENUM.WEATHER: goAhead = true; break;
     case STATUS_STORY_ENUM.CHARACTER: goAhead = false; break;
     case STATUS_STORY_ENUM.NAME: goAhead = false; break;
     case STATUS_STORY_ENUM.SITUA1: goAhead = true; break;
