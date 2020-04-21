@@ -28,6 +28,7 @@ const sketch = function(sketch) {
 
     //Reset the canvas (the following function is called always on the press of clear button)
     restart(0); //0: called at startup
+    drawingStatus = DRAWING_STATUS.INIT;
 
     sketch.stroke(currentColor);
 
@@ -72,6 +73,9 @@ const sketch = function(sketch) {
       infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
       speak(infoMessage.innerHTML);
       modelIsActive = false;
+
+      //change drawing status
+      drawingStatus = DRAWING_STATUS.FINISHING;
     } else {
       // Only draw on the paper if the pen is still touching the paper.
       if (previousPen[PEN.DOWN] === 1) {
@@ -97,6 +101,10 @@ const sketch = function(sketch) {
     }
 
     if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen) {
+      if(drawingStatus == DRAWING_STATUS.INIT){
+        drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+      }
+
       console.log('Drawing in progress...');
 
       x = startX = sketch.mouseX;
@@ -120,7 +128,10 @@ const sketch = function(sketch) {
     updatePixelsState(); //Refresh the current pixels, actually save the last drawings
     if (!splashIsOpen && !popupIsOpen && !graphicToolsOpen) {
 
-      if(sketch.isInBounds()){ //Need to be moved to click of Done button
+      if(drawingStatus == DRAWING_STATUS.FIRST_STROKE && sketch.isInBounds()){
+        //Start magic status
+        drawingStatus = DRAWING_STATUS.MAGIC;
+
         userPen = 0;  // Up!
         const currentRawLineSimplified = model.simplifyLine(currentRawLine);
 
@@ -131,6 +142,8 @@ const sketch = function(sketch) {
         }
         currentRawLine = [];
         previousUserPen = userPen;
+
+        doMagic();
       }
 
       if(eraserActive && !graphicToolsOpen){

@@ -35,6 +35,11 @@ let lastModelDrawing = []; // the actual sequence of lines that the model drew, 
 // Don't record mouse events when the splash is open.
 let splashIsOpen = false;
 
+//drawing variables
+let DRAWING_STATUS = {INIT: 0, FIRST_STROKE:1, MAGIC:2, FINISHING:3, DRAG:4};
+let drawingStatus = DRAWING_STATUS.INIT;
+let graphicToolsOpen = false;
+
 //Eraser variables
 let eraserTransparentColor; //Black (0,0,0,..), transparent (..,..,..,0)
 let eraserRadius = 20;
@@ -45,8 +50,6 @@ let eraserStrokeColor = 'black';
 //Popup variables
 popupIsOpen = false;
 
-//Graphic tools variables
-graphicToolsOpen = false;
 
 //Voice variables
 let voiceNameITA;

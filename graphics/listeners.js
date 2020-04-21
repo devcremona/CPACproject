@@ -23,7 +23,8 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
         setTimeout(openPopup,500);
       } else {
         //loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
-        infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
+        drawingStatus = DRAWING_STATUS.INIT;
+        infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus()).toLowerCase()+', then press the magic wand!';
         setVoice(voiceNameENG);
         speak(infoMessage.innerHTML);
       }
@@ -69,11 +70,30 @@ function setListeners() {
     doMagic();
   });
   btnDone.addEventListener('click', function() {
-    if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
-      setNextStatus();
-    }
     speakStop();
-    openPopup();
+
+    //increase drawing status
+    switch(drawingStatus){
+      case DRAWING_STATUS.FINISHING:
+        drawingStatus = DRAWING_STATUS.DRAG;
+        //Save canvas as image, activate dragging
+
+        //Reset canvas
+        restart();
+        break;
+      case DRAWING_STATUS.DRAG:
+        //Increase the story status
+        if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
+          setNextStatus();
+        }
+        //Reset the drawing status
+        drawingStatus = DRAWING_STATUS.INIT;
+        openPopup();
+        break;
+      default:
+        console.log("ERROR: Drawing status not handle...draw something!");
+        break;
+    }
   });
 
 
