@@ -36,12 +36,10 @@
   transition: 0.5s transform;
 }
 
-/*#btnClosePopup {
-  color: #AAAAAA;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}*/
+#btnConfirmPopup {
+  width: fit-content;
+  margin: auto;
+}
 
 #btnStartRecording,
 #btnStopRecording {

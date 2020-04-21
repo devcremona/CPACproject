@@ -9,10 +9,6 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   popupIsOpen = false;
 
   switch (getCurrentStatus()) {
-    case STATUS_STORY_ENUM.CHARACTER:
-      loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
-      break;
-
     case STATUS_STORY_ENUM.NAME:
       setUserChoice(getCurrentStatus(), characterNameField.value);
 
@@ -22,9 +18,9 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
         setNextStatus();
         setTimeout(openPopup,500);
       } else {
-        //loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
+        loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
         drawingStatus = DRAWING_STATUS.INIT;
-        infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus()).toLowerCase()+', then press the magic wand!';
+        infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus()).toLowerCase()+'...';
         setVoice(voiceNameENG);
         speak(infoMessage.innerHTML);
       }
@@ -36,6 +32,57 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
 
     case STATUS_STORY_ENUM.RECAP:
       infoMessage.innerHTML = 'The End!';
+      break;
+  }
+}
+
+function btnDoneCallback() {
+  speakStop();
+
+  //increase drawing status
+  switch(drawingStatus){
+    case DRAWING_STATUS.MAGIC:
+      //Activate retry magic button
+      btnRetryMagic.classList.add('inactive');
+      btnRetryMagic.removeEventListener('click', doMagic);
+
+      //Increase drawing status
+      drawingStatus = DRAWING_STATUS.FINISHING;
+
+      infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
+      speak(infoMessage.innerHTML);
+      break;
+    case DRAWING_STATUS.FINISHING:
+      drawingStatus = DRAWING_STATUS.DRAG;
+
+      //Save canvas as image, activate dragging
+      //...
+
+      //Reset canvas
+      restart();
+
+      //Inform the user
+      infoMessage.innerHTML = "Now you can drag your drawing wherever you want! Then click ✔";
+      speak(infoMessage.innerHTML);
+
+      break;
+    case DRAWING_STATUS.DRAG:
+
+      //Increase the story status
+      if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
+        setNextStatus();
+      }
+
+      //Deactivate Done button
+      btnDone.classList.add('inactive');
+      btnDone.removeEventListener('click', btnDoneCallback);
+
+      //Reset the drawing status
+      drawingStatus = DRAWING_STATUS.INIT;
+      openPopup();
+      break;
+    default:
+      console.log("ERROR: Drawing status not handle...draw something!");
       break;
   }
 }
@@ -65,36 +112,8 @@ function setListeners() {
     //Update pixels state
     updatePixelsState();
   });
-  btnMagic.addEventListener('click', function() {
-    speakStop();
-    doMagic();
-  });
-  btnDone.addEventListener('click', function() {
-    speakStop();
 
-    //increase drawing status
-    switch(drawingStatus){
-      case DRAWING_STATUS.FINISHING:
-        drawingStatus = DRAWING_STATUS.DRAG;
-        //Save canvas as image, activate dragging
-
-        //Reset canvas
-        restart();
-        break;
-      case DRAWING_STATUS.DRAG:
-        //Increase the story status
-        if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
-          setNextStatus();
-        }
-        //Reset the drawing status
-        drawingStatus = DRAWING_STATUS.INIT;
-        openPopup();
-        break;
-      default:
-        console.log("ERROR: Drawing status not handle...draw something!");
-        break;
-    }
-  });
+  btnDone.addEventListener('click', btnDoneCallback);
 
 
   //DRAWING

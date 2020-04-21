@@ -70,12 +70,18 @@ const sketch = function(sketch) {
     // If we finished the previous drawing, start a new one.
     if (pen[PEN.END] === 1) {
       console.log('finished this one');
-      infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
-      speak(infoMessage.innerHTML);
       modelIsActive = false;
 
-      //change drawing status
-      drawingStatus = DRAWING_STATUS.FINISHING;
+      infoMessage.innerHTML = "If you don't like it, click the retry button! Otherwise click ✔";
+      speak(infoMessage.innerHTML);
+
+      //Activate done button
+      btnDone.classList.remove('inactive');
+      btnDone.addEventListener('click', btnDoneCallback);
+
+      //Activate retry magic button
+      btnRetryMagic.classList.remove('inactive');
+      btnRetryMagic.addEventListener('click', doMagic);
     } else {
       // Only draw on the paper if the pen is still touching the paper.
       if (previousPen[PEN.DOWN] === 1) {

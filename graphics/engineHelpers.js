@@ -1,5 +1,11 @@
 function doMagic() {
 
+  //Deactivate done button
+  btnDone.classList.add('inactive');
+  btnDone.removeEventListener('click', btnDoneCallback);
+
+  speakStop();
+
   infoMessage.innerHTML = 'Look at the magic! WOW';
   speakStop();
   speak(infoMessage.innerHTML);
@@ -66,9 +72,9 @@ function loadModel(index) {
 
   //Use custom trained model of sheep
   model = new ms.SketchRNN(`../ML/models/baseball.gen.json`);
-    
+
   //model = new ms.SketchRNN('https://storage.googleapis.com/quickdraw-models/sketchRNN/models/sheep.gen.json');
-    
+
   //Actually initialize the model, and set a callback to run at the end of the initialization
   model.initialize().then(function() {
     modelLoaded = true;

@@ -17,4 +17,5 @@
 
 .inactive {
   filter: invert(60%);
+  pointer-events: none;
 }
