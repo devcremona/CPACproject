@@ -32,8 +32,8 @@ const sketch = function(sketch) {
     sketch.stroke(currentColor);
 
     //Speech language setting
-    setTimeout(function(){
-      //Search the last voice of the current language
+    speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
+      //Search the last available italian and english voice
       for(i=0; i<getVoices().length; i++){
           if(getVoices()[i][1]=='it-IT'){
               voiceNameITA=getVoices()[i][0];

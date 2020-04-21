@@ -10,6 +10,7 @@
 
 #navigation-tools{
   position: fixed;
+  display: inline-flex;;
   left: 0.5vw;
   bottom: var(--bottom-margin);
   }

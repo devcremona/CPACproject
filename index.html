@@ -70,7 +70,7 @@
 
       <div id="app">
 
-          <div class="iconify" id="btnHelp" data-icon="entypo:help"></div>
+          <div id="btnHelp"><span class="iconify" data-icon="entypo:help"></span></div>
 
           <div id="sketchContainer"></div>
 
@@ -80,30 +80,30 @@
               <div id="narrationText">Narration Text here</div>
               <div id="choicesDiv"></div>
               <div><input type="text" id="characterNameField" style="display:none"></div>
-              <div class="iconify" id="btnConfirmPopup" data-icon="ic:baseline-done-outline"></div>
-              <div class="iconify" id="btnStartRecording" data-icon="mdi:record-circle-outline"></div>
-              <div class="iconify" id="btnStopRecording" data-icon="ion:stop-circle-outline"></div>
+              <div id="btnConfirmPopup"><span class="iconify" data-icon="ic:baseline-done-outline"></span></div>
+              <div id="btnStartRecording"><span class="iconify"  data-icon="mdi:record-circle-outline"></span></div>
+              <div id="btnStopRecording"><span class="iconify"  data-icon="ion:stop-circle-outline"></span></div>
             </div>
           </div>
 
           <div id="footer">
             <div id="navigation-tools">
-              <div class="iconify" id="btnClear" data-icon="ic:baseline-delete-forever"></div>
-              <div class="iconify" id="btnMagic" data-icon="mdi-auto-fix"></div>
-              <div class="iconify" id="btnDone" data-icon="ic:baseline-done-outline"></div>
+              <div id="btnClear"><span class="iconify" data-icon="ic:baseline-delete-forever"></span></div>
+              <div id="btnMagic"><span class="iconify" data-icon="mdi-auto-fix"></span></div>
+              <div id="btnDone"><span class="iconify" data-icon="ic:baseline-done-outline"></span></div>
             </div>
             <div id="infoMessage">Welcome!</div>
             <div id="drawing-tools">
               <div id="pencil">
                 <div id="pencilSliderContainer"><input type="range" id="pencilSlider" value='3' min='1' max='30'></div>
-                <div class="iconify active" id="btnPencil" data-icon="bx:bxs-pencil"></div>
+                <div id="btnPencil"><span class="iconify active" data-icon="bx:bxs-pencil"></span></div>
               </div>
               <div id="eraser">
                 <div id="eraserSliderContainer"><input type="range" id="eraserSlider" value='20' min='5' max='70'></div>
-                <div class="iconify" id="btnEraser" data-icon="jam:rubber"></div>
+                <div id="btnEraser"><span class="iconify" data-icon="jam:rubber"></span></div>
               </div>
               <div id="colorsManager">
-                <div class="iconify" id="btnColors" data-icon="ion:color-palette"></div>
+                <div id="btnColors"><span class="iconify" data-icon="ion:color-palette"></span></div>
                 <div id="colors">
                   <button data-index="0" style="background-color: rgb(0, 0, 0)" class="active" onclick="changeColor(event)"></button>
                   <button data-index="1" style="background-color: rgb(244, 67, 54)" onclick="changeColor(event)"></button>
@@ -123,7 +123,7 @@
                   <button data-index="15" style="background-color: rgb(255, 87, 34)" onclick="changeColor(event)"></button>
                   <button data-index="16" style="background-color: rgb(121, 85, 72)" onclick="changeColor(event)"></button>
                   <button data-index="17" style="background-color: rgb(158, 158, 158)" onclick="changeColor(event)"></button>
-                  <div class="iconify" id="btnCustomColor" data-icon="gridicons:customize"></div>
+                  <div id="btnCustomColor"><span class="iconify" data-icon="gridicons:customize"></span></div>
                   <input type="color" id="customColor" value="#636363" style="display:none">
                 </div>
               </div>
