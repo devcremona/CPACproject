@@ -43,8 +43,8 @@ const sketch = function(sketch) {
           }
       }
       //Set the voice just found (currently overwritten inside openPopup() and confirm popup listener)
-      setVoice(voiceNameITA,rate=1.1);
-    },1);
+      setVoice(voiceNameENG);
+    };
 
     setListeners();
 

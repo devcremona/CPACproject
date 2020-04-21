@@ -9,11 +9,11 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   popupIsOpen = false;
 
   switch (getCurrentStatus()) {
-    case STATUS_STORY_ENUM.PROTAGONISTA:
+    case STATUS_STORY_ENUM.CHARACTER:
       loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
       break;
 
-    case STATUS_STORY_ENUM.NOME:
+    case STATUS_STORY_ENUM.NAME:
       setUserChoice(getCurrentStatus(), characterNameField.value);
 
     default:
@@ -24,12 +24,12 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
       } else {
         //loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
         infoMessage.innerHTML = 'Start drawing '+getUserChoice(getCurrentStatus())+', then press the magic wand!';
-        setVoice(voiceNameENG,rate=1.1);
+        setVoice(voiceNameENG);
         speak(infoMessage.innerHTML);
       }
       break;
 
-    case STATUS_STORY_ENUM.FINALE:
+    case STATUS_STORY_ENUM.RECORDING:
       infoMessage.innerHTML = '';
       break;
 

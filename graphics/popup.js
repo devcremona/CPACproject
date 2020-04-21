@@ -12,7 +12,7 @@ function openPopup() {
   //Get narration text from story.js and set text
   narrationText.innerHTML = getNarration()[0];
   infoMessage.innerHTML = getNarration()[0];
-  setVoice(voiceNameITA,rate=1.1);
+  setVoice(voiceNameENG);
   speak(narrationText.innerHTML);
 
   //Get choices list from story.js and populate the list
@@ -36,9 +36,9 @@ function openPopup() {
   choicesDivs = $( '#choicesDiv' ).children().toArray();
 
   switch(getCurrentStatus()){
-    case STATUS_STORY_ENUM.DOVE:
-    case STATUS_STORY_ENUM.METEO:
-    case STATUS_STORY_ENUM.PROTAGONISTA:
+    case STATUS_STORY_ENUM.WHERE:
+    case STATUS_STORY_ENUM.WEATHER:
+    case STATUS_STORY_ENUM.CHARACTER:
       choicesDivs.forEach(
         function(choiceDiv,index){
           choiceDiv.addEventListener('click', function() {
@@ -50,19 +50,19 @@ function openPopup() {
             btnConfirmPopup.classList.remove('inactive');
             btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
 
-            if(getCurrentStatus()==STATUS_STORY_ENUM.DOVE)
-              setUserChoice(STATUS_STORY_ENUM.METEO,choices[STATUS_STORY_ENUM.METEO][0]); //The first time is set to "sun", second time is overwritten by next
+            if(getCurrentStatus()==STATUS_STORY_ENUM.WHERE)
+              setUserChoice(STATUS_STORY_ENUM.WEATHER,choices[STATUS_STORY_ENUM.WEATHER][0]); //The first time is set to "sun", second time is overwritten by next
 
             //First time set WHERE, second time set weather, third time set main character
             setUserChoice(getCurrentStatus(),choiceDiv.innerHTML);
 
-            sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.DOVE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.METEO).toLowerCase().replace(/\s/g, '_')+'.jpg)';
+            sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')+'.jpg)';
           });
         }
       );
       break;
 
-    case STATUS_STORY_ENUM.NOME:
+    case STATUS_STORY_ENUM.NAME:
       choicesDiv.style.display = 'none';
       characterNameField.style.display = 'inline';
       characterNameField.addEventListener('input', function(){
@@ -95,7 +95,7 @@ function openPopup() {
       );
       break;
 
-    case STATUS_STORY_ENUM.FINALE:
+    case STATUS_STORY_ENUM.RECORDING:
       choicesDiv.innerHTML = 'Press the rec button below to start the audio recording...'
       btnStartRecording.style.display = 'inline';
       btnStopRecording.style.display = 'inline';

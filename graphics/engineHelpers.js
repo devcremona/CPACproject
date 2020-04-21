@@ -76,14 +76,5 @@ function loadModel(index) {
     loadingGif.style.display = 'none'; //Hide loading gif
     console.log(`🤖${availableModels[index]} loaded.`);
     model.setPixelFactor(5.0);  // Smaller -> larger outputs
-
-    //Open the popup for the first time
-    if(getCurrentStatus()==STATUS_STORY_ENUM.PROTAGONISTA){
-      popup.classList.remove('hidden');
-      popupContent.classList.remove('hidden');
-      popupIsOpen = true;
-      setNextStatus();
-      openPopup();
-    }
   });
 };
