@@ -19,10 +19,6 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
         setTimeout(openPopup,500);
       } else {
         loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
-        drawingStatus = DRAWING_STATUS.INIT;
-        infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus()).toLowerCase()+'...';
-        setVoice(voiceNameENG);
-        speak(infoMessage.innerHTML);
       }
       break;
 

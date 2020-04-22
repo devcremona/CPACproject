@@ -82,5 +82,12 @@ function loadModel(index) {
     loadingGif.style.display = 'none'; //Hide loading gif
     console.log(`🤖${availableModels[index]} loaded.`);
     model.setPixelFactor(5.0);  // Smaller -> larger outputs
+
+    //Set the drawing status
+    drawingStatus = DRAWING_STATUS.INIT;
+
+    //Inform the user on what to do now
+    infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus()).toLowerCase()+'...';
+    speak(infoMessage.innerHTML);
   });
 };
