@@ -5,6 +5,13 @@ function openPopup() {
   sketchContext.mouseDragged = undefined;
   sketchContext.mouseReleased = undefined;
 
+  //Deactivate drawing buttons
+  btnPencil.classList.remove('active');
+  colorsManager.classList.remove('active');
+  btnEraser.classList.remove('active');
+  btnColors.style.backgroundColor = 'rgba(0,0,0,0)';
+
+
   //Set confirm popup button inactive
   btnConfirmPopup.classList.add('inactive');
   btnConfirmPopup.removeEventListener('click',confirmPopupCallback);

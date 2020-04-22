@@ -19,6 +19,10 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
         setTimeout(openPopup,500);
       } else {
         loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
+
+        //Deactivate eraser at the beginning
+        btnEraser.classList.add('inactive');
+        btnEraser.removeEventListener('click', btnEraserListener);
       }
       break;
 
@@ -32,19 +36,52 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   }
 }
 
+function btnEraserListener() {
+
+  //Opens slider
+  eraserSliderContainer.classList.toggle('visible');
+
+  //Block under-drawing
+  if(eraserSliderContainer.classList.contains('visible')){
+    graphicToolsOpen = true;
+    sketchContext.mouseDragged = undefined;
+  }
+  else {
+    graphicToolsOpen = false;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+  }
+
+  eraserActive = true;
+
+  btnPencil.classList.remove('active');
+  pencilSliderContainer.classList.remove('visible');
+  colorsManager.classList.remove('active');
+  colors.classList.remove('visible');
+  btnEraser.classList.add('active');
+
+  sketchContext.noFill();
+  sketchContext.stroke(eraserStrokeColor);
+  sketchContext.strokeWeight(eraserStrokeWeight);
+}
+
 function btnDoneCallback() {
   speakStop();
 
   //increase drawing status
   switch(drawingStatus){
     case DRAWING_STATUS.MAGIC:
-      //Activate retry magic button
+      //Deactivate retry magic button
       btnRetryMagic.classList.add('inactive');
       btnRetryMagic.removeEventListener('click', doMagic);
+
+      //Activate eraser
+      btnEraser.classList.remove('inactive');
+      btnEraser.addEventListener('click', btnEraserListener);
 
       //Increase drawing status
       drawingStatus = DRAWING_STATUS.FINISHING;
 
+      //Inform the user
       infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
       speak(infoMessage.innerHTML);
       break;
@@ -158,33 +195,7 @@ function setListeners() {
   });
 
 
-  btnEraser.addEventListener('click', function() {
-
-    //Opens slider
-    eraserSliderContainer.classList.toggle('visible');
-
-    //Block under-drawing
-    if(eraserSliderContainer.classList.contains('visible')){
-      graphicToolsOpen = true;
-      sketchContext.mouseDragged = undefined;
-    }
-    else {
-      graphicToolsOpen = false;
-      sketchContext.mouseDragged = sketchMouseDraggedListener;
-    }
-
-    eraserActive = true;
-
-    btnPencil.classList.remove('active');
-    pencilSliderContainer.classList.remove('visible');
-    colorsManager.classList.remove('active');
-    colors.classList.remove('visible');
-    btnEraser.classList.add('active');
-
-    sketchContext.noFill();
-    sketchContext.stroke(eraserStrokeColor);
-    sketchContext.strokeWeight(eraserStrokeWeight);
-  });
+  btnEraser.addEventListener('click', btnEraserListener);
 
   eraserSlider.addEventListener('input', function(event){
     eraserRadius = parseInt(event.target.value);
