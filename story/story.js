@@ -33,7 +33,7 @@ var choices = {
 };
 
 // list of possibilities
-const PLAY_LIST = ["Ball", "Kite", "Musical instrument"];
+const PLAY_LIST = ["Ball", "Kite", "Guitar"];
 const FOOD_LIST = ["Hamburger", "Cake", "Pizza", "Apple"];
 const THIRST_LIST = ["Bottle", "Bowl", "Fountain"];
 
@@ -205,7 +205,7 @@ function setSitua1(situa1){
       narrationVoice[STATUS_STORY_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " is starving and it would like to eat a big "
 
       choices[STATUS_STORY_ENUM.OBJECT] = FOOD_LIST;
-      narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does he want to eat?"];
+      narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does it want to eat?"];
       }
       break;
     case situa[2]: {
@@ -213,7 +213,7 @@ function setSitua1(situa1){
       narrationVoice[STATUS_STORY_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has an incredible thirst! And it would like to drink from a very fresh "
 
       choices[STATUS_STORY_ENUM.OBJECT] = THIRST_LIST;
-      narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does he want to drink?"];
+      narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does it want to drink from?"];
       }
       break;
     default: break;
