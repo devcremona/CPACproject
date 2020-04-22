@@ -236,8 +236,15 @@ function setListeners() {
   //SPLASH
   //==============================================================================
   btnHelp.addEventListener('click', function() { //Go to the spash screen
-    splash.classList.remove('hidden');
-    splashIsOpen = true;
+    if(splash.classList.contains('hidden')){
+      splash.classList.remove('hidden');
+      splashIsOpen = true;
+    } else{
+      splash.classList.add('hidden');
+      splashIsOpen = false;
+    }
+
+
   });
 
   btnGo.addEventListener('click', function() { //From splash to the sketch
