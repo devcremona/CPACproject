@@ -11,6 +11,8 @@ const sketch = function(sketch) {
     canvas = sketch.createCanvas(screenWidth, screenHeight);
     canvas.id('sketchCanvas'); //Rename the canvas id
     document.getElementById('sketchCanvas').style.position = 'fixed'; //Set the canvas position to fixed (in order to superpose other elements)
+    sketch.pixelDensity(1); //Set the pixel density to 1 (for zoomed resolutions)
+
     sketch.frameRate(60);
 
     sketchContext = sketch;
@@ -31,6 +33,10 @@ const sketch = function(sketch) {
     drawingStatus = DRAWING_STATUS.INIT;
 
     sketch.stroke(currentColor);
+
+    //Reset of the character name field
+    characterNameField.value = '';
+
 
     //Speech language setting
     speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
