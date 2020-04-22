@@ -84,6 +84,42 @@ function btnDoneCallback() {
 }
 
 
+function btnPencilListener() {
+  //Activate the mouse listeners for the p5 sketch
+  if(drawingStatus == DRAWING_STATUS.INIT){
+    sketchContext.mousePressed = sketchMousePressedListener;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+    sketchContext.mouseReleased = sketchMouseReleasedListener;
+  }
+
+  //Opens slider
+  pencilSliderContainer.classList.toggle('visible');
+
+  //Block under-drawing
+  if(pencilSliderContainer.classList.contains('visible')){
+    graphicToolsOpen = true;
+    sketchContext.mouseDragged = undefined;
+  }
+  else {
+    graphicToolsOpen = false;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+  }
+
+  eraserActive = false;
+
+  colorsManager.classList.remove('active');
+  colors.classList.remove('visible');
+  btnEraser.classList.remove('active');
+  eraserSliderContainer.classList.remove('visible');
+  btnPencil.classList.add('active');
+
+  sketchContext.fill(currentColor);
+  sketchContext.stroke(currentColor);
+  sketchContext.strokeWeight(currentStrokeWeight);
+
+}
+
+
 function setListeners() {
 
   //POPUP
@@ -114,40 +150,7 @@ function setListeners() {
 
   //DRAWING
   //==============================================================================
-  btnPencil.addEventListener('click', function() {
-    //Activate the mouse listeners for the p5 sketch
-    if(drawingStatus == DRAWING_STATUS.INIT){
-      sketchContext.mousePressed = sketchMousePressedListener;
-      sketchContext.mouseDragged = sketchMouseDraggedListener;
-      sketchContext.mouseReleased = sketchMouseReleasedListener;
-    }
-
-    //Opens slider
-    pencilSliderContainer.classList.toggle('visible');
-
-    //Block under-drawing
-    if(pencilSliderContainer.classList.contains('visible')){
-      graphicToolsOpen = true;
-      sketchContext.mouseDragged = undefined;
-    }
-    else {
-      graphicToolsOpen = false;
-      sketchContext.mouseDragged = sketchMouseDraggedListener;
-    }
-
-    eraserActive = false;
-
-    btnColors.classList.remove('active');
-    colors.classList.remove('visible');
-    btnEraser.classList.remove('active');
-    eraserSliderContainer.classList.remove('visible');
-    btnPencil.classList.add('active');
-
-    sketchContext.fill(currentColor);
-    sketchContext.stroke(currentColor);
-    sketchContext.strokeWeight(currentStrokeWeight);
-
-  });
+  btnPencil.addEventListener('click', btnPencilListener);
 
   pencilSlider.addEventListener('input', function(event){
     currentStrokeWeight = event.target.value;
@@ -174,7 +177,7 @@ function setListeners() {
 
     btnPencil.classList.remove('active');
     pencilSliderContainer.classList.remove('visible');
-    btnColors.classList.remove('active');
+    colorsManager.classList.remove('active');
     colors.classList.remove('visible');
     btnEraser.classList.add('active');
 
@@ -194,15 +197,18 @@ function setListeners() {
     btnEraser.classList.remove('active');
     eraserSliderContainer.classList.remove('visible');
 
-    if(btnColors.classList.contains('active')){
-      btnColors.classList.remove('active');
-      btnPencil.classList.add('active');
-    } else {
-      btnColors.classList.add('active');
-    }
-
     colors.classList.toggle('visible');
-    graphicToolsOpen = !graphicToolsOpen;
+
+    if(!colors.classList.contains('visible')){
+      colorsManager.classList.remove('active');
+      graphicToolsOpen = false;
+
+      //Reactivate pencil
+      btnPencilListener();
+    } else {
+      colorsManager.classList.add('active');
+      graphicToolsOpen = true;
+    }
   });
 
   btnCustomColor.addEventListener('click', function() {
@@ -215,15 +221,7 @@ function setListeners() {
     sketchContext.updateCurrentColor(index=-1,hex=event.target.value.toUpperCase());
 
     //Reactivate pencil
-    eraserActive = false;
-
-    btnPencil.classList.add('active');
-    btnEraser.classList.remove('active');
-    btnColors.classList.remove('active');
-
-    sketchContext.fill(currentColor);
-    sketchContext.stroke(currentColor);
-    sketchContext.strokeWeight(currentStrokeWeight);
+    btnPencilListener();
 
     if(currentColor!='#000000'){
       btnColors.style.backgroundColor = currentColor;

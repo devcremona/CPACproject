@@ -103,7 +103,7 @@ const sketch = function(sketch) {
 
 
 
-  sketch.mousePressed = sketchMousePressedListener; 
+  sketch.mousePressed = sketchMousePressedListener;
 
 
 
@@ -147,7 +147,14 @@ function sketchMousePressedListener(e) { //Human drawing
   if (!document.getElementById('pencilSlider').contains(e.target) && !document.getElementById('eraserSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('btnColors').contains(e.target)){
     pencilSliderContainer.classList.remove('visible');
     eraserSliderContainer.classList.remove('visible');
+
+    if(colors.classList.contains('visible')){
+      btnPencil.classList.add('active');
+    }
+
     colors.classList.remove('visible');
+    colorsManager.classList.remove('active');
+    
     graphicToolsOpen = false;
     sketchContext.mouseDragged = sketchMouseDraggedListener;
   }

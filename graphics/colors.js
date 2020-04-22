@@ -31,15 +31,7 @@ function changeColor(event){
   graphicToolsOpen = false;
 
   //Reactivate pencil
-  eraserActive = false;
-
-  btnPencil.classList.add('active');
-  btnEraser.classList.remove('active');
-  btnColors.classList.remove('active');
-
-  sketchContext.fill(currentColor);
-  sketchContext.stroke(currentColor);
-  sketchContext.strokeWeight(currentStrokeWeight);
+  btnPencilListener();
 
   if(currentColor!='#000000'){
     btnColors.style.backgroundColor = currentColor;
