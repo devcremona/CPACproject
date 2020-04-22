@@ -115,16 +115,24 @@ function setListeners() {
   //DRAWING
   //==============================================================================
   btnPencil.addEventListener('click', function() {
+    //Activate the mouse listeners for the p5 sketch
+    if(drawingStatus == DRAWING_STATUS.INIT){
+      sketchContext.mousePressed = sketchMousePressedListener;
+      sketchContext.mouseDragged = sketchMouseDraggedListener;
+      sketchContext.mouseReleased = sketchMouseReleasedListener;
+    }
 
     //Opens slider
-    if(btnPencil.classList.contains('active')){
-      pencilSliderContainer.classList.toggle('visible');
-      graphicToolsOpen = !graphicToolsOpen;
-      if(sketchContext.mouseDragged == undefined){
-        sketchContext.mouseDragged = sketchMouseDraggedListener;
-      } else {
-        sketchContext.mouseDragged = undefined;
-      }
+    pencilSliderContainer.classList.toggle('visible');
+
+    //Block under-drawing
+    if(pencilSliderContainer.classList.contains('visible')){
+      graphicToolsOpen = true;
+      sketchContext.mouseDragged = undefined;
+    }
+    else {
+      graphicToolsOpen = false;
+      sketchContext.mouseDragged = sketchMouseDraggedListener;
     }
 
     eraserActive = false;
@@ -150,14 +158,16 @@ function setListeners() {
   btnEraser.addEventListener('click', function() {
 
     //Opens slider
-    if(btnEraser.classList.contains('active')){
-      eraserSliderContainer.classList.toggle('visible');
-      graphicToolsOpen = !graphicToolsOpen;
-      if(sketchContext.mouseDragged == undefined){
-        sketchContext.mouseDragged = sketchMouseDraggedListener;
-      } else {
-        sketchContext.mouseDragged = undefined;
-      }
+    eraserSliderContainer.classList.toggle('visible');
+
+    //Block under-drawing
+    if(eraserSliderContainer.classList.contains('visible')){
+      graphicToolsOpen = true;
+      sketchContext.mouseDragged = undefined;
+    }
+    else {
+      graphicToolsOpen = false;
+      sketchContext.mouseDragged = sketchMouseDraggedListener;
     }
 
     eraserActive = true;

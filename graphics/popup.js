@@ -1,5 +1,10 @@
 function openPopup() {
 
+  //Deactivate the mouse listeners for the p5 sketch
+  sketchContext.mousePressed = undefined;
+  sketchContext.mouseDragged = undefined;
+  sketchContext.mouseReleased = undefined;
+
   //Set confirm popup button inactive
   btnConfirmPopup.classList.add('inactive');
   btnConfirmPopup.removeEventListener('click',confirmPopupCallback);
@@ -12,7 +17,6 @@ function openPopup() {
   //Get narration text from story.js and set text
   narrationText.innerHTML = getNarration()[0];
   infoMessage.innerHTML = getNarration()[0];
-  setVoice(voiceNameENG);
   speak(narrationText.innerHTML);
 
   //Get choices list from story.js and populate the list

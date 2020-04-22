@@ -103,32 +103,7 @@ const sketch = function(sketch) {
 
 
 
-  sketch.mousePressed = function (e) { //Human drawing
-    if (!document.getElementById('pencilSlider').contains(e.target) && !document.getElementById('eraserSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('btnColors').contains(e.target)){
-      pencilSliderContainer.classList.remove('visible');
-      eraserSliderContainer.classList.remove('visible');
-      colors.classList.remove('visible');
-      graphicToolsOpen = false;
-      sketchContext.mouseDragged = sketchMouseDraggedListener;
-    }
-
-    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen) {
-      if(drawingStatus == DRAWING_STATUS.INIT){
-        drawingStatus = DRAWING_STATUS.FIRST_STROKE;
-      }
-
-      console.log('Drawing in progress...');
-
-      x = startX = sketch.mouseX;
-      y = startY = sketch.mouseY;
-      userPen = 1; // down!
-
-      modelIsActive = false; //Machine learning in pause while i'm drawing
-      //currentRawLine = [];
-      //lastHumanDrawing = [];
-      previousUserPen = userPen;
-    }
-  }
+  sketch.mousePressed = sketchMousePressedListener; 
 
 
 
@@ -136,33 +111,7 @@ const sketch = function(sketch) {
 
 
 
-  sketch.mouseReleased = function () {
-    updatePixelsState(); //Refresh the current pixels, actually save the last drawings
-    if (!splashIsOpen && !popupIsOpen && !graphicToolsOpen) {
-
-      if(drawingStatus == DRAWING_STATUS.FIRST_STROKE && sketch.isInBounds()){
-        //Start magic status
-        drawingStatus = DRAWING_STATUS.MAGIC;
-
-        userPen = 0;  // Up!
-        const currentRawLineSimplified = model.simplifyLine(currentRawLine);
-
-        // If it's an accident...ignore it.
-        if (currentRawLineSimplified.length > 1) {
-          // Encode this line as a stroke used to feed to the model
-          lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
-        }
-        currentRawLine = [];
-        previousUserPen = userPen;
-
-        doMagic();
-      }
-
-      if(eraserActive && !graphicToolsOpen){
-        erase();
-      }
-    }
-  }
+  sketch.mouseReleased = sketchMouseReleasedListener;
 
 
 
@@ -194,6 +143,33 @@ const sketch = function(sketch) {
 };
 
 
+function sketchMousePressedListener(e) { //Human drawing
+  if (!document.getElementById('pencilSlider').contains(e.target) && !document.getElementById('eraserSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('btnColors').contains(e.target)){
+    pencilSliderContainer.classList.remove('visible');
+    eraserSliderContainer.classList.remove('visible');
+    colors.classList.remove('visible');
+    graphicToolsOpen = false;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+  }
+
+  if (!splashIsOpen && !popupIsOpen && sketchContext.isInBounds() && !graphicToolsOpen) {
+    if(drawingStatus == DRAWING_STATUS.INIT){
+      drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+    }
+
+    console.log('Drawing in progress...');
+
+    x = startX = sketchContext.mouseX;
+    y = startY = sketchContext.mouseY;
+    userPen = 1; // down!
+
+    modelIsActive = false; //Machine learning in pause while i'm drawing
+    //currentRawLine = [];
+    //lastHumanDrawing = [];
+    previousUserPen = userPen;
+  }
+}
+
 
 function sketchMouseDraggedListener() {
   if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketchContext.isInBounds() && !eraserActive && !graphicToolsOpen) {
@@ -219,6 +195,35 @@ function sketchMouseDraggedListener() {
   }
 
   return false;
+}
+
+
+function sketchMouseReleasedListener() {
+  updatePixelsState(); //Refresh the current pixels, actually save the last drawings
+  if (!splashIsOpen && !popupIsOpen && !graphicToolsOpen) {
+
+    if(drawingStatus == DRAWING_STATUS.FIRST_STROKE && sketchContext.isInBounds()){
+      //Start magic status
+      drawingStatus = DRAWING_STATUS.MAGIC;
+
+      userPen = 0;  // Up!
+      const currentRawLineSimplified = model.simplifyLine(currentRawLine);
+
+      // If it's an accident...ignore it.
+      if (currentRawLineSimplified.length > 1) {
+        // Encode this line as a stroke used to feed to the model
+        lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
+      }
+      currentRawLine = [];
+      previousUserPen = userPen;
+
+      doMagic();
+    }
+
+    if(eraserActive && !graphicToolsOpen){
+      erase();
+    }
+  }
 }
 
 
