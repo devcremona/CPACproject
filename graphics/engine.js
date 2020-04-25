@@ -55,9 +55,9 @@ const sketch = function(sketch) {
 
     setListeners();
 
-    //loadModel(0);
+    loadModel(0);
 
-    openPopup();
+    //openPopup();
   };
 
 
@@ -88,6 +88,7 @@ const sketch = function(sketch) {
       //Activate retry magic button
       btnRetryMagic.classList.remove('inactive');
       btnRetryMagic.addEventListener('click', doMagic);
+      //addDrawing();
     } else {
       // Only draw on the paper if the pen is still touching the paper.
       if (previousPen[PEN.DOWN] === 1) {
@@ -98,8 +99,11 @@ const sketch = function(sketch) {
       x += dx;
       y += dy;
       previousPen = pen;
+
+      maxx = Math.round(Math.max(x, maxx)); minx = Math.round(Math.min(x, minx));        // updating crop area
+      maxy = Math.round(Math.max(y, maxy)); miny = Math.round(Math.min(y, miny));
     }
-  };
+  }
 
 
 
@@ -112,9 +116,13 @@ const sketch = function(sketch) {
       sketchContext.mouseDragged = sketchMouseDraggedListener;
     }
 
-    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen) {
+    // if drawing
+    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen && drawingStatus != DRAWING_STATUS.DRAG) {
+      // if starting drawing
       if(drawingStatus == DRAWING_STATUS.INIT){
         drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+        maxx = sketch.mouseX; minx = maxx;
+        maxy = sketch.mouseY; miny = maxy;
       }
 
       console.log('Drawing in progress...');
@@ -127,6 +135,12 @@ const sketch = function(sketch) {
       //currentRawLine = [];
       //lastHumanDrawing = [];
       previousUserPen = userPen;
+    }
+
+    // if dragging
+    if (!splashIsOpen && !popupIsOpen && sketch.isInBounds() && !graphicToolsOpen && drawingStatus == DRAWING_STATUS.DRAG) {
+      x = startX = sketch.mouseX;
+      y = startY = sketch.mouseY;
     }
   }
 
@@ -158,11 +172,16 @@ const sketch = function(sketch) {
         doMagic();
       }
 
+      if(drawingStatus == DRAWING_STATUS.FINISHING){
+        userPen = 0;
+      }
+
       if(eraserActive && !graphicToolsOpen){
         erase();
       }
     }
   }
+
 
 
 
@@ -196,27 +215,51 @@ const sketch = function(sketch) {
 
 
 function sketchMouseDraggedListener() {
-  if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && sketchContext.isInBounds() && !eraserActive && !graphicToolsOpen) {
-    const dx0 = sketchContext.mouseX - x;
-    const dy0 = sketchContext.mouseY - y;
-    if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
-      dx = dx0;
-      dy = dy0;
-      userPen = 1;
-      if (previousUserPen == 1) {
-        sketchContext.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
-        lastHumanDrawing.push([x, y, x+dx, y+dy]);
+
+  let flagDwg = (drawingStatus==DRAWING_STATUS.FIRST_STROKE || drawingStatus==DRAWING_STATUS.FINISHING);
+  
+  if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && !graphicToolsOpen && flagDwg){
+    if (sketchContext.isInBounds() && !eraserActive ) {
+      const dx0 = sketchContext.mouseX - x;
+      const dy0 = sketchContext.mouseY - y;
+      if (dx0*dx0+dy0*dy0 > epsilon*epsilon) { // Only if pen is not in same area (computing the radius^2).
+        dx = dx0;
+        dy = dy0;
+        userPen = 1;
+        if (previousUserPen == 1) {
+          sketchContext.line(x, y, x+dx, y+dy); // draw line connecting prev point to current point.
+          lastHumanDrawing.push([x, y, x+dx, y+dy]);
+        }
+        x += dx;
+        y += dy;
+        currentRawLine.push([x, y]);
+
+        maxx = Math.round(Math.max(x, maxx)); minx = Math.round(Math.min(x, minx));        // updating crop area
+        maxy = Math.round(Math.max(y, maxy)); miny = Math.round(Math.min(y, miny));
+
       }
-      x += dx;
-      y += dy;
-      currentRawLine.push([x, y]);
+      previousUserPen = userPen;
     }
-    previousUserPen = userPen;
+    else if(eraserActive) {
+      erase(); //Erase the pixels (set to transparent)
+      sketchContext.ellipse(sketchContext.mouseX, sketchContext.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
+    }
+    flagDwg = false;
   }
-  else if(!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && eraserActive && !graphicToolsOpen) {
-    erase(); //Erase the pixels (set to transparent)
-    sketchContext.ellipse(sketchContext.mouseX, sketchContext.mouseY, eraserRadius*2-eraserStrokeWeight-2, eraserRadius*2-eraserStrokeWeight-2); //Circle to identify the eraser area
-  }
+
+  else if(drawingStatus == DRAWING_STATUS.DRAG){
+      const dx0 = sketchContext.mouseX - x;
+      const dy0 = sketchContext.mouseY - y;
+      
+      if ((dx0*dx0+dy0*dy0 > epsilon*epsilon) && checkMask(x, y))
+        updatePosition(Math.round(dx0), Math.round(dy0));
+      
+      x += dx0;
+      y += dy0;
+
+      if(testing)
+        console.log("dx "+dx0+"\ndy "+dy0);
+  } 
 
   return false;
 }

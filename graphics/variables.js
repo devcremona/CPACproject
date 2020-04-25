@@ -54,3 +54,13 @@ popupIsOpen = false;
 //Voice variables
 let voiceNameITA;
 let voiceNameENG;
+
+
+//Crop variables
+var maxx, maxy, minx, miny;
+var dwgCount = 0;
+var drawings = [];
+var lastDwg;
+
+//debug variables
+var testing = false;

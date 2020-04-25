@@ -52,7 +52,7 @@ function btnDoneCallback() {
       drawingStatus = DRAWING_STATUS.DRAG;
 
       //Save canvas as image, activate dragging
-      //...
+      addDrawing();
 
       //Reset canvas
       restart();
