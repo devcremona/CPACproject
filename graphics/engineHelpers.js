@@ -6,7 +6,7 @@ function doMagic() {
 
   speakStop();
 
-  infoMessage.innerHTML = 'Look at the magic! WOW';
+  infoMessage.innerHTML = 'Look at the magic! Cool!';
   speakStop();
   speak(infoMessage.innerHTML);
 

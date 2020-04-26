@@ -19,6 +19,10 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
         setTimeout(openPopup,500);
       } else {
         loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
+
+        //Deactivate eraser at the beginning
+        btnEraser.classList.add('inactive');
+        btnEraser.removeEventListener('click', btnEraserListener);
       }
       break;
 
@@ -32,19 +36,52 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   }
 }
 
+function btnEraserListener() {
+
+  //Opens slider
+  eraserSliderContainer.classList.toggle('visible');
+
+  //Block under-drawing
+  if(eraserSliderContainer.classList.contains('visible')){
+    graphicToolsOpen = true;
+    sketchContext.mouseDragged = undefined;
+  }
+  else {
+    graphicToolsOpen = false;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+  }
+
+  eraserActive = true;
+
+  btnPencil.classList.remove('active');
+  pencilSliderContainer.classList.remove('visible');
+  colorsManager.classList.remove('active');
+  colors.classList.remove('visible');
+  btnEraser.classList.add('active');
+
+  sketchContext.noFill();
+  sketchContext.stroke(eraserStrokeColor);
+  sketchContext.strokeWeight(eraserStrokeWeight);
+}
+
 function btnDoneCallback() {
   speakStop();
 
   //increase drawing status
   switch(drawingStatus){
     case DRAWING_STATUS.MAGIC:
-      //Activate retry magic button
+      //Deactivate retry magic button
       btnRetryMagic.classList.add('inactive');
       btnRetryMagic.removeEventListener('click', doMagic);
+
+      //Activate eraser
+      btnEraser.classList.remove('inactive');
+      btnEraser.addEventListener('click', btnEraserListener);
 
       //Increase drawing status
       drawingStatus = DRAWING_STATUS.FINISHING;
 
+      //Inform the user
       infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
       speak(infoMessage.innerHTML);
       break;
@@ -84,6 +121,42 @@ function btnDoneCallback() {
 }
 
 
+function btnPencilListener() {
+  //Activate the mouse listeners for the p5 sketch
+  if(drawingStatus == DRAWING_STATUS.INIT){
+    sketchContext.mousePressed = sketchMousePressedListener;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+    sketchContext.mouseReleased = sketchMouseReleasedListener;
+  }
+
+  //Opens slider
+  pencilSliderContainer.classList.toggle('visible');
+
+  //Block under-drawing
+  if(pencilSliderContainer.classList.contains('visible')){
+    graphicToolsOpen = true;
+    sketchContext.mouseDragged = undefined;
+  }
+  else {
+    graphicToolsOpen = false;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+  }
+
+  eraserActive = false;
+
+  colorsManager.classList.remove('active');
+  colors.classList.remove('visible');
+  btnEraser.classList.remove('active');
+  eraserSliderContainer.classList.remove('visible');
+  btnPencil.classList.add('active');
+
+  sketchContext.fill(currentColor);
+  sketchContext.stroke(currentColor);
+  sketchContext.strokeWeight(currentStrokeWeight);
+
+}
+
+
 function setListeners() {
 
   //POPUP
@@ -114,32 +187,7 @@ function setListeners() {
 
   //DRAWING
   //==============================================================================
-  btnPencil.addEventListener('click', function() {
-
-    //Opens slider
-    if(btnPencil.classList.contains('active')){
-      pencilSliderContainer.classList.toggle('visible');
-      graphicToolsOpen = !graphicToolsOpen;
-      if(sketchContext.mouseDragged == undefined){
-        sketchContext.mouseDragged = sketchMouseDraggedListener;
-      } else {
-        sketchContext.mouseDragged = undefined;
-      }
-    }
-
-    eraserActive = false;
-
-    btnColors.classList.remove('active');
-    colors.classList.remove('visible');
-    btnEraser.classList.remove('active');
-    eraserSliderContainer.classList.remove('visible');
-    btnPencil.classList.add('active');
-
-    sketchContext.fill(currentColor);
-    sketchContext.stroke(currentColor);
-    sketchContext.strokeWeight(currentStrokeWeight);
-
-  });
+  btnPencil.addEventListener('click', btnPencilListener);
 
   pencilSlider.addEventListener('input', function(event){
     currentStrokeWeight = event.target.value;
@@ -147,31 +195,7 @@ function setListeners() {
   });
 
 
-  btnEraser.addEventListener('click', function() {
-
-    //Opens slider
-    if(btnEraser.classList.contains('active')){
-      eraserSliderContainer.classList.toggle('visible');
-      graphicToolsOpen = !graphicToolsOpen;
-      if(sketchContext.mouseDragged == undefined){
-        sketchContext.mouseDragged = sketchMouseDraggedListener;
-      } else {
-        sketchContext.mouseDragged = undefined;
-      }
-    }
-
-    eraserActive = true;
-
-    btnPencil.classList.remove('active');
-    pencilSliderContainer.classList.remove('visible');
-    btnColors.classList.remove('active');
-    colors.classList.remove('visible');
-    btnEraser.classList.add('active');
-
-    sketchContext.noFill();
-    sketchContext.stroke(eraserStrokeColor);
-    sketchContext.strokeWeight(eraserStrokeWeight);
-  });
+  btnEraser.addEventListener('click', btnEraserListener);
 
   eraserSlider.addEventListener('input', function(event){
     eraserRadius = parseInt(event.target.value);
@@ -184,15 +208,18 @@ function setListeners() {
     btnEraser.classList.remove('active');
     eraserSliderContainer.classList.remove('visible');
 
-    if(btnColors.classList.contains('active')){
-      btnColors.classList.remove('active');
-      btnPencil.classList.add('active');
-    } else {
-      btnColors.classList.add('active');
-    }
-
     colors.classList.toggle('visible');
-    graphicToolsOpen = !graphicToolsOpen;
+
+    if(!colors.classList.contains('visible')){
+      colorsManager.classList.remove('active');
+      graphicToolsOpen = false;
+
+      //Reactivate pencil
+      btnPencilListener();
+    } else {
+      colorsManager.classList.add('active');
+      graphicToolsOpen = true;
+    }
   });
 
   btnCustomColor.addEventListener('click', function() {
@@ -205,15 +232,7 @@ function setListeners() {
     sketchContext.updateCurrentColor(index=-1,hex=event.target.value.toUpperCase());
 
     //Reactivate pencil
-    eraserActive = false;
-
-    btnPencil.classList.add('active');
-    btnEraser.classList.remove('active');
-    btnColors.classList.remove('active');
-
-    sketchContext.fill(currentColor);
-    sketchContext.stroke(currentColor);
-    sketchContext.strokeWeight(currentStrokeWeight);
+    btnPencilListener();
 
     if(currentColor!='#000000'){
       btnColors.style.backgroundColor = currentColor;
@@ -226,8 +245,15 @@ function setListeners() {
   //SPLASH
   //==============================================================================
   btnHelp.addEventListener('click', function() { //Go to the spash screen
-    splash.classList.remove('hidden');
-    splashIsOpen = true;
+    if(splash.classList.contains('hidden')){
+      splash.classList.remove('hidden');
+      splashIsOpen = true;
+    } else{
+      splash.classList.add('hidden');
+      splashIsOpen = false;
+    }
+
+
   });
 
   btnGo.addEventListener('click', function() { //From splash to the sketch

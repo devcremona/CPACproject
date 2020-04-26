@@ -33,7 +33,7 @@ var choices = {
 };
 
 // list of possibilities
-const PLAY_LIST = ["Ball", "Kite", "Guitar"];
+const PLAY_LIST = ["Ball", "Boomerang", "Guitar"];
 const FOOD_LIST = ["Hamburger", "Cake", "Pizza", "Apple"];
 const THIRST_LIST = ["Bottle", "Bowl", "Fountain"];
 
