@@ -34,7 +34,7 @@ a:hover {
   overflow: auto;
   transition: 1s transform;
   transform: translate3d(0, 0, 0);
-  z-index: 2;
+  z-index: 5;
 }
 
 #splash.hidden {

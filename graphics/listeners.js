@@ -259,6 +259,7 @@ function setListeners() {
   btnGo.addEventListener('click', function() { //From splash to the sketch
     splashIsOpen = false;
     splash.classList.add('hidden');
+    btnHelp.style.zIndex = 6;
     openPopup();
   });
 }
