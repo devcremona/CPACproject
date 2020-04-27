@@ -26,10 +26,10 @@ function doMagic() {
 
 
 
-function restart(flag) {
+function restart() {
 
-  if(flag==1){
-    console.log('everything was perfectly clean!');
+  if (drawingStatus==DRAWING_STATUS.MAGIC){
+      drawingStatus = DRAWING_STATUS.INIT;
   }
 
   sketchContext.background(255, 255, 255, 0);
@@ -71,7 +71,7 @@ function loadModel(index) {
   //model = new ms.SketchRNN(`${BASE_URL}${availableModels[index]}.gen.json`);
 
   //Use custom trained model of sheep
-  model = new ms.SketchRNN(`../ML/models/baseball.gen.json`);
+  model = new ms.SketchRNN(`../ML/models/`+getUserChoice(getCurrentStatus()).toLowerCase()+`.gen.json`);
 
   //model = new ms.SketchRNN('https://storage.googleapis.com/quickdraw-models/sketchRNN/models/sheep.gen.json');
 
