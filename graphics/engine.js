@@ -55,9 +55,9 @@ const sketch = function(sketch) {
 
     setListeners();
 
-    loadModel(0);
+    //loadModel(0);
 
-    //openPopup();
+    openPopup();
   };
 
 
@@ -159,7 +159,7 @@ function sketchMousePressedListener(e) { //Human drawing
 
     colors.classList.remove('visible');
     colorsManager.classList.remove('active');
-    
+
     graphicToolsOpen = false;
     sketchContext.mouseDragged = sketchMouseDraggedListener;
   }
@@ -186,7 +186,7 @@ function sketchMousePressedListener(e) { //Human drawing
 function sketchMouseDraggedListener() {
 
   let flagDwg = (drawingStatus==DRAWING_STATUS.FIRST_STROKE || drawingStatus==DRAWING_STATUS.FINISHING);
-  
+
   if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && !graphicToolsOpen && flagDwg){
     if (sketchContext.isInBounds() && !eraserActive ) {
       const dx0 = sketchContext.mouseX - x;
@@ -219,16 +219,16 @@ function sketchMouseDraggedListener() {
   else if(drawingStatus == DRAWING_STATUS.DRAG){
       const dx0 = sketchContext.mouseX - x;
       const dy0 = sketchContext.mouseY - y;
-      
+
       if ((dx0*dx0+dy0*dy0 > epsilon*epsilon) && checkMask(x, y))
         updatePosition(Math.round(dx0), Math.round(dy0));
-      
+
       x += dx0;
       y += dy0;
 
       if(testing)
         console.log("dx "+dx0+"\ndy "+dy0);
-  } 
+  }
 
   return false;
 }
