@@ -21,7 +21,7 @@ const STATUS_STORY_ENUM = {
 // choices for the users
 var choices = {
   [STATUS_STORY_ENUM.WHERE]: ["Lake", "City", "Forest", "Hill", "Farm"],
-  [STATUS_STORY_ENUM.WEATHER]: ["Sunny", "Cloudy", "Rainy", "Dark"],
+  [STATUS_STORY_ENUM.WEATHER]: ["Sunny", "Rainy", "Foggy", "Dark"],
   [STATUS_STORY_ENUM.CHARACTER]: ["Dog", "Cat"],
   [STATUS_STORY_ENUM.NAME]: [],
   [STATUS_STORY_ENUM.SITUA1]: ["X wants to play", "X is hungry", "X is thirsty"],
@@ -35,7 +35,7 @@ var choices = {
 // list of possibilities
 const PLAY_LIST = ["Ball", "Boomerang", "Guitar"];
 const FOOD_LIST = ["Hamburger", "Cake", "Pizza", "Apple"];
-const THIRST_LIST = ["Bottle", "Bowl", "Fountain"];
+const THIRST_LIST = ["Bottle", "Bowl"];
 
 // sentences for the narration to visualize to the screen
 // narrationPC
