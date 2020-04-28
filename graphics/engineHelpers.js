@@ -86,6 +86,14 @@ function loadModel(index) {
     //Set the drawing status
     drawingStatus = DRAWING_STATUS.INIT;
 
+    //Activate Pencil
+    btnPencil.classList.remove('inactive');
+    btnPencil.addEventListener('click', btnPencilListener);
+
+    //Activate Colors
+    btnColors.classList.remove('inactive');
+    btnColors.addEventListener('click', btnColorsListener);
+
     //Inform the user on what to do now
     infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+'...';
     speak(infoMessage.innerHTML);

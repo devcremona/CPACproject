@@ -78,6 +78,12 @@ function btnDoneCallback() {
       btnEraser.classList.remove('inactive');
       btnEraser.addEventListener('click', btnEraserListener);
 
+      //Activate pencil
+      btnPencil.classList.remove('inactive');
+      btnPencil.classList.add('active');
+      btnPencil.addEventListener('click', btnPencilListener);
+      btnPencil.style.removeProperty('filter');
+
       //Increase drawing status
       drawingStatus = DRAWING_STATUS.FINISHING;
 
@@ -87,6 +93,28 @@ function btnDoneCallback() {
       break;
     case DRAWING_STATUS.FINISHING:
       drawingStatus = DRAWING_STATUS.DRAG;
+
+      //Deactivate all buttons exept for done
+      btnClear.classList.add('inactive');
+      btnClear.removeEventListener('click', btnClearListener);
+
+      btnRetryMagic.classList.add('inactive');
+      btnRetryMagic.removeEventListener('click', doMagic);
+
+      btnPencil.classList.add('inactive');
+      btnPencil.classList.remove('active');
+      btnPencil.removeEventListener('click', btnPencilListener);
+
+      btnColors.classList.add('inactive');
+      btnColors.classList.remove('active');
+      btnColors.removeEventListener('click', btnColorsListener);
+      btnColors.style.backgroundColor = 'rgba(0,0,0,0)';
+
+      btnEraser.classList.add('inactive');
+      btnEraser.classList.remove('active');
+      btnEraser.removeEventListener('click', btnEraserListener);
+
+
 
       //Save canvas as image, activate dragging
       addDrawing();
@@ -109,6 +137,14 @@ function btnDoneCallback() {
       //Deactivate Done button
       btnDone.classList.add('inactive');
       btnDone.removeEventListener('click', btnDoneCallback);
+
+      //Deactivate eraser
+      btnEraser.classList.add('inactive');
+      btnEraser.removeEventListener('click', btnEraserListener);
+
+      //Deactivate clear
+      btnClear.classList.add('inactive');
+      btnClear.removeEventListener('click', btnClearListener);
 
       //Reset the drawing status
       drawingStatus = DRAWING_STATUS.INIT;
@@ -157,6 +193,65 @@ function btnPencilListener() {
 }
 
 
+function btnClearListener() {
+
+  //Deactivate done button
+  btnDone.classList.add('inactive');
+  btnDone.removeEventListener('click', btnDoneCallback);
+
+  //pseudo-reactivate pencil
+  btnPencil.style.removeProperty('filter');
+
+  restart(1); //1: called after cleck event
+
+  eraserActive = false;
+
+  btnEraser.classList.remove('active');
+
+  //Deactivate retry
+  btnRetryMagic.classList.add('inactive');
+  btnRetryMagic.removeEventListener('click', doMagic);
+
+  //Activate pencil
+  btnPencil.classList.remove('inactive');
+  btnPencil.classList.add('active');
+  btnPencil.addEventListener('click', btnPencilListener);
+
+  //Deactivate clear
+  btnClear.classList.add('inactive');
+  btnClear.removeEventListener('click', btnClearListener);
+
+
+  sketchContext.fill(currentColor);
+  sketchContext.stroke(currentColor);
+  sketchContext.strokeWeight(currentStrokeWeight);
+
+  //Update pixels state
+  updatePixelsState();
+}
+
+
+function btnColorsListener() {
+  btnPencil.classList.remove('active');
+  pencilSliderContainer.classList.remove('visible');
+  btnEraser.classList.remove('active');
+  eraserSliderContainer.classList.remove('visible');
+
+  colors.classList.toggle('visible');
+
+  if(!colors.classList.contains('visible')){
+    colorsManager.classList.remove('active');
+    graphicToolsOpen = false;
+
+    //Reactivate pencil
+    btnPencilListener();
+  } else {
+    colorsManager.classList.add('active');
+    graphicToolsOpen = true;
+  }
+}
+
+
 function setListeners() {
 
   //POPUP
@@ -166,21 +261,6 @@ function setListeners() {
 
   //NAVIGATION
   //==============================================================================
-  btnClear.addEventListener('click', function() {
-    restart(1); //1: called after cleck event
-
-    eraserActive = false;
-
-    btnPencil.classList.add('active');
-    btnEraser.classList.remove('active');
-
-    sketchContext.fill(currentColor);
-    sketchContext.stroke(currentColor);
-    sketchContext.strokeWeight(currentStrokeWeight);
-
-    //Update pixels state
-    updatePixelsState();
-  });
 
   btnDone.addEventListener('click', btnDoneCallback);
 
@@ -194,33 +274,12 @@ function setListeners() {
     sketchContext.strokeWeight(currentStrokeWeight);
   });
 
-
-  btnEraser.addEventListener('click', btnEraserListener);
-
   eraserSlider.addEventListener('input', function(event){
     eraserRadius = parseInt(event.target.value);
   });
 
 
-  btnColors.addEventListener('click', function() {
-    btnPencil.classList.remove('active');
-    pencilSliderContainer.classList.remove('visible');
-    btnEraser.classList.remove('active');
-    eraserSliderContainer.classList.remove('visible');
-
-    colors.classList.toggle('visible');
-
-    if(!colors.classList.contains('visible')){
-      colorsManager.classList.remove('active');
-      graphicToolsOpen = false;
-
-      //Reactivate pencil
-      btnPencilListener();
-    } else {
-      colorsManager.classList.add('active');
-      graphicToolsOpen = true;
-    }
-  });
+  btnColors.addEventListener('click', btnColorsListener);
 
   btnCustomColor.addEventListener('click', function() {
     document.getElementById('customColor').click();

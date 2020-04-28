@@ -90,6 +90,11 @@ const sketch = function(sketch) {
       //Activate retry magic button
       btnRetryMagic.classList.remove('inactive');
       btnRetryMagic.addEventListener('click', doMagic);
+
+      //Activate clear button
+      btnClear.classList.remove('inactive');
+      btnClear.addEventListener('click', btnClearListener);
+
       //addDrawing();
     } else {
       // Only draw on the paper if the pen is still touching the paper.
@@ -187,6 +192,12 @@ function sketchMousePressedListener(e) { //Human drawing
 
 function sketchMouseDraggedListener() {
 
+  if(sketchContext.isInBounds() && drawingStatus==DRAWING_STATUS.FINISHING){
+    //Reactivate done button
+    btnDone.classList.remove('inactive');
+    btnDone.addEventListener('click', btnDoneCallback);
+  }
+
   let flagDwg = (drawingStatus==DRAWING_STATUS.FIRST_STROKE || drawingStatus==DRAWING_STATUS.FINISHING);
 
   if (!splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && !graphicToolsOpen && flagDwg){
@@ -243,6 +254,10 @@ function sketchMouseReleasedListener() {
     if(drawingStatus == DRAWING_STATUS.FIRST_STROKE && sketchContext.isInBounds()){
       //Start magic status
       drawingStatus = DRAWING_STATUS.MAGIC;
+
+      //Pseudo-deactivate Pencil button
+      btnPencil.style.filter = 'invert(60%)';
+
 
       userPen = 0;  // Up!
       const currentRawLineSimplified = model.simplifyLine(currentRawLine);
