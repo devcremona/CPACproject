@@ -67,7 +67,7 @@ function openPopup() {
             //First time set WHERE, second time set weather, third time set main character
             setUserChoice(getCurrentStatus(),choiceDiv.innerHTML);
 
-            sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')+'.jpg)';
+            sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')+'.png)';
           });
         }
       );
