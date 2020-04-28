@@ -37,6 +37,10 @@ const sketch = function(sketch) {
     //Reset of the character name field
     characterNameField.value = '';
 
+    sketchContainer.style.zIndex = -1;
+    sketchContainer.childNodes[0].style.zIndex = 1;
+    document.getElementById("footer").zIndex = 3;
+
 
     //Speech language setting
     speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
@@ -155,33 +159,45 @@ const sketch = function(sketch) {
 };
 
 
-function sketchMouseReleasedListener() {
-  updatePixelsState(); //Refresh the current pixels, actually save the last drawings
-  if (!splashIsOpen && !popupIsOpen && !graphicToolsOpen) {
+function sketchMousePressedListener(e) { //Human drawing
+  if (!document.getElementById('pencilSlider').contains(e.target) && !document.getElementById('eraserSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('btnColors').contains(e.target)){
+    pencilSliderContainer.classList.remove('visible');
+    eraserSliderContainer.classList.remove('visible');
 
-    if(drawingStatus == DRAWING_STATUS.FIRST_STROKE && sketchContext.isInBounds()){
-      //Start magic status
-      drawingStatus = DRAWING_STATUS.MAGIC;
-
-      userPen = 0;  // Up!
-      const currentRawLineSimplified = model.simplifyLine(currentRawLine);
-
-      // If it's an accident...ignore it.
-      if (currentRawLineSimplified.length > 1) {
-        // Encode this line as a stroke used to feed to the model
-        lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
-      }
-      currentRawLine = [];
-      previousUserPen = userPen;
-
-      doMagic();
+    if(colors.classList.contains('visible')){
+      btnPencil.classList.add('active');
     }
 
-    if(eraserActive && !graphicToolsOpen){
-      erase();
+    colors.classList.remove('visible');
+    colorsManager.classList.remove('active');
+
+    graphicToolsOpen = false;
+    sketchContext.mouseDragged = sketchMouseDraggedListener;
+  }
+
+  if (!splashIsOpen && !popupIsOpen && sketchContext.isInBounds() && !graphicToolsOpen) {
+
+    x = startX = sketchContext.mouseX;
+    y = startY = sketchContext.mouseY;
+    maxx = x; minx = x;
+    maxy = y; miny = y;
+    userPen = 1; // down!
+
+    if(drawingStatus == DRAWING_STATUS.INIT){
+      drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+    }else if(drawingStatus == DRAWING_STATUS.DRAG){
+      nearDwg = getNearestDwg(x, y);
     }
+
+    console.log('Drawing in progress...');
+
+    modelIsActive = false; //Machine learning in pause while i'm drawing
+    //currentRawLine = [];
+    //lastHumanDrawing = [];
+    previousUserPen = userPen;
   }
 }
+
 
 function sketchMouseDraggedListener() {
 
@@ -222,56 +238,50 @@ function sketchMouseDraggedListener() {
     flagDwg = false;
   }
 
-  else if(drawingStatus == DRAWING_STATUS.DRAG){
+  else if(drawingStatus == DRAWING_STATUS.DRAG && sketchContext.isInBounds()){
       const dx0 = sketchContext.mouseX - x;
       const dy0 = sketchContext.mouseY - y;
 
       if ((dx0*dx0+dy0*dy0 > epsilon*epsilon) && checkMask(x, y))
-        updatePosition(Math.round(dx0), Math.round(dy0));
+        nearDwg.updateCoord(dx0, dy0); // todo: drag NEAREST dwg, not last one
 
       x += dx0;
       y += dy0;
-
-      if(testing)
-        console.log("dx "+dx0+"\ndy "+dy0);
   }
 
   return false;
 }
 
 
+function sketchMouseReleasedListener() {
+  updatePixelsState(); //Refresh the current pixels, actually save the last drawings
+  if (!splashIsOpen && !popupIsOpen && !graphicToolsOpen) {
 
-function sketchMousePressedListener(e) { //Human drawing
-  if (!document.getElementById('pencilSlider').contains(e.target) && !document.getElementById('eraserSlider').contains(e.target) && !document.getElementById('colors').contains(e.target) && !document.getElementById('btnPencil').contains(e.target) && !document.getElementById('btnEraser').contains(e.target) && !document.getElementById('btnColors').contains(e.target)){
-    pencilSliderContainer.classList.remove('visible');
-    eraserSliderContainer.classList.remove('visible');
+    if(drawingStatus == DRAWING_STATUS.FIRST_STROKE && sketchContext.isInBounds()){
+      //Start magic status
+      drawingStatus = DRAWING_STATUS.MAGIC;
 
-    if(colors.classList.contains('visible')){
-      btnPencil.classList.add('active');
+      //Pseudo-deactivate Pencil button
+      btnPencil.style.filter = 'invert(60%)';
+
+
+      userPen = 0;  // Up!
+      const currentRawLineSimplified = model.simplifyLine(currentRawLine);
+
+      // If it's an accident...ignore it.
+      if (currentRawLineSimplified.length > 1) {
+        // Encode this line as a stroke used to feed to the model
+        lastHumanStroke = model.lineToStroke(currentRawLineSimplified, [startX, startY]);
+      }
+      currentRawLine = [];
+      previousUserPen = userPen;
+
+      doMagic();
     }
 
-    colors.classList.remove('visible');
-    colorsManager.classList.remove('active');
-    
-    graphicToolsOpen = false;
-    sketchContext.mouseDragged = sketchMouseDraggedListener;
-  }
-
-  if (!splashIsOpen && !popupIsOpen && sketchContext.isInBounds() && !graphicToolsOpen) {
-    if(drawingStatus == DRAWING_STATUS.INIT){
-      drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+    if(eraserActive && !graphicToolsOpen){
+      erase();
     }
-
-    console.log('Drawing in progress...');
-
-    x = startX = sketchContext.mouseX;
-    y = startY = sketchContext.mouseY;
-    userPen = 1; // down!
-
-    modelIsActive = false; //Machine learning in pause while i'm drawing
-    //currentRawLine = [];
-    //lastHumanDrawing = [];
-    previousUserPen = userPen;
   }
 }
 
