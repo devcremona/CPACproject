@@ -21,7 +21,7 @@
   border-radius: 10px;
   margin: 0 auto; /* Center the DIV horizontally */
   text-align: center;
-  width: 50vw;
+  width: 60vw;
   padding: 5px 5px 5px 5px;
 }
 
@@ -29,8 +29,8 @@
   position: fixed;
   display: inline-flex;
   right: 0.5vw;
-  width: 90px;
-  height: 35px;
+  width: 12.5vw;
+  height: 9vh;
   bottom: var(--bottom-margin);
 }
 
@@ -53,8 +53,10 @@
 
 #eraser,
 #pencil{
-  --var-slider-width: 10px;
-  --var-slider-height: 180px;
+  --var-slider-width: 7px;
+  --var-slider-height: 120px;
+  --var-slide-shift-y: 10px;
+  --var-slide-shift-x: 12px;
   position: relative;
   width: 30px;
 }
@@ -63,7 +65,7 @@
 #eraserSlider,
 #pencilSlider{
 
-  transform: rotate(-90deg) translateX(calc(-1 * var(--var-slider-height) + 25px - var(--var-slider-width))) translateY(calc(15px - 1 / 2 * var(--var-slider-width)));
+  transform: rotate(-90deg) translateX(calc(-1 * var(--var-slider-height) + var(--var-slide-shift-y) - var(--var-slider-width))) translateY(calc(var(--var-slide-shift-x) - 1 / 2 * var(--var-slider-width)));
   transform-origin: top left;
   cursor: pointer;
   margin: 0px;
@@ -78,8 +80,8 @@
 #pencilSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: calc(var(--var-slider-width) + 15px);
-  height: calc(var(--var-slider-width) + 15px);
+  width: calc(var(--var-slider-width) + 10px);
+  height: calc(var(--var-slider-width) + 10px);
   border-radius: 50%;
   background: gray;
   cursor: pointer;
@@ -88,8 +90,8 @@
 
 #eraserSlider::-moz-range-thumb,
 #pencilSlider::-moz-range-thumb {
-  width: calc(var(--var-slider-width) + 15px);
-  height: calc(var(--var-slider-width) + 15px);
+  width: calc(var(--var-slider-width) + 10px);
+  height: calc(var(--var-slider-width) + 10px);
   border-radius: 50%;
   background: gray;
   cursor: pointer;
@@ -108,7 +110,7 @@
   overflow: hidden;
   height:0px;
   width: 30px;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
   opacity:0;
   transition: 0.5s all ease;
 }
@@ -137,37 +139,39 @@
 
 
 #colors{
-  width: 114px;
+  width: 53px;
   height: 0px;
   position: absolute;
-  margin-bottom: 10px;
-  bottom: 33px;
-  right:-30px;
+  margin-bottom: 8px;
+  bottom: 20px;
+  right:-15px;
   transition: 0.5s all ease;
   background-color: rgba(250,250,250,0.3);
   border-radius: 20px;
   overflow: hidden;
-  padding:10px;
+  padding:6px;
   opacity:0;
   font-size-adjust: 0.35; /*Just for firefox*/
+  pointer-events: none;
 }
 
 
 
 #colors.visible {
-  height: 40vh;
+  height: 50vh;
   opacity: 1;
+  pointer-events: all;
 }
 
 #colors button {
-  width: 2vw;
-  height: 2vw;
+  width: 11px;
+  height: 11px;
   border: 0.3vw solid transparent;
   border-radius: 50%;
   padding: 0;
 }
 #colors button.active {
-  border: 0.3vw solid white;
+  border:2px solid white;
 }
 #colors button:hover {
   transform: scale(1.3);
@@ -178,7 +182,7 @@
 #btnColors{
   position:absolute;
   bottom:0px;
-  height: 30px;
+  height: 6.4vh;
   margin-bottom: 4px;
   background-color: rgba(0,0,0,0);
   border-radius: 50%;
@@ -206,11 +210,139 @@
     width: 30px;
     height: 30px;
   }
+  #drawing-tools{
+    width: 90px;
+    height: 35px;
+  }
+  #pencil,
+  #eraser,
+  #colorsManager{
+    width: 30px;
+  }
+  #btnColors{
+    height: 30px;
+  }
+
+  #eraser,
+  #pencil{
+    --var-slider-width: 10px;
+    --var-slider-height: 180px;
+    --var-slide-shift-y: 25px;
+    --var-slide-shift-x: 15px;
+  }
+
+  #eraserSliderContainer.visible,
+  #pencilSliderContainer.visible{
+    height: calc(var(--var-slider-height) + 25px);
+  }
+
+  #eraserSlider::-webkit-slider-thumb,
+  #pencilSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: calc(var(--var-slider-width) + 15px);
+    height: calc(var(--var-slider-width) + 15px);
+    border-radius: 50%;
+    background: gray;
+    cursor: pointer;
+    margin: 0px;
+  }
+
+  #eraserSlider::-moz-range-thumb,
+  #pencilSlider::-moz-range-thumb {
+    width: calc(var(--var-slider-width) + 15px);
+    height: calc(var(--var-slider-width) + 15px);
+    border-radius: 50%;
+    background: gray;
+    cursor: pointer;
+    margin: 0px;
+  }
+
+  #eraserSliderContainer,
+  #pencilSliderContainer{
+    margin-bottom: 35px;
+  }
+
+  #colors{
+    width: 114px;
+    margin-bottom: 10px;
+    bottom: 33px;
+    right:-30px;
+    border-radius: 20px;
+    padding:10px;
+  }
+  #colors.visible {
+    height: 40vh;
+  }
+
+  #colors button {
+    width: 27px;
+    height: 27px;
+  }
+  #colors button.active {
+    border:3px solid white;
+  }
+
 }
 
 @media screen and (min-width: 1700px) {
  .iconify {
     width: 40px;
     height: 40px;
+  }
+
+  #drawing-tools{
+    width: 120px;
+    height: 45px;
+  }
+  #pencil,
+  #eraser,
+  #colorsManager{
+    width: 40px;
+  }
+  #btnColors{
+    height: 40px;
+  }
+
+  #eraser,
+  #pencil{
+    --var-slider-width: 13px;
+    --var-slider-height: 200px;
+    --var-slide-shift-y: 20px;
+    --var-slide-shift-x: 17px;
+  }
+
+  #eraserSliderContainer.visible,
+  #pencilSliderContainer.visible{
+    height: calc(var(--var-slider-height) + 35px);
+  }
+
+  #eraserSliderContainer,
+  #pencilSliderContainer{
+    margin-bottom: 40px;
+    width: 40px;
+  }
+
+  #colors{
+    width: 125px;
+    margin-bottom: 8px;
+    bottom: 46px;
+    right: -40px;
+    border-radius: 20px;
+    padding: 10px;
+  }
+
+  #colors.visible{
+    height: 29vh;
+  }
+
+  #colors button {
+    border: 2px solid transparent;
+    width: 30px;
+    height: 30px;
+  }
+
+  #colors button.active {
+    border: 4px solid transparent;
   }
 }
