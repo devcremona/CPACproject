@@ -114,7 +114,7 @@ function openPopup() {
       btnStopRecording.addEventListener('click', confirmPopupCallback);
       break;
 
-    case STATUS_STORY_ENUM.RECAP:
+    case STATUS_STORY_ENUM.END:
       btnStartRecording.style.display = 'none';
       btnStopRecording.style.display = 'none';
       btnConfirmPopup.style.display = 'inline';
