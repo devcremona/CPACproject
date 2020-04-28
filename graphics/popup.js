@@ -34,9 +34,18 @@ function openPopup() {
 
   //Generate dynamically buttons for the choices
   for (var i = 0; i < currentChoices.length; i++){
-      $( '#choicesDiv' ).append( '<div class="choiceButton" id=choice'+i+'">'+currentChoices[i]+'</div>' );
+      if(!isAutomaticStoryAhead(getCurrentStatus_Story())){ //If I have to draw something, place images in the choice buttons
+        img = '<img width="60vw" src="../buttonsImg/'+currentChoices[i].toLowerCase()+'.png" style="margin:auto">'
+        $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+img+currentChoices[i]+'</div>' );
+      }
+      else {
+        $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+currentChoices[i]+'</div>' );
+      }
       speak(currentChoices[i]);
   }
+
+
+
 
   //Show the popup
   popup.classList.remove('hidden');
@@ -65,7 +74,12 @@ function openPopup() {
               setUserChoice(STATUS_STORY_ENUM.WEATHER,choices[STATUS_STORY_ENUM.WEATHER][0]); //The first time is set to "sun", second time is overwritten by next
 
             //First time set WHERE, second time set weather, third time set main character
-            setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML);
+            if(!isAutomaticStoryAhead(getCurrentStatus_Story())){
+              setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML.split('>')[1]);
+            } else {
+              setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML);
+            }
+
 
             sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')+'.png)';
           });
@@ -100,7 +114,11 @@ function openPopup() {
             btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
 
             //Set the user choice
-            setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML);
+            if(!isAutomaticStoryAhead(getCurrentStatus_Story())){
+              setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML.split('>')[1]);
+            } else {
+              setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML);
+            }
           });
         }
       );
@@ -131,7 +149,7 @@ function openPopup() {
             btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
 
             //Set the user choice
-            //setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML);
+            //setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML.split('>')[1]);
           });
         }
       );

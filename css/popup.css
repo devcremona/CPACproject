@@ -58,6 +58,7 @@
 }
 
 .choiceButton {
+  display: grid;
   margin: 0px 2vw 0px 2vw;
   padding: 1vw;
   border-radius: 30%;
