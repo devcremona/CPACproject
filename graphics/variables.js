@@ -1,8 +1,6 @@
 let sketchContext;
 
 //Model variables
-const BASE_URL = 'https://storage.googleapis.com/quickdraw-models/sketchRNN/models/';
-const availableModels = ['cat','sheep'];
 let model;
 
 // Model

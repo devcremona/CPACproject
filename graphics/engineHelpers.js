@@ -80,7 +80,7 @@ function loadModel(index) {
     modelLoaded = true;
     app.classList.remove('loading');
     loadingGif.style.display = 'none'; //Hide loading gif
-    console.log(`🤖${availableModels[index]} loaded.`);
+    console.log(`🤖${getUserChoice(getCurrentStatus_Story())} loaded.`);
     model.setPixelFactor(5.0);  // Smaller -> larger outputs
 
     //Set the drawing status
