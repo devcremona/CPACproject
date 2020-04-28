@@ -13,7 +13,7 @@ const STATUS_STORY_ENUM = {
   SITUA1: 4,
   OBJECT: 5,
   SITUA2: 6,
-  SITUA3: 7,
+  LAST_SITUA: 7,
   RECORDING: 8,
   RECAP: 9,
 };
@@ -27,7 +27,7 @@ var choices = {
   [STATUS_STORY_ENUM.SITUA1]: ["X wants to play", "X is hungry", "X is thirsty"],
   [STATUS_STORY_ENUM.OBJECT]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
   [STATUS_STORY_ENUM.SITUA2]: ["Bird", "Bee", "Crab", "Duck"],
-  [STATUS_STORY_ENUM.SITUA3]: ["Steal the Y", "Share the Y", "Enjoy with X"],
+  [STATUS_STORY_ENUM.LAST_SITUA]: ["Steal the Y", "Share the Y", "Enjoy with X"],
   [STATUS_STORY_ENUM.RECORDING]: [],
   [STATUS_STORY_ENUM.RECAP]: ["The end", "Very good", "What a beautiful story", "Thank you"]
 };
@@ -47,7 +47,7 @@ var narrationPC = {
   [STATUS_STORY_ENUM.SITUA1]: ["Now what happens?"],
   [STATUS_STORY_ENUM.OBJECT]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
   [STATUS_STORY_ENUM.SITUA2]: ["But at some point ... There comes a"],
-  [STATUS_STORY_ENUM.SITUA3]: ["But character2 would like..."],
+  [STATUS_STORY_ENUM.LAST_SITUA]: ["But character2 would like..."],
   [STATUS_STORY_ENUM.RECORDING]: ["Now tell me how this story ends!"],
   [STATUS_STORY_ENUM.RECAP]: ["The end", "Very good", "What a beautiful story", "Thank you"]
 };
@@ -63,7 +63,7 @@ var narrationVoice = {
   [STATUS_STORY_ENUM.SITUA1]: "X ...",
   [STATUS_STORY_ENUM.OBJECT]: "with ...",
   [STATUS_STORY_ENUM.SITUA2]: "At some point a small ... arrives",
-  [STATUS_STORY_ENUM.SITUA3]: "but the character2 would like so much to ...",
+  [STATUS_STORY_ENUM.LAST_SITUA]: "but the character2 would like so much to ...",
   [STATUS_STORY_ENUM.RECORDING]: "Suddenly ...",
   [STATUS_STORY_ENUM.RECAP]: ""
 };
@@ -97,7 +97,7 @@ function setUserChoice(status, object){
     case STATUS_STORY_ENUM.SITUA1: setSitua1(object); break;
     case STATUS_STORY_ENUM.OBJECT: setObject(object); break;
     case STATUS_STORY_ENUM.SITUA2: setSitua2(object); break;
-    case STATUS_STORY_ENUM.SITUA3: setSitua3(object); break;
+    case STATUS_STORY_ENUM.LAST_SITUA: setLAST_SITUA(object); break;
     case STATUS_STORY_ENUM.RECORDING: setFinale(object); break;
     default: ret = false; break;
   }
@@ -169,13 +169,13 @@ function setNameCharacter(name){
   choices[STATUS_STORY_ENUM.SITUA1] = situa1;
 
   // change the choices according the name
-  situa3 = choices[STATUS_STORY_ENUM.SITUA3]
-  for (let i=0; i<situa3.length; i++) {
-    situa3[i] = situa3[i].replace("X", name);
+  LAST_SITUA = choices[STATUS_STORY_ENUM.LAST_SITUA]
+  for (let i=0; i<LAST_SITUA.length; i++) {
+    LAST_SITUA[i] = LAST_SITUA[i].replace("X", name);
   } // if the replace not found return the original sentence
 
   //update choices
-  choices[STATUS_STORY_ENUM.SITUA3] = situa3;
+  choices[STATUS_STORY_ENUM.LAST_SITUA] = LAST_SITUA;
 
   // add to the narrations
   narrationVoice[STATUS_STORY_ENUM.NAME] = narrationVoice[STATUS_STORY_ENUM.NAME].replace("...", nameCharacter.toLowerCase());
@@ -233,13 +233,13 @@ function setObject(obj){
   narrationVoice[STATUS_STORY_ENUM.OBJECT] += ".";
 
   // change the choices according the name
-  situa3 = choices[STATUS_STORY_ENUM.SITUA3]
-  for (let i=0; i<situa3.length; i++) {
-    situa3[i] = situa3[i].replace("Y", obj);
+  LAST_SITUA = choices[STATUS_STORY_ENUM.LAST_SITUA]
+  for (let i=0; i<LAST_SITUA.length; i++) {
+    LAST_SITUA[i] = LAST_SITUA[i].replace("Y", obj);
   } // if the replace not found return the original sentence
 
   //update choices
-  choices[STATUS_STORY_ENUM.SITUA3] = situa3;
+  choices[STATUS_STORY_ENUM.LAST_SITUA] = LAST_SITUA;
 };
 
 
@@ -260,29 +260,29 @@ function setSitua2(character){
   narrationVoice[STATUS_STORY_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2] += ",";
 
   // change the narrations according the name
-  narr_situa3 = narrationPC[STATUS_STORY_ENUM.SITUA3]
-  for (let i=0; i<narr_situa3.length; i++) {
-    narr_situa3[i] = narr_situa3[i].replace("character2", character);
+  narr_LAST_SITUA = narrationPC[STATUS_STORY_ENUM.LAST_SITUA]
+  for (let i=0; i<narr_LAST_SITUA.length; i++) {
+    narr_LAST_SITUA[i] = narr_LAST_SITUA[i].replace("character2", character);
   } // if the replace not found return the original sentence
-  narrationVoice[STATUS_STORY_ENUM.SITUA3] = narrationVoice[STATUS_STORY_ENUM.SITUA3].replace("character2", character.toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.LAST_SITUA] = narrationVoice[STATUS_STORY_ENUM.LAST_SITUA].replace("character2", character.toLowerCase());
 
   //update narrations
-  narrationPC[STATUS_STORY_ENUM.SITUA3] = narr_situa3;
+  narrationPC[STATUS_STORY_ENUM.LAST_SITUA] = narr_LAST_SITUA;
 
 };
 
 
 /**
 * set situa2 chosen
-* @param situa3 {string}: correspond if the user selected ["Steal the Y", "Share the Y", "Enjoy with X"]
+* @param LAST_SITUA {string}: correspond if the user selected ["Steal the Y", "Share the Y", "Enjoy with X"]
 */
-function setSitua3(situa3){
+function setLAST_SITUA(LAST_SITUA){
   //update choices
-  userChoice[STATUS_STORY_ENUM.SITUA3] = situa3;
+  userChoice[STATUS_STORY_ENUM.LAST_SITUA] = LAST_SITUA;
 
   // add to the narrations
-  narrationVoice[STATUS_STORY_ENUM.SITUA3] = narrationVoice[STATUS_STORY_ENUM.SITUA3].replace("...", situa3.toLowerCase());
-  narrationVoice[STATUS_STORY_ENUM.SITUA3] += ".";
+  narrationVoice[STATUS_STORY_ENUM.LAST_SITUA] = narrationVoice[STATUS_STORY_ENUM.LAST_SITUA].replace("...", LAST_SITUA.toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.LAST_SITUA] += ".";
 }
 
 
@@ -309,8 +309,8 @@ function setNextStatus(){
     case STATUS_STORY_ENUM.NAME: currentStatus=STATUS_STORY_ENUM.SITUA1; break;
     case STATUS_STORY_ENUM.SITUA1: currentStatus=STATUS_STORY_ENUM.OBJECT; break;
     case STATUS_STORY_ENUM.OBJECT: currentStatus=STATUS_STORY_ENUM.SITUA2; break;
-    case STATUS_STORY_ENUM.SITUA2: currentStatus=STATUS_STORY_ENUM.SITUA3; break;
-    case STATUS_STORY_ENUM.SITUA3: currentStatus=STATUS_STORY_ENUM.RECORDING; break;
+    case STATUS_STORY_ENUM.SITUA2: currentStatus=STATUS_STORY_ENUM.LAST_SITUA; break;
+    case STATUS_STORY_ENUM.LAST_SITUA: currentStatus=STATUS_STORY_ENUM.RECORDING; break;
     case STATUS_STORY_ENUM.RECORDING: currentStatus=STATUS_STORY_ENUM.RECAP; break;
     default: currentStatus=""; break;
   }
@@ -345,7 +345,7 @@ function isAutomaticStoryAhead(status){
     case STATUS_STORY_ENUM.SITUA1: goAhead = true; break;
     case STATUS_STORY_ENUM.OBJECT: goAhead = false; break;
     case STATUS_STORY_ENUM.SITUA2: goAhead = false; break;
-    case STATUS_STORY_ENUM.SITUA3: goAhead = false; break;
+    case STATUS_STORY_ENUM.LAST_SITUA: goAhead = false; break;
     case STATUS_STORY_ENUM.RECORDING: goAhead = false; break;
     default: goAhead = false; break;
   }
