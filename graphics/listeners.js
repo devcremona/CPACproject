@@ -30,7 +30,7 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
       infoMessage.innerHTML = '';
       break;
 
-    case STATUS_STORY_ENUM.RECAP:
+    case STATUS_STORY_ENUM.END:
       infoMessage.innerHTML = 'The End!';
       break;
   }
@@ -102,7 +102,7 @@ function btnDoneCallback() {
     case DRAWING_STATUS.DRAG:
 
       //Increase the story status
-      if(getCurrentStatus_Story()<STATUS_STORY_ENUM.RECAP){
+      if(getCurrentStatus_Story()<STATUS_STORY_ENUM.END){
         setNextStatus_Story();
       }
 
