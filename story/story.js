@@ -340,15 +340,15 @@ function setNextStatus_Story(){
 */
 function setNextStatus_Recap(){
   switch(current_recap_status){
-    case STATUS_RECAP_ENUM.WHERE: current_story_status=STATUS_RECAP_ENUM.WEATHER; break;
-    case STATUS_RECAP_ENUM.WEATHER: current_story_status=STATUS_RECAP_ENUM.CHARACTER; break;
-    case STATUS_RECAP_ENUM.CHARACTER: current_story_status=STATUS_RECAP_ENUM.NAME; break;
-    case STATUS_RECAP_ENUM.NAME: current_story_status=STATUS_RECAP_ENUM.SITUA1; break;
-    case STATUS_RECAP_ENUM.SITUA1: current_story_status=STATUS_RECAP_ENUM.OBJECT; break;
-    case STATUS_RECAP_ENUM.OBJECT: current_story_status=STATUS_RECAP_ENUM.SITUA2; break;
-    case STATUS_RECAP_ENUM.SITUA2: current_story_status=STATUS_RECAP_ENUM.LAST_SITUA; break;
-    case STATUS_RECAP_ENUM.LAST_SITUA: current_story_status=STATUS_RECAP_ENUM.RECORDING; break;
-    case STATUS_RECAP_ENUM.RECORDING: current_story_status=STATUS_RECAP_ENUM.END; break;
+    case STATUS_RECAP_ENUM.WHERE: current_recap_status=STATUS_RECAP_ENUM.WEATHER; break;
+    case STATUS_RECAP_ENUM.WEATHER: current_recap_status=STATUS_RECAP_ENUM.CHARACTER; break;
+    case STATUS_RECAP_ENUM.CHARACTER: current_recap_status=STATUS_RECAP_ENUM.NAME; break;
+    case STATUS_RECAP_ENUM.NAME: current_recap_status=STATUS_RECAP_ENUM.SITUA1; break;
+    case STATUS_RECAP_ENUM.SITUA1: current_recap_status=STATUS_RECAP_ENUM.OBJECT; break;
+    case STATUS_RECAP_ENUM.OBJECT: current_recap_status=STATUS_RECAP_ENUM.SITUA2; break;
+    case STATUS_RECAP_ENUM.SITUA2: current_recap_status=STATUS_RECAP_ENUM.LAST_SITUA; break;
+    case STATUS_RECAP_ENUM.LAST_SITUA: current_recap_status=STATUS_RECAP_ENUM.RECORDING; break;
+    case STATUS_RECAP_ENUM.RECORDING: current_recap_status=STATUS_RECAP_ENUM.END; break;
     default: current_recap_status=""; break;
   }
   return  current_recap_status
