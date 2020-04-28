@@ -222,18 +222,15 @@ function sketchMouseDraggedListener() {
     flagDwg = false;
   }
 
-  else if(drawingStatus == DRAWING_STATUS.DRAG){
+  else if(drawingStatus == DRAWING_STATUS.DRAG && sketchContext.isInBounds()){
       const dx0 = sketchContext.mouseX - x;
       const dy0 = sketchContext.mouseY - y;
 
       if ((dx0*dx0+dy0*dy0 > epsilon*epsilon) && checkMask(x, y))
-        updatePosition(Math.round(dx0), Math.round(dy0));
+        nearDwg.updateCoord(dx0, dy0); // todo: drag NEAREST dwg, not last one
 
       x += dx0;
       y += dy0;
-
-      if(testing)
-        console.log("dx "+dx0+"\ndy "+dy0);
   }
 
   return false;
@@ -252,21 +249,26 @@ function sketchMousePressedListener(e) { //Human drawing
 
     colors.classList.remove('visible');
     colorsManager.classList.remove('active');
-    
+
     graphicToolsOpen = false;
     sketchContext.mouseDragged = sketchMouseDraggedListener;
   }
 
   if (!splashIsOpen && !popupIsOpen && sketchContext.isInBounds() && !graphicToolsOpen) {
-    if(drawingStatus == DRAWING_STATUS.INIT){
-      drawingStatus = DRAWING_STATUS.FIRST_STROKE;
-    }
-
-    console.log('Drawing in progress...');
 
     x = startX = sketchContext.mouseX;
     y = startY = sketchContext.mouseY;
+    maxx = x; minx = x;
+    maxy = y; miny = y;
     userPen = 1; // down!
+
+    if(drawingStatus == DRAWING_STATUS.INIT){
+      drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+    }else if(drawingStatus == DRAWING_STATUS.DRAG){
+      nearDwg = getNearestDwg(x, y);
+    }
+
+    console.log('Drawing in progress...');
 
     modelIsActive = false; //Machine learning in pause while i'm drawing
     //currentRawLine = [];

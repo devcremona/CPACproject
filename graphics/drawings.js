@@ -18,13 +18,8 @@ function addDrawing(){
 	img1.style.zIndex = "+1";
 	img1.style.left = 0+"px";
 	img1.style.top = 0+"px";
-	lastDwg = img1;
-}
-
-// "apx" -> "bpx" being a and b respectively old and new positions
-function updatePosition(dx, dy){
-	lastDwg.style.left = Number(lastDwg.style.left.substring(0, lastDwg.style.left.length-2))+dx+"px";
-	lastDwg.style.top = Number(lastDwg.style.top.substring(0, lastDwg.style.top.length-2))+dy+"px";
+	img1.style.zIndex = 0;
+	drawings.push(new Drawing(img1)); 
 }
 
 // todo: cambiare da controllo bordi a controllo mask
@@ -34,4 +29,56 @@ function checkMask(x, y){
 		return true;
 	else
 		return false;
+}
+
+
+function getNearestDwg(xx, yy){
+	mindwg = 0;
+	mind2 = sketchContext.width ** 2 + sketchContext.height ** 2;
+
+	for(var i=0; i<drawings.length; i++){ // for each drawing
+		// compute squared distance wrt clicked point
+		let d2 = (xx - drawings[i].meanx) ** 2 + (yy - drawings[i].meany) ** 2;
+
+		if(d2 < mind2){ // save nearest one
+			mind2 = d2;
+			mindwg = drawings[i];
+		}
+	}
+
+	return mindwg; // return nearest one
+}
+
+
+class Drawing{
+	constructor(dwg){
+		this.dwg = dwg; // element in the DOM
+
+		this.dmaxx = maxx;
+		this.dmaxy = maxy;
+		
+		this.dminx = minx;
+		this.dminy = miny;
+		
+		this.width = maxx-minx;
+		this.height = maxy-miny;
+		
+		this.meanx = Math.round(this.dminx + this.width/2);
+		this.meany = Math.round(this.dminy + this.height/2);
+	}
+
+	updateCoord(dxx, dyy){
+		this.dmaxx += dxx;
+		this.dminx += dxx;
+
+		this.dmaxy += dyy;
+		this.dminy += dyy;
+
+		this.meanx += dxx;
+		this.meany += dyy;
+
+		// DOM operations
+		this.dwg.style.left = Number(this.dwg.style.left.substring(0, this.dwg.style.left.length-2))+dxx+"px";
+		this.dwg.style.top = Number(this.dwg.style.top.substring(0, this.dwg.style.top.length-2))+dyy+"px";
+	}
 }
