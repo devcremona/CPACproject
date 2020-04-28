@@ -390,7 +390,7 @@ function isAutomaticStoryAhead(status){
     case STATUS_STORY_ENUM.SITUA1: goAhead = true; break;
     case STATUS_STORY_ENUM.OBJECT: goAhead = false; break;
     case STATUS_STORY_ENUM.SITUA2: goAhead = false; break;
-    case STATUS_STORY_ENUM.LAST_SITUA: goAhead = false; break;
+    case STATUS_STORY_ENUM.LAST_SITUA: goAhead = true; break;
     case STATUS_STORY_ENUM.RECORDING: goAhead = false; break;
     default: goAhead = false; break;
   }
