@@ -362,7 +362,7 @@ function setNextStatus_Recap(){
 * return the current status of the story
 * @return {enum} status
 */
-function getCurrent_Story_Status(){
+function getCurrentStatus_Story(){
   return current_story_status
 };
 
@@ -370,7 +370,7 @@ function getCurrent_Story_Status(){
 * return the current status of the recap
 * @return {enum} status
 */
-function getCurrent_Recap_Status(){
+function getCurrentStatus_Recap(){
   return current_recap_status
 };
 
