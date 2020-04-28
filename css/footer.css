@@ -6,6 +6,7 @@
   bottom: var(--bottom-margin);
   width: 100%;
   display: inline-flex;
+  z-index: 3;
 }
 
 #navigation-tools{

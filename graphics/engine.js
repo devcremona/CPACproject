@@ -57,7 +57,9 @@ const sketch = function(sketch) {
 
     //loadModel(0);
 
-    openPopup();
+    //openPopup();
+
+    splashIsOpen = true;
   };
 
 

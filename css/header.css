@@ -5,5 +5,5 @@
   position: fixed;
   right: 0.5vw;
   top: var(--bottom-margin);
-  z-index: 2;
+  z-index: 1;
 }
