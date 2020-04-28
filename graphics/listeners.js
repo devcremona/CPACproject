@@ -195,6 +195,9 @@ function btnPencilListener() {
 
 function btnClearListener() {
 
+  //Stop speak
+  speakStop();
+
   //Deactivate done button
   btnDone.classList.add('inactive');
   btnDone.removeEventListener('click', btnDoneCallback);
