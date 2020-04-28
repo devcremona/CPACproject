@@ -8,17 +8,17 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   popupContent.classList.add('hidden');
   popupIsOpen = false;
 
-  switch (getCurrentStatus()) {
+  switch (getCurrent_Status_Story()) {
     case STATUS_STORY_ENUM.NAME:
-      setUserChoice(getCurrentStatus(), characterNameField.value);
+      setUserChoice(getCurrent_Status_Story(), characterNameField.value);
 
     default:
-      if(isAutomaticStoryAhead(getCurrentStatus())){
+      if(isAutomaticStoryAhead(getCurrent_Status_Story())){
         //Auto re-call popup after set next status
-        setNextStatus();
+        setNextStatus_Story();
         setTimeout(openPopup,500);
       } else {
-        loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus())));
+        loadModel(currentChoices.indexOf(getUserChoice(getCurrent_Status_Story())));
 
         //Deactivate eraser at the beginning
         btnEraser.classList.add('inactive');
@@ -102,8 +102,8 @@ function btnDoneCallback() {
     case DRAWING_STATUS.DRAG:
 
       //Increase the story status
-      if(getCurrentStatus()<STATUS_STORY_ENUM.RECAP){
-        setNextStatus();
+      if(getCurrent_Status_Story()<STATUS_STORY_ENUM.RECAP){
+        setNextStatus_Story();
       }
 
       //Deactivate Done button

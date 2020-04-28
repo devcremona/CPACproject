@@ -71,7 +71,7 @@ function loadModel(index) {
   //model = new ms.SketchRNN(`${BASE_URL}${availableModels[index]}.gen.json`);
 
   //Use custom trained model of sheep
-  model = new ms.SketchRNN(`../ML/models/`+getUserChoice(getCurrentStatus()).toLowerCase()+`.gen.json`);
+  model = new ms.SketchRNN(`../ML/models/`+getUserChoice(getCurrent_Status_Story()).toLowerCase()+`.gen.json`);
 
   //model = new ms.SketchRNN('https://storage.googleapis.com/quickdraw-models/sketchRNN/models/sheep.gen.json');
 
@@ -87,7 +87,7 @@ function loadModel(index) {
     drawingStatus = DRAWING_STATUS.INIT;
 
     //Inform the user on what to do now
-    infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus()).toLowerCase()+'...';
+    infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrent_Status_Story()).toLowerCase()+'...';
     speak(infoMessage.innerHTML);
   });
 };

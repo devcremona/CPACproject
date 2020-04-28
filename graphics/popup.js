@@ -46,7 +46,7 @@ function openPopup() {
   //Get the divs of the choices in an array
   choicesDivs = $( '#choicesDiv' ).children().toArray();
 
-  switch(getCurrentStatus()){
+  switch(getCurrent_Status_Story()){
     case STATUS_STORY_ENUM.WHERE:
     case STATUS_STORY_ENUM.WEATHER:
     case STATUS_STORY_ENUM.CHARACTER:
@@ -61,11 +61,11 @@ function openPopup() {
             btnConfirmPopup.classList.remove('inactive');
             btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
 
-            if(getCurrentStatus()==STATUS_STORY_ENUM.WHERE)
+            if(getCurrent_Status_Story()==STATUS_STORY_ENUM.WHERE)
               setUserChoice(STATUS_STORY_ENUM.WEATHER,choices[STATUS_STORY_ENUM.WEATHER][0]); //The first time is set to "sun", second time is overwritten by next
 
             //First time set WHERE, second time set weather, third time set main character
-            setUserChoice(getCurrentStatus(),choiceDiv.innerHTML);
+            setUserChoice(getCurrent_Status_Story(),choiceDiv.innerHTML);
 
             sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')+'.png)';
           });
@@ -100,7 +100,7 @@ function openPopup() {
             btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
 
             //Set the user choice
-            setUserChoice(getCurrentStatus(),choiceDiv.innerHTML);
+            setUserChoice(getCurrent_Status_Story(),choiceDiv.innerHTML);
           });
         }
       );
@@ -131,7 +131,7 @@ function openPopup() {
             btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
 
             //Set the user choice
-            //setUserChoice(getCurrentStatus(),choiceDiv.innerHTML);
+            //setUserChoice(getCurrent_Status_Story(),choiceDiv.innerHTML);
           });
         }
       );
