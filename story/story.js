@@ -55,7 +55,7 @@ var narrationPC = {
 var userChoice = [];
 
 // status for the recap phase
-const RECAP_STORY_ENUM = {
+const STATUS_RECAP_ENUM = {
   WHERE: 0,
   WEATHER: 1,
   CHARACTER: 2,
@@ -71,16 +71,16 @@ const RECAP_STORY_ENUM = {
 
 // sentences for the narration to reproduce
 var narrationVoice = {
-  [RECAP_STORY_ENUM.WHERE]: "Once upon a time, in a beautilul ...",
-  [RECAP_STORY_ENUM.WEATHER]: "on a ... day",
-  [RECAP_STORY_ENUM.CHARACTER]: "there was a very nice ...",
-  [RECAP_STORY_ENUM.NAME]: "named ...",
-  [RECAP_STORY_ENUM.SITUA1]: "X ...",
-  [RECAP_STORY_ENUM.OBJECT]: "with ...",
-  [RECAP_STORY_ENUM.SITUA2]: "At some point a small ... arrives",
-  [RECAP_STORY_ENUM.LAST_SITUA]: "but the character2 would like so much to ...",
-  [RECAP_STORY_ENUM.RECORDING]: "Suddenly ...",
-  [RECAP_STORY_ENUM.END]: "" // bravissimo
+  [STATUS_RECAP_ENUM.WHERE]: "Once upon a time, in a beautilul ...",
+  [STATUS_RECAP_ENUM.WEATHER]: "on a ... day",
+  [STATUS_RECAP_ENUM.CHARACTER]: "there was a very nice ...",
+  [STATUS_RECAP_ENUM.NAME]: "named ...",
+  [STATUS_RECAP_ENUM.SITUA1]: "X ...",
+  [STATUS_RECAP_ENUM.OBJECT]: "with ...",
+  [STATUS_RECAP_ENUM.SITUA2]: "At some point a small ... arrives",
+  [STATUS_RECAP_ENUM.LAST_SITUA]: "but the character2 would like so much to ...",
+  [STATUS_RECAP_ENUM.RECORDING]: "Suddenly ...",
+  [STATUS_RECAP_ENUM.END]: "" // bravissimo
 };
 
 // ============================================================================
@@ -88,7 +88,7 @@ var narrationVoice = {
 // ============================================================================
 
 var current_story_status = STATUS_STORY_ENUM.WHERE;
-var current_recap_status = RECAP_STORY_ENUM.WHERE;
+var current_recap_status = STATUS_RECAP_ENUM.WHERE;
 var nameCharacter = "X";
 var objectStory = "Y";
 
@@ -340,15 +340,15 @@ function setNextStatus_Story(){
 */
 function setNextStatus_Recap(){
   switch(current_recap_status){
-    case RECAP_STORY_ENUM.WHERE: current_story_status=RECAP_STORY_ENUM.WEATHER; break;
-    case RECAP_STORY_ENUM.WEATHER: current_story_status=RECAP_STORY_ENUM.CHARACTER; break;
-    case RECAP_STORY_ENUM.CHARACTER: current_story_status=RECAP_STORY_ENUM.NAME; break;
-    case RECAP_STORY_ENUM.NAME: current_story_status=RECAP_STORY_ENUM.SITUA1; break;
-    case RECAP_STORY_ENUM.SITUA1: current_story_status=RECAP_STORY_ENUM.OBJECT; break;
-    case RECAP_STORY_ENUM.OBJECT: current_story_status=RECAP_STORY_ENUM.SITUA2; break;
-    case RECAP_STORY_ENUM.SITUA2: current_story_status=RECAP_STORY_ENUM.LAST_SITUA; break;
-    case RECAP_STORY_ENUM.LAST_SITUA: current_story_status=RECAP_STORY_ENUM.RECORDING; break;
-    case RECAP_STORY_ENUM.RECORDING: current_story_status=RECAP_STORY_ENUM.END; break;
+    case STATUS_RECAP_ENUM.WHERE: current_story_status=STATUS_RECAP_ENUM.WEATHER; break;
+    case STATUS_RECAP_ENUM.WEATHER: current_story_status=STATUS_RECAP_ENUM.CHARACTER; break;
+    case STATUS_RECAP_ENUM.CHARACTER: current_story_status=STATUS_RECAP_ENUM.NAME; break;
+    case STATUS_RECAP_ENUM.NAME: current_story_status=STATUS_RECAP_ENUM.SITUA1; break;
+    case STATUS_RECAP_ENUM.SITUA1: current_story_status=STATUS_RECAP_ENUM.OBJECT; break;
+    case STATUS_RECAP_ENUM.OBJECT: current_story_status=STATUS_RECAP_ENUM.SITUA2; break;
+    case STATUS_RECAP_ENUM.SITUA2: current_story_status=STATUS_RECAP_ENUM.LAST_SITUA; break;
+    case STATUS_RECAP_ENUM.LAST_SITUA: current_story_status=STATUS_RECAP_ENUM.RECORDING; break;
+    case STATUS_RECAP_ENUM.RECORDING: current_story_status=STATUS_RECAP_ENUM.END; break;
     default: current_recap_status=""; break;
   }
   return  current_recap_status
