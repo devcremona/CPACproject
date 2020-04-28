@@ -96,6 +96,11 @@ function speak(text){
 
   // Queue this utterance.
 	window.speechSynthesis.speak(msg);
+
+  // event handler when narration finishes to speak msg
+  msg.onend = function(event) {
+      console.log('Narration speech ended in ' + event.elapsedTime + ' milliseconds.');
+  }
 }
 
 /**
