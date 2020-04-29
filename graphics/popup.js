@@ -22,9 +22,15 @@ function openPopup() {
 
 
   //Get narration text from story.js and set text
-  narrationText.innerHTML = getNarration()[0];
   infoMessage.innerHTML = getNarration()[0];
-  speak(narrationText.innerHTML);
+  if(getCurrentStatus_Story()<STATUS_STORY_ENUM.END){
+    narrationText.innerHTML = getNarration()[0];
+    speak(narrationText.innerHTML);
+  } else {
+    //Select a random ending text from the list of choices
+    narrationText.innerHTML = getChoices()[Math.floor(Math.random() * (getChoices().length-1 - 0 + 1)) + 0];
+    speak(narrationText.innerHTML);
+  }
 
   //Get choices list from story.js and populate the list
   currentChoices = getChoices();
@@ -33,18 +39,18 @@ function openPopup() {
   choicesList.selectedIndex = -1; //Set the dropdown menu to the initial wallpaper  */
 
   //Generate dynamically buttons for the choices
-  for (var i = 0; i < currentChoices.length; i++){
-      if(!isAutomaticStoryAhead(getCurrentStatus_Story())){ //If I have to draw something, place images in the choice buttons
-        img = '<img width="60vw" src="../buttonsImg/'+currentChoices[i].toLowerCase()+'.png" style="margin:auto">'
-        $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+img+currentChoices[i]+'</div>' );
-      }
-      else {
-        $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+currentChoices[i]+'</div>' );
-      }
-      speak(currentChoices[i]);
+  if(getCurrentStatus_Story()<STATUS_STORY_ENUM.END){
+    for (var i = 0; i < currentChoices.length; i++){
+        if(!isAutomaticStoryAhead(getCurrentStatus_Story())){ //If I have to draw something, place images in the choice buttons
+          img = '<img width="60vw" src="../buttonsImg/'+currentChoices[i].toLowerCase()+'.png" style="margin:auto">'
+          $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+img+currentChoices[i]+'</div>' );
+        }
+        else {
+          $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+currentChoices[i]+'</div>' );
+        }
+        speak(currentChoices[i]);
+    }
   }
-
-
 
 
   //Show the popup
@@ -126,33 +132,33 @@ function openPopup() {
 
     case STATUS_STORY_ENUM.RECORDING:
       choicesDiv.innerHTML = 'Press the rec button below to start the audio recording...'
-      btnStartRecording.style.display = 'inline';
-      btnStopRecording.style.display = 'inline';
+      btnStartRecordingContainer.style.display = 'inline';
+      btnStopRecordingContainer.style.display = 'inline';
       btnConfirmPopup.style.display = 'none';
-      btnStopRecording.addEventListener('click', confirmPopupCallback);
+      btnStartRecording.addEventListener('click', function(){
+        speakStop();
+        startRecord();
+        btnStartRecording.classList.add('Blink');
+        btnStartRecording.style.pointerEvents = 'none';
+      });
+      btnStopRecording.addEventListener('click', function(){
+        stopRecord();
+        btnStartRecording.classList.remove('Blink');
+        confirmPopupCallback();
+      });
       break;
 
     case STATUS_STORY_ENUM.END:
-      btnStartRecording.style.display = 'none';
-      btnStopRecording.style.display = 'none';
-      btnConfirmPopup.style.display = 'inline';
-      choicesDivs.forEach(
-        function(choiceDiv,index){
-          choiceDiv.addEventListener('click', function() {
+      btnStartRecordingContainer.style.display = 'none';
+      btnStopRecordingContainer.style.display = 'none';
+      btnConfirmPopup.style.display = 'none';
 
-            //Set active just the clicked choice
-            choicesDivs.forEach(function(element){ element.classList.remove('active') });
-            choiceDiv.classList.add('active');
-
-            //Reactivate confirm button
-            btnConfirmPopup.classList.remove('inactive');
-            btnConfirmPopup.addEventListener('click',confirmPopupCallback); //Reactivate the listener for the confirm button
-
-            //Set the user choice
-            //setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML.split('>')[1]);
-          });
-        }
-      );
+      setTimeout(function(){
+        /*//Hide the popup
+        popup.classList.add('hidden');
+        popupContent.classList.add('hidden');
+        popupIsOpen = false;*/
+      },3000);
       break;
   }
 }

@@ -27,7 +27,8 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
       break;
 
     case STATUS_STORY_ENUM.RECORDING:
-      infoMessage.innerHTML = '';
+      setNextStatus_Story();
+      introduceRecap();
       break;
 
     case STATUS_STORY_ENUM.END:

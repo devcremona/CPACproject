@@ -41,8 +41,8 @@
   margin: auto;
 }
 
-#btnStartRecording,
-#btnStopRecording {
+#btnStartRecordingContainer,
+#btnStopRecordingContainer {
   display: none;
 }
 
