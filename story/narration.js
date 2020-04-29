@@ -100,6 +100,9 @@ function speak(text){
   // event handler when narration finishes to speak msg
   msg.onend = function(event) {
       console.log('Narration speech ended in ' + event.elapsedTime + ' milliseconds.');
+
+      // call a method in graphics at the end of the current speech
+      afterSpeech()
   }
 }
 
