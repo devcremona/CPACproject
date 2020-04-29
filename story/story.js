@@ -6,16 +6,18 @@
 
 // current status of the Story
 const STATUS_STORY_ENUM = {
-  WHERE: 0,
-  WEATHER: 1,
-  CHARACTER: 2,
-  NAME: 3,
-  SITUA1: 4,
-  OBJECT: 5,
-  SITUA2: 6,
-  LAST_SITUA: 7,
-  RECORDING: 8,
-  END: 9,
+  INIT: 0,
+  WHERE: 1,
+  WEATHER: 2,
+  CHARACTER: 3,
+  NAME: 4,
+  SITUA1: 5,
+  OBJECT: 6,
+  SITUA2: 7,
+  LAST_SITUA: 8,
+  RECORDING: 9,
+  RECAP: 10,
+  END: 11
 };
 
 // choices for the users
@@ -56,16 +58,17 @@ var userChoice = [];
 
 // status for the recap phase
 const STATUS_RECAP_ENUM = {
-  WHERE: 0,
-  WEATHER: 1,
-  CHARACTER: 2,
-  NAME: 3,
-  SITUA1: 4,
-  OBJECT: 5,
-  SITUA2: 6,
-  LAST_SITUA: 7,
-  RECORDING: 8,
-  END: 9,
+  INIT: 0,
+  WHERE: 1,
+  WEATHER: 2,
+  CHARACTER: 3,
+  NAME: 4,
+  SITUA1: 5,
+  OBJECT: 6,
+  SITUA2: 7,
+  LAST_SITUA: 8,
+  RECORDING: 9,
+  END: 10,
 };
 
 
@@ -87,8 +90,8 @@ var narrationVoice = {
 // VARIABLES
 // ============================================================================
 
-var current_story_status = STATUS_STORY_ENUM.WHERE;
-var current_recap_status = STATUS_RECAP_ENUM.WHERE;
+var current_story_status = STATUS_STORY_ENUM.INIT;
+var current_recap_status = STATUS_RECAP_ENUM.INIT;
 var nameCharacter = "X";
 var objectStory = "Y";
 
@@ -319,6 +322,7 @@ function setFinale(final){
 */
 function setNextStatus_Story(){
   switch(current_story_status){
+    case STATUS_STORY_ENUM.INIT: current_story_status=STATUS_STORY_ENUM.WHERE; break;
     case STATUS_STORY_ENUM.WHERE: current_story_status=STATUS_STORY_ENUM.WEATHER; break;
     case STATUS_STORY_ENUM.WEATHER: current_story_status=STATUS_STORY_ENUM.CHARACTER; break;
     case STATUS_STORY_ENUM.CHARACTER: current_story_status=STATUS_STORY_ENUM.NAME; break;
@@ -327,7 +331,8 @@ function setNextStatus_Story(){
     case STATUS_STORY_ENUM.OBJECT: current_story_status=STATUS_STORY_ENUM.SITUA2; break;
     case STATUS_STORY_ENUM.SITUA2: current_story_status=STATUS_STORY_ENUM.LAST_SITUA; break;
     case STATUS_STORY_ENUM.LAST_SITUA: current_story_status=STATUS_STORY_ENUM.RECORDING; break;
-    case STATUS_STORY_ENUM.RECORDING: current_story_status=STATUS_STORY_ENUM.END; break;
+    case STATUS_STORY_ENUM.RECORDING: current_story_status=STATUS_STORY_ENUM.RECAP; break;
+    case STATUS_STORY_ENUM.RECAP: current_story_status=STATUS_STORY_ENUM.END; break;
     default: current_story_status=""; break;
   }
   return  current_story_status
@@ -340,6 +345,7 @@ function setNextStatus_Story(){
 */
 function setNextStatus_Recap(){
   switch(current_recap_status){
+    case STATUS_RECAP_ENUM.INIT: current_recap_status=STATUS_RECAP_ENUM.WHERE; break;
     case STATUS_RECAP_ENUM.WHERE: current_recap_status=STATUS_RECAP_ENUM.WEATHER; break;
     case STATUS_RECAP_ENUM.WEATHER: current_recap_status=STATUS_RECAP_ENUM.CHARACTER; break;
     case STATUS_RECAP_ENUM.CHARACTER: current_recap_status=STATUS_RECAP_ENUM.NAME; break;
@@ -392,6 +398,7 @@ function isAutomaticStoryAhead(status){
     case STATUS_STORY_ENUM.SITUA2: goAhead = false; break;
     case STATUS_STORY_ENUM.LAST_SITUA: goAhead = true; break;
     case STATUS_STORY_ENUM.RECORDING: goAhead = false; break;
+    case STATUS_STORY_ENUM.RECAP: goAhead = false; break;
     default: goAhead = false; break;
   }
   return  goAhead
