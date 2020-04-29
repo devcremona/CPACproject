@@ -6,7 +6,7 @@ function addDrawing(){
 	*/
 
 	sketchContainer = document.getElementById('sketchContainer');
-	
+
 
 	var img1 = new Image();						// paint on canv2
 	img1.src = sketchContext.canvas.toDataURL('image/png');
@@ -19,7 +19,7 @@ function addDrawing(){
 	img1.style.left = 0+"px";
 	img1.style.top = 0+"px";
 	img1.style.zIndex = 0;
-	drawings.push(new Drawing(img1)); 
+	drawings[getCurrentStatus_Story()] = new Drawing(img1);
 }
 
 // todo: cambiare da controllo bordi a controllo mask
@@ -36,13 +36,16 @@ function getNearestDwg(xx, yy){
 	mindwg = 0;
 	mind2 = sketchContext.width ** 2 + sketchContext.height ** 2;
 
-	for(var i=0; i<drawings.length; i++){ // for each drawing
+	//Generate array of keys
+	drawingsKeys = Object.keys(drawings).map(function(item) {return parseInt(item, 10);});
+
+	for(var i=0; i<drawingsKeys.length; i++){ // for each drawing
 		// compute squared distance wrt clicked point
-		let d2 = (xx - drawings[i].meanx) ** 2 + (yy - drawings[i].meany) ** 2;
+		let d2 = (xx - drawings[drawingsKeys[i]].meanx) ** 2 + (yy - drawings[drawingsKeys[i]].meany) ** 2;
 
 		if(d2 < mind2){ // save nearest one
 			mind2 = d2;
-			mindwg = drawings[i];
+			mindwg = drawings[drawingsKeys[i]];
 		}
 	}
 
@@ -56,13 +59,13 @@ class Drawing{
 
 		this.dmaxx = maxx;
 		this.dmaxy = maxy;
-		
+
 		this.dminx = minx;
 		this.dminy = miny;
-		
+
 		this.width = maxx-minx;
 		this.height = maxy-miny;
-		
+
 		this.meanx = Math.round(this.dminx + this.width/2);
 		this.meany = Math.round(this.dminy + this.height/2);
 	}
