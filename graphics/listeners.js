@@ -323,5 +323,7 @@ function setListeners() {
     splash.classList.add('hidden');
     btnHelp.style.zIndex = 6;
     openPopup();
+    // Prepare and check if requirements are filled
+    Initialize();
   });
 }

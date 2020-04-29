@@ -2,9 +2,9 @@
 var audio_context;
 var recorder;
 var audio_stream;
-var startRecord = document.getElementById("startRecord");
+/*var startRecord = document.getElementById("startRecord");
 var stopRecord = document.getElementById("stopRecord");
-var pauseRecord = document.getElementById("pauseRecord");
+var pauseRecord = document.getElementById("pauseRecord");*/
 var input;
 var rec = false;
 
@@ -55,10 +55,10 @@ function startRecording() {
     console.log('Recording...');
 
     // Disable Record button and Play button and enable Stop button and Sause button!
-    document.getElementById("startRecord").disabled = true;
+    /*document.getElementById("startRecord").disabled = true;
     document.getElementById("stopRecord").disabled = false;
     document.getElementById("pauseRecord").disabled = false;
-    document.getElementById("playRecord").disabled = true;
+    document.getElementById("playRecord").disabled = true;*/
 }
 
 function pauseRecording() {
@@ -66,15 +66,15 @@ function pauseRecording() {
     if (recorder.recording) {
         //pause
         recorder.stop();
-        document.getElementById("pauseRecord").innerHTML = "Resume";
+        /*document.getElementById("pauseRecord").innerHTML = "Resume";*/
     } else {
         //resume
         recorder.record()
-        document.getElementById("pauseRecord").innerHTML = "Pause";
+        /*document.getElementById("pauseRecord").innerHTML = "Pause";*/
     }
     // Disable Record button and Play button and enable Stop button
-    document.getElementById("stopRecord").disabled = false;
-    document.getElementById("playRecord").disabled = true;
+    /*document.getElementById("stopRecord").disabled = false;
+    document.getElementById("playRecord").disabled = true;*/
 }
 /**
  * Stops the recording process. The method expects a callback as first
@@ -91,10 +91,10 @@ function stopRecording(callback) {
     //audio_stream.getAudioTracks()[0].stop();
 
     // Disable Stop button and enable Record button and Play button!
-    document.getElementById("startRecord").disabled = false;
+    /*document.getElementById("startRecord").disabled = false;
     document.getElementById("stopRecord").disabled = true;
     document.getElementById("pauseRecord").disabled = true;
-    document.getElementById("playRecord").disabled = false;
+    document.getElementById("playRecord").disabled = false;*/
     // Use the Recorder Library to export the recorder Audio as a .wav file
     // The callback providen in the stop recording method receives the blob
 
@@ -144,7 +144,7 @@ var vocalsBuffers = null,
     vocalsRecording = null;
 
 // Initialize everything once the window loads
-window.onload = function(){
+/*window.onload = function(){
     // Prepare and check if requirements are filled
     Initialize();
 
@@ -168,4 +168,26 @@ window.onload = function(){
           vocalsRecording = createBuffer(vocalsBuffer, 2);
         });
     }, false);
-};
+};*/
+
+
+
+
+
+/* Exposed Functions */
+/*----------------------------------------------------*/
+
+function startRecord(){
+  startRecording();
+}
+
+function stopRecord(){
+  stopRecording(function(buffers){
+    vocalsBuffer = buffers;
+    vocalsRecording = createBuffer(vocalsBuffer, 2);
+  });
+}
+
+function playRecord(){
+  vocalsInstance = playback(vocalsBuffer);
+}
