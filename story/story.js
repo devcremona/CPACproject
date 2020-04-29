@@ -424,6 +424,15 @@ function getUserChoice(status){
 };
 
 
+/**
+* return the string of the narration voice for the recap
+* @return {string} string of narration
+*/
+function getNarrationRecap(){
+  return narrationVoice[current_recap_status]
+};
+
+
 
 // first usage to test the narration... (based on status ??)
 /**
