@@ -6,18 +6,17 @@
 
 // current status of the Story
 const STATUS_STORY_ENUM = {
-  INIT: 0,
-  WHERE: 1,
-  WEATHER: 2,
-  CHARACTER: 3,
-  NAME: 4,
-  SITUA1: 5,
-  OBJECT: 6,
-  SITUA2: 7,
-  LAST_SITUA: 8,
-  RECORDING: 9,
-  RECAP: 10,
-  END: 11
+  WHERE: 0,
+  WEATHER: 1,
+  CHARACTER: 2,
+  NAME: 3,
+  SITUA1: 4,
+  OBJECT: 5,
+  SITUA2: 6,
+  LAST_SITUA: 7,
+  RECORDING: 8,
+  RECAP: 9,
+  END: 10
 };
 
 // choices for the users
@@ -90,7 +89,7 @@ var narrationVoice = {
 // VARIABLES
 // ============================================================================
 
-var current_story_status = STATUS_STORY_ENUM.INIT;
+var current_story_status = STATUS_STORY_ENUM.WHERE;
 var current_recap_status = STATUS_RECAP_ENUM.INIT;
 var nameCharacter = "X";
 var objectStory = "Y";
@@ -322,7 +321,6 @@ function setFinale(final){
 */
 function setNextStatus_Story(){
   switch(current_story_status){
-    case STATUS_STORY_ENUM.INIT: current_story_status=STATUS_STORY_ENUM.WHERE; break;
     case STATUS_STORY_ENUM.WHERE: current_story_status=STATUS_STORY_ENUM.WEATHER; break;
     case STATUS_STORY_ENUM.WEATHER: current_story_status=STATUS_STORY_ENUM.CHARACTER; break;
     case STATUS_STORY_ENUM.CHARACTER: current_story_status=STATUS_STORY_ENUM.NAME; break;
