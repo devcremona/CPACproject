@@ -124,12 +124,6 @@ function afterSpeech() {
 
     //Change the background: make the background dark and hide sketch container
     $('#sketchContainer').animate({opacity:0},3000);
-
-    //openPopup: just for now
-    /*setTimeout(function(){
-      setNextStatus_Story();
-      openPopup();
-    },7000);*/
   }
 
 }
