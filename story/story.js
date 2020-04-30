@@ -6,17 +6,18 @@
 
 // current status of the Story
 const STATUS_STORY_ENUM = {
-  WHERE: 0,
-  WEATHER: 1,
-  CHARACTER: 2,
-  NAME: 3,
-  SITUA1: 4,
-  OBJECT: 5,
-  SITUA2: 6,
-  LAST_SITUA: 7,
-  RECORDING: 8,
-  RECAP: 9,
-  END: 10
+  INIT: 0,
+  WHERE: 1,
+  WEATHER: 2,
+  CHARACTER: 3,
+  NAME: 4,
+  SITUA1: 5,
+  OBJECT: 6,
+  SITUA2: 7,
+  LAST_SITUA: 8,
+  RECORDING: 9,
+  RECAP: 10,
+  END: 11
 };
 
 // choices for the users
@@ -76,7 +77,7 @@ var narrationVoice = {
   [STATUS_RECAP_ENUM.WHERE]: "Once upon a time, in a beautilul ...",
   [STATUS_RECAP_ENUM.WEATHER]: "on a ... day",
   [STATUS_RECAP_ENUM.CHARACTER]: "there was a very nice ...",
-  [STATUS_RECAP_ENUM.NAME]: "named ...",
+  [STATUS_RECAP_ENUM.NAME]: "Its name was ...",
   [STATUS_RECAP_ENUM.SITUA1]: "X ...",
   [STATUS_RECAP_ENUM.OBJECT]: "with ...",
   [STATUS_RECAP_ENUM.SITUA2]: "At some point a small ... arrives",
@@ -134,7 +135,7 @@ function setPlace(place){
   userChoice[STATUS_STORY_ENUM.WHERE] = place;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.WHERE] = narrationVoice[STATUS_RECAP_ENUM.WHERE].replace("...", place.toLowerCase());
+  //narrationVoice[STATUS_RECAP_ENUM.WHERE] = narrationVoice[STATUS_RECAP_ENUM.WHERE].replace("...", place.toLowerCase());
   //if (place[place.length-1] != "o"){
   //  narrationVoice[STATUS_RECAP_ENUM.WHERE] = narrationVoice[STATUS_RECAP_ENUM.WHERE].replace("un bellissimo", "una bellissima");
   //}
@@ -151,8 +152,8 @@ function setMeteo(meteo){
   userChoice[STATUS_STORY_ENUM.WEATHER] = meteo;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.WEATHER] = narrationVoice[STATUS_RECAP_ENUM.WEATHER].replace("...", meteo.toLowerCase());
-  narrationVoice[STATUS_RECAP_ENUM.WEATHER] += ",";
+  //narrationVoice[STATUS_STORY_ENUM.WEATHER] = narrationVoice[STATUS_STORY_ENUM.WEATHER].replace("...", meteo.toLowerCase());
+  //narrationVoice[STATUS_STORY_ENUM.WEATHER] += ",";
 }
 
 /**
@@ -164,7 +165,7 @@ function setMainCharacter(character){
   userChoice[STATUS_STORY_ENUM.CHARACTER] = character;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.CHARACTER] = narrationVoice[STATUS_RECAP_ENUM.CHARACTER].replace("...", character.toLowerCase());
+  //narrationVoice[STATUS_RECAP_ENUM.CHARACTER] = narrationVoice[STATUS_RECAP_ENUM.CHARACTER].replace("...", character.toLowerCase());
 }
 
 
@@ -196,8 +197,8 @@ function setNameCharacter(name){
   choices[STATUS_STORY_ENUM.LAST_SITUA] = LAST_SITUA;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.NAME] = narrationVoice[STATUS_RECAP_ENUM.NAME].replace("...", nameCharacter.toLowerCase());
-  narrationVoice[STATUS_RECAP_ENUM.NAME] += ".";
+  //narrationVoice[STATUS_RECAP_ENUM.NAME] = narrationVoice[STATUS_RECAP_ENUM.NAME].replace("...", nameCharacter.toLowerCase());
+  //narrationVoice[STATUS_RECAP_ENUM.NAME] += ".";
 };
 
 
@@ -212,7 +213,7 @@ function setSitua1(situa1){
   switch(situa1){
     case situa[0]: {
         // add to the narrations
-        narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has a great desire to play with a beautiful "
+        //narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has a great desire to play with a beautiful "
 
         choices[STATUS_STORY_ENUM.OBJECT] = PLAY_LIST;
         narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does it want to play with?"];
@@ -220,7 +221,7 @@ function setSitua1(situa1){
       break;
     case situa[1]: {
       // add to the narrations
-      narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " is starving and it would like to eat a big "
+      //narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " is starving and it would like to eat a big "
 
       choices[STATUS_STORY_ENUM.OBJECT] = FOOD_LIST;
       narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does it want to eat?"];
@@ -228,7 +229,7 @@ function setSitua1(situa1){
       break;
     case situa[2]: {
       // add to the narrations
-      narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has an incredible thirst! And it would like to drink from a very fresh "
+      //narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has an incredible thirst! And it would like to drink from a very fresh "
 
       choices[STATUS_STORY_ENUM.OBJECT] = THIRST_LIST;
       narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does it want to drink from?"];
@@ -247,8 +248,8 @@ function setObject(obj){
   userChoice[STATUS_STORY_ENUM.OBJECT] = objectStory;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.OBJECT] = objectStory.toLowerCase();
-  narrationVoice[STATUS_RECAP_ENUM.OBJECT] += ".";
+  //narrationVoice[STATUS_RECAP_ENUM.OBJECT] = objectStory.toLowerCase();
+  //narrationVoice[STATUS_RECAP_ENUM.OBJECT] += ".";
 
   // change the choices according the name
   LAST_SITUA = choices[STATUS_STORY_ENUM.LAST_SITUA]
@@ -271,18 +272,15 @@ function setSitua2(character){
   userChoice[STATUS_STORY_ENUM.SITUA2] = character;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2].replace("...", character.toLowerCase());
-  if (character[character.length-1] != "o"){
-    narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2].replace("un piccolo", "una piccola");
-  }
-  narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2] += ",";
+  //narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2].replace("...", character.toLowerCase());
+  //narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2] += ",";
 
   // change the narrations according the name
   narr_LAST_SITUA = narrationPC[STATUS_STORY_ENUM.LAST_SITUA]
   for (let i=0; i<narr_LAST_SITUA.length; i++) {
     narr_LAST_SITUA[i] = narr_LAST_SITUA[i].replace("character2", character);
   } // if the replace not found return the original sentence
-  narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] = narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA].replace("character2", character.toLowerCase());
+  //narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] = narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA].replace("character2", character.toLowerCase());
 
   //update narrations
   narrationPC[STATUS_STORY_ENUM.LAST_SITUA] = narr_LAST_SITUA;
@@ -299,8 +297,8 @@ function setLastSitua(situa){
   userChoice[STATUS_STORY_ENUM.LAST_SITUA] = situa;
 
   // add to the narrations
-  narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] = narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA].replace("...", situa.toLowerCase());
-  narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] += ".";
+  //narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] = narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA].replace("...", situa.toLowerCase());
+  //narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] += ".";
 }
 
 
@@ -328,7 +326,7 @@ function setNextStatus_Story(){
     case STATUS_STORY_ENUM.SITUA1: current_story_status=STATUS_STORY_ENUM.OBJECT; break;
     case STATUS_STORY_ENUM.OBJECT: current_story_status=STATUS_STORY_ENUM.SITUA2; break;
     case STATUS_STORY_ENUM.SITUA2: current_story_status=STATUS_STORY_ENUM.LAST_SITUA; break;
-    case STATUS_STORY_ENUM.LAST_SITUA: current_story_status=STATUS_STORY_ENUM.RECORDING; break;
+    case STATUS_STORY_ENUM.LAST_SITUA: {current_story_status=STATUS_STORY_ENUM.RECORDING; setNarrationVoice();} break;
     case STATUS_STORY_ENUM.RECORDING: current_story_status=STATUS_STORY_ENUM.RECAP; break;
     case STATUS_STORY_ENUM.RECAP: current_story_status=STATUS_STORY_ENUM.END; break;
     default: current_story_status=""; break;
@@ -357,6 +355,55 @@ function setNextStatus_Recap(){
   }
   return  current_recap_status
 };
+
+/**
+* set the narrationVoice with all the user choices made
+*/
+function setNarrationVoice(){
+  console.log("setNarrationVoice");
+  // where to narration
+  narrationVoice[STATUS_RECAP_ENUM.WHERE] = narrationVoice[STATUS_RECAP_ENUM.WHERE].replace("...", userChoice[STATUS_STORY_ENUM.WHERE].toLowerCase());
+
+  // weather to the narrations
+  narrationVoice[STATUS_STORY_ENUM.WEATHER] = narrationVoice[STATUS_STORY_ENUM.WEATHER].replace("...", userChoice[STATUS_STORY_ENUM.WEATHER].toLowerCase());
+  narrationVoice[STATUS_STORY_ENUM.WEATHER] += ",";
+
+  // character to the narrations
+  narrationVoice[STATUS_RECAP_ENUM.CHARACTER] = narrationVoice[STATUS_RECAP_ENUM.CHARACTER].replace("...", userChoice[STATUS_STORY_ENUM.CHARACTER].toLowerCase());
+
+  // name to the narrations
+  narrationVoice[STATUS_RECAP_ENUM.NAME] = narrationVoice[STATUS_RECAP_ENUM.NAME].replace("...", userChoice[STATUS_STORY_ENUM.NAME].toLowerCase());
+  narrationVoice[STATUS_RECAP_ENUM.NAME] += ".";
+
+  // add to the narrations situa1 (play/eat/drink)
+  switch(userChoice[STATUS_STORY_ENUM.SITUA1]){
+    case choices[STATUS_STORY_ENUM.SITUA1][0]:
+      narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has a great desire to play with a beautiful ";
+      break;
+    case choices[STATUS_STORY_ENUM.SITUA1][1]:
+      narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " is starving and it would like to eat a big ";
+      break;
+    case choices[STATUS_STORY_ENUM.SITUA1][2]:
+      narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " has an incredible thirst! And it would like to drink from a very fresh ";
+      break;
+    default: break;
+  }
+
+  // object to the narrations
+  narrationVoice[STATUS_RECAP_ENUM.OBJECT] = userChoice[STATUS_STORY_ENUM.OBJECT].toLowerCase();
+  narrationVoice[STATUS_RECAP_ENUM.OBJECT] += ".";
+
+  // situa2 to the narrations (Bird/Bee/Crab/Duck)
+  narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2].replace("...", userChoice[STATUS_STORY_ENUM.SITUA2].toLowerCase());
+  narrationVoice[STATUS_RECAP_ENUM.SITUA2] = narrationVoice[STATUS_STORY_ENUM.SITUA2] += ",";
+
+  // change character2 in narration
+  narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] = narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA].replace("character2", userChoice[STATUS_STORY_ENUM.SITUA2].toLowerCase());
+
+  // last_situa to the narrations (steel/shear/enjoy)
+  narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] = narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA].replace("...", userChoice[STATUS_STORY_ENUM.LAST_SITUA].toLowerCase());
+  narrationVoice[STATUS_RECAP_ENUM.LAST_SITUA] += ".";
+}
 
 // ============================================================================
 // GET FUNCTIONS
