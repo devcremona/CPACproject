@@ -126,10 +126,10 @@ function afterSpeech() {
     $('#sketchContainer').animate({opacity:0},3000);
 
     //openPopup: just for now
-    setTimeout(function(){
+    /*setTimeout(function(){
       setNextStatus_Story();
       openPopup();
-    },7000);
+    },7000);*/
   }
 
 }

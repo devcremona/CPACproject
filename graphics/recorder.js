@@ -101,16 +101,8 @@ function stopRecording(callback) {
     this.recorder.getBuffer(function (buffers) {callback(buffers)});
 
     if(typeof(callback) == "function"){
-                /**
-                 * Export the AudioBLOB using the exportWAV method.
-                 * Note that this method exports too with mp3 if
-                 * you provide the second argument of the function
-                 */
                 recorder && recorder.getBuffer(function (buffers) {
                     callback(buffers);
-                    // create WAV download link using audio data blob
-                    // createDownloadLink();
-                    // Clear the Recorder to start again !
                     recorder.clear();
                 });
             }
@@ -128,8 +120,15 @@ function playback(buffers) {
     gainNode.connect(audio_context.destination);
     source.startTime = audio_context.currentTime; // important for later!
     source.start(0);
-    return source;
+    timer = buffers[0].length/audio_context.sampleRate ;
+    setTimeout(afterRecordingEnd,timer*1000);
+    return timer;
 }
+
+/*function callbackFunction() {
+  console.log("End of recording");
+  afterRecordingEnd()
+}*/
 
 function createBuffer(buffers, channelTotal) {
     var channel = 0,
@@ -189,5 +188,5 @@ function stopRecord(){
 }
 
 function playRecord(){
-  vocalsInstance = playback(vocalsBuffer);
+  durationRec = playback(vocalsBuffer);
 }
