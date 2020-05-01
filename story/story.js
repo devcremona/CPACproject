@@ -29,7 +29,7 @@ var choices = {
   [STATUS_STORY_ENUM.SITUA1]: ["X wants to play", "X is hungry", "X is thirsty"],
   [STATUS_STORY_ENUM.OBJECT]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
   [STATUS_STORY_ENUM.SITUA2]: ["Bird", "Bee", "Crab", "Duck"],
-  [STATUS_STORY_ENUM.LAST_SITUA]: ["Steal the Y", "Share the Y", "Enjoy with X"],
+  [STATUS_STORY_ENUM.LAST_SITUA]: ["Steal the Y", "Share the Y", "Enjoy it with X"],
   [STATUS_STORY_ENUM.RECORDING]: [],
   [STATUS_STORY_ENUM.END]: ["The end", "Very good", "What a beautiful story", "Thank you"]
 };
@@ -44,7 +44,7 @@ const THIRST_LIST = ["Bottle", "Cup"];
 var narrationPC = {
   [STATUS_STORY_ENUM.WHERE]: ["Once upon a time... but where?"],
   [STATUS_STORY_ENUM.WEATHER]: ["and it was a day..."],
-  [STATUS_STORY_ENUM.CHARACTER]: ["But who is the protagonist of the story?"],
+  [STATUS_STORY_ENUM.CHARACTER]: ["But who is the main character of the story?"],
   [STATUS_STORY_ENUM.NAME]: ["What's its name?"],
   [STATUS_STORY_ENUM.SITUA1]: ["Now what happens?"],
   [STATUS_STORY_ENUM.OBJECT]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
