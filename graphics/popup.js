@@ -140,14 +140,21 @@ function openPopup() {
       btnStartRecordingContainer.style.display = 'inline';
       btnStopRecordingContainer.style.display = 'inline';
       btnConfirmPopup.style.display = 'none';
+      btnStartRecording.classList.remove('inactive'); //Activate start recording button, but not stop button
       btnStartRecording.addEventListener('click', function(){
         speakStop();
         startRecord();
-        btnStartRecording.classList.add('Blink');
+
+        btnStartRecording.classList.add('Blink'); //Blick recording button
         btnStartRecording.style.pointerEvents = 'none';
+
+        btnStopRecording.classList.remove('inactive'); //Activate stop recording button,
+        btnStopRecording.style.pointerEvents = 'all';
       });
       btnStopRecording.addEventListener('click', function(){
         stopRecord();
+
+        btnStartRecording.classList.add('inactive'); //deactivate start rec button
         btnStartRecording.classList.remove('Blink');
         confirmPopupCallback();
       });
