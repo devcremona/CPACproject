@@ -74,7 +74,7 @@ const STATUS_RECAP_ENUM = {
 
 // sentences for the narration to reproduce
 var narrationVoice = {
-  [STATUS_RECAP_ENUM.WHERE]: "Once upon a time, in a beautilul ...",
+  [STATUS_RECAP_ENUM.WHERE]: "Once upon a time, in a beautiful ...",
   [STATUS_RECAP_ENUM.WEATHER]: "on a ... day",
   [STATUS_RECAP_ENUM.CHARACTER]: "there was a very nice ...",
   [STATUS_RECAP_ENUM.NAME]: "Its name was ...",
