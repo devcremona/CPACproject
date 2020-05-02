@@ -11,7 +11,7 @@ function introduceRecap() {
 
   setTimeout(function(){
 
-    //Hid all compoents inside popup
+    //Hide all compoents inside popup
     choicesDiv.style.display = 'none';
     btnStartRecording.style.display = 'none';
     btnStopRecording.style.display = 'none';

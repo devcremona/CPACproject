@@ -151,14 +151,23 @@ function openPopup() {
     case STATUS_STORY_ENUM.END:
       btnStartRecordingContainer.style.display = 'none';
       btnStopRecordingContainer.style.display = 'none';
-      btnConfirmPopup.style.display = 'none';
 
-      setTimeout(function(){
-        /*//Hide the popup
-        popup.classList.add('hidden');
-        popupContent.classList.add('hidden');
-        popupIsOpen = false;*/
-      },3000);
+      //Replace the checkmark with another icon for the RELOAD PAGE
+      btnConfirmPopup.replaceChild($('<span data-width="100" data-height="100" class="iconify" id="reloadIcon" data-icon="subway:cloud-reload" data-inline="false"></span>')[0], btnConfirmPopup.firstChild);
+      //Set the properties for this icon
+      setTimeout(function(){ //Timeout needed because iconify need to have time to substitute the element
+        reloadIcon.style.marginTop = '8vh';
+        reloadIcon.classList.remove('iconify');
+        reloadIcon.style.cursor = 'pointer';
+        reloadIcon.addEventListener('click',function(){
+          location.reload();
+        });
+      },10);
+      //Show the button
+      btnConfirmPopup.removeEventListener('click', confirmPopupCallback);
+      btnConfirmPopup.classList.remove('inactive');
+      btnConfirmPopup.style.display = 'block';
+
       break;
   }
 }
