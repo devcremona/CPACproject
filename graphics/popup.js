@@ -132,6 +132,11 @@ function openPopup() {
 
     case STATUS_STORY_ENUM.RECORDING:
       choicesDiv.innerHTML = 'Press the rec button below to start the audio recording...'
+      speak(choicesDiv.innerHTML);
+
+      // Prepare and check if requirements are filled
+      Initialize();
+
       btnStartRecordingContainer.style.display = 'inline';
       btnStopRecordingContainer.style.display = 'inline';
       btnConfirmPopup.style.display = 'none';
