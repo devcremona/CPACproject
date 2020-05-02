@@ -8,6 +8,8 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
   popupContent.classList.add('hidden');
   popupIsOpen = false;
 
+
+
   switch (getCurrentStatus_Story()) {
     case STATUS_STORY_ENUM.NAME:
       setUserChoice(getCurrentStatus_Story(), characterNameField.value);
@@ -19,6 +21,10 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
         setTimeout(openPopup,500);
       } else {
         loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus_Story())));
+
+        //Activate clear button
+        btnClear.classList.remove('inactive');
+        btnClear.addEventListener('click', btnClearListener);
 
         //Deactivate eraser at the beginning
         btnEraser.classList.add('inactive');
@@ -203,7 +209,7 @@ function btnClearListener() {
   btnDone.classList.add('inactive');
   btnDone.removeEventListener('click', btnDoneCallback);
 
-  //pseudo-reactivate pencil
+  //Pseudo-reactivate pencil
   btnPencil.style.removeProperty('filter');
 
   restart(1); //1: called after cleck event
@@ -221,9 +227,14 @@ function btnClearListener() {
   btnPencil.classList.add('active');
   btnPencil.addEventListener('click', btnPencilListener);
 
-  //Deactivate clear
-  btnClear.classList.add('inactive');
-  btnClear.removeEventListener('click', btnClearListener);
+  //Activate listeners on pencil
+  sketchContext.mousePressed = sketchMousePressedListener;
+  sketchContext.mouseDragged = sketchMouseDraggedListener;
+  sketchContext.mouseReleased = sketchMouseReleasedListener;
+
+  // //Deactivate clear
+  // btnClear.classList.add('inactive');
+  // btnClear.removeEventListener('click', btnClearListener);
 
 
   sketchContext.fill(currentColor);
