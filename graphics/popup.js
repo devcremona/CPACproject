@@ -166,6 +166,11 @@ function openPopup() {
 
       //Replace the checkmark with another icon for the RELOAD PAGE
       btnConfirmPopup.replaceChild($('<span data-width="100" data-height="100" class="iconify" id="reloadIcon" data-icon="subway:cloud-reload" data-inline="false"></span>')[0], btnConfirmPopup.firstChild);
+      /*divText = document.createElement('div');
+      divText.innerText = 'Restart!';
+      divText.style.fontSize = '1.8vw';
+      divText.style.marginTop = '-2.5vw';
+      btnConfirmPopup.appendChild(divText);*/
       //Set the properties for this icon
       setTimeout(function(){ //Timeout needed because iconify need to have time to substitute the element
         reloadIcon.style.marginTop = '8vh';
