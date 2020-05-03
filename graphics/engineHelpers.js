@@ -95,7 +95,10 @@ function loadModel(index) {
     btnColors.addEventListener('click', btnColorsListener);
 
     //Inform the user on what to do now
-    infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+'...';
-    speak(infoMessage.innerHTML);
+    infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+' by clicking on <span id="pencilText" class="iconify active" data-icon="bx:bxs-pencil">...';
+    setTimeout(function(){
+      pencilText.style.cursor = 'auto';
+    },10);
+    speak('Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+' by clicking on the pencil...');
   });
 };

@@ -131,8 +131,13 @@ function openPopup() {
       break;
 
     case STATUS_STORY_ENUM.RECORDING:
-      choicesDiv.innerHTML = 'Press the rec button below to start the audio recording...'
-      speak(choicesDiv.innerHTML);
+      choicesDiv.innerHTML = 'Press  <span id="btnStartRecordingText" class="iconify"  data-icon="mdi:record-circle-outline"></span>  to start the audio recording...';
+      setTimeout(function(){
+        btnStartRecordingText.style.cursor = 'auto';
+        btnStartRecordingText.style.marginLeft = '0.5vw';
+        btnStartRecordingText.style.marginRight = '0.5vw';
+      },50);
+      speak('Press the rec button to start the audio recording');
 
       // Prepare and check if requirements are filled
       Initialize();
