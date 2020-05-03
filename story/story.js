@@ -23,7 +23,7 @@ const STATUS_STORY_ENUM = {
 // choices for the users
 var choices = {
   [STATUS_STORY_ENUM.WHERE]: ["Lake", "City", "Forest", "Hill", "Farm"],
-  [STATUS_STORY_ENUM.WEATHER]: ["Sunny", "Rainy", "Foggy", "Dark"],
+  [STATUS_STORY_ENUM.WEATHER]: ["Sunny", "Rainy", "Foggy"],
   [STATUS_STORY_ENUM.CHARACTER]: ["Dog", "Cat"],
   [STATUS_STORY_ENUM.NAME]: [],
   [STATUS_STORY_ENUM.SITUA1]: ["X wants to play", "X is hungry", "X is thirsty"],
