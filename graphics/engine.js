@@ -100,8 +100,12 @@ const sketch = function(sketch) {
       console.log('finished this one');
       modelIsActive = false;
 
-      infoMessage.innerHTML = "If you don't like it, click the retry button! Otherwise click ✔";
-      speak(infoMessage.innerHTML);
+      infoMessage.innerHTML = "If you don't like it, click <span id='retryText' class='iconify' data-icon='ic:baseline-update'></span> Otherwise click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
+      setTimeout(function(){
+        retryText.style.cursor = 'auto';
+        doneText.style.cursor = 'auto';
+      },10);
+      speak("If you don't like it, click the retry button! Otherwise click Done!");
 
       //Activate done button
       btnDone.classList.remove('inactive');

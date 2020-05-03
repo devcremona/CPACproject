@@ -95,8 +95,11 @@ function btnDoneCallback() {
       drawingStatus = DRAWING_STATUS.FINISHING;
 
       //Inform the user
-      infoMessage.innerHTML = 'Now finish your drawing as you like! Then click ✔';
-      speak(infoMessage.innerHTML);
+      infoMessage.innerHTML = "Now finish your drawing as you like! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
+      setTimeout(function(){
+        doneText.style.cursor = 'auto';
+      },10);
+      speak('Now finish your drawing as you like! Then click Done');
       break;
     case DRAWING_STATUS.FINISHING:
       drawingStatus = DRAWING_STATUS.DRAG;
@@ -130,9 +133,11 @@ function btnDoneCallback() {
       restart();
 
       //Inform the user
-      infoMessage.innerHTML = "Now you can drag your drawing wherever you want! Then click ✔";
-      speak(infoMessage.innerHTML);
-
+      infoMessage.innerHTML = "Now you can drag your drawing wherever you want! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
+      setTimeout(function(){
+        doneText.style.cursor = 'auto';
+      },10);
+      speak('Now you can drag your drawing wherever you want! Then click Done');
       break;
     case DRAWING_STATUS.DRAG:
 
