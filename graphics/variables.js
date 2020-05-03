@@ -59,6 +59,7 @@ var maxx, maxy, minx, miny;
 var dwgCount = 0;
 var drawings = {};
 var lastDwg;
+var arrows;
 
 //debug variables
 var testing = false;

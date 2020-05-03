@@ -60,6 +60,7 @@ const sketch = function(sketch) {
     //openPopup();
 
     splashIsOpen = true;
+
   };
 
 
@@ -264,11 +265,12 @@ function sketchMousePressedListener(e) { //Human drawing
 
     if(drawingStatus == DRAWING_STATUS.INIT){
       drawingStatus = DRAWING_STATUS.FIRST_STROKE;
+      console.log('Drawing in progress...');
     }else if(drawingStatus == DRAWING_STATUS.DRAG){
       nearDwg = getNearestDwg(x, y);
+      Drawing.arrowsOff();
+      console.log("Drag clicked");
     }
-
-    console.log('Drawing in progress...');
 
     modelIsActive = false; //Machine learning in pause while i'm drawing
     //currentRawLine = [];

@@ -8,7 +8,7 @@ function addDrawing(){
 	sketchContainer = document.getElementById('sketchContainer');
 
 
-	var img1 = new Image();						// paint on canv2
+	var img1 = new Image();						
 	img1.src = sketchContext.canvas.toDataURL('image/png');
 
 	sketchContainer.appendChild(img1);
@@ -18,8 +18,10 @@ function addDrawing(){
 	img1.style.zIndex = "+1";
 	img1.style.left = 0+"px";
 	img1.style.top = 0+"px";
-	img1.style.zIndex = 0;
+	img1.style.zIndex = "0";
 	drawings[getCurrentStatus_Story()] = new Drawing(img1);
+
+	drawings[getCurrentStatus_Story()].setArrows();
 }
 
 // todo: cambiare da controllo bordi a controllo mask
@@ -52,8 +54,10 @@ function getNearestDwg(xx, yy){
 	return mindwg; // return nearest one
 }
 
-
 class Drawing{
+
+	static arrows = undefined;
+
 	constructor(dwg){
 		this.dwg = dwg; // element in the DOM
 
@@ -68,6 +72,9 @@ class Drawing{
 
 		this.meanx = Math.round(this.dminx + this.width/2);
 		this.meany = Math.round(this.dminy + this.height/2);
+
+		this.path = [];
+		this.path.push([this.meanx, this.meany]);
 	}
 
 	updateCoord(dxx, dyy){
@@ -83,5 +90,22 @@ class Drawing{
 		// DOM operations
 		this.dwg.style.left = Number(this.dwg.style.left.substring(0, this.dwg.style.left.length-2))+dxx+"px";
 		this.dwg.style.top = Number(this.dwg.style.top.substring(0, this.dwg.style.top.length-2))+dyy+"px";
+
+		this.path.push([this.meanx, this.meany]);
+	}
+
+	setArrows(){
+		let arrowsImg = new Image();
+		arrowsImg.src = "../arrows.png";;
+		sketchContainer.appendChild(arrowsImg);
+		arrowsImg.style.position = "absolute";
+		arrowsImg.style.zIndex = "0";
+		arrowsImg.style.left = (this.meanx - 250)+"px";
+		arrowsImg.style.top = (this.meany - 250)+"px";
+		Drawing.arrows = arrowsImg;
+	}
+
+	static arrowsOff(){
+		Drawing.arrows.remove();
 	}
 }
