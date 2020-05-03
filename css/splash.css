@@ -1,27 +1,16 @@
 /* Splash Screen Style */
 /*-----------------------------------------------------------------------------*/
 
-h1 {
-  font-size: 60px;
-}
-
-p {
-  padding: 24px 0;
-  font-size: 20px;
-  line-height: 1.5;
-}
-
 #splash {
-  position: absolute;
+  font-size: 2vw;
   text-align: center;
-  overflow: auto;
   z-index: 5;
   background-color: rgba(255,255,255,0.8);
   border-radius: 30px;
   padding: 2vw;
   width: 72vw;
-  left: 13vw;
-  top: 7vh;
+  margin: auto;
+  margin-top: 11vh;
   opacity: 1;
   transition: 1s all ease;
 }
@@ -32,8 +21,8 @@ p {
 
 #splashCurtain{
   position: absolute;
-  height: 1138px;
-  width: 100%;/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGEEEE!!!!!!*/
+  height: 120vh;
+  width: 100%;
   transition: 6s transform;
   z-index: 4;
 }
@@ -49,14 +38,6 @@ p {
 /*----------------------------------------------------------------------------*/
 
 @media screen and (max-width: 700px) {
-  h1 {
-    font-size: 32px;
-  }
-  p {
-    padding: 14px 0;
-    text-align: left;
-    font-size: 18px;
-  }
   #splash {
     padding: 24px;
   }
