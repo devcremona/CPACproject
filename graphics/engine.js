@@ -26,6 +26,9 @@ const sketch = function(sketch) {
     loadingGifStyle.marginTop = "-"+loadingGif.height/2+"px";
     loadingGifStyle.marginLeft = "-"+loadingGif.width/2+"px";
 
+    //Set curtain height
+    splashCurtain.style.height = screenHeight+'px';
+
     eraserTransparentColor = sketch.color(0,0,0,0);
 
     //Reset the canvas (the following function is called always on the press of clear button)
