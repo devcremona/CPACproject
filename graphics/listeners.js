@@ -141,6 +141,8 @@ function btnDoneCallback() {
         setNextStatus_Story();
       }
 
+      Drawing.arrowsOff();
+
       //Deactivate Done button
       btnDone.classList.add('inactive');
       btnDone.removeEventListener('click', btnDoneCallback);

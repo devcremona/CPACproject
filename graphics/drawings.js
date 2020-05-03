@@ -24,7 +24,7 @@ function addDrawing(){
 	drawings[getCurrentStatus_Story()].setArrows();
 }
 
-// todo: cambiare da controllo bordi a controllo mask
+// upgrade: cambiare da controllo bordi a controllo mask
 function checkMask(x, y){
 	let pad = 10; // distance in pixels from the "out zone"
 	if(x>(0+pad) && x<(sketchContext.width-pad) && y>(0+pad) && y<(sketchContext.height-pad))

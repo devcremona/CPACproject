@@ -278,13 +278,13 @@ function sketchMousePressedListener(e) { //Human drawing
 
     x = startX = sketchContext.mouseX;
     y = startY = sketchContext.mouseY;
-    maxx = x; minx = x;
-    maxy = y; miny = y;
     userPen = 1; // down!
 
     if(drawingStatus == DRAWING_STATUS.INIT){
       drawingStatus = DRAWING_STATUS.FIRST_STROKE;
       console.log('Drawing in progress...');
+      maxx = x; minx = x;
+      maxy = y; miny = y;
     }else if(drawingStatus == DRAWING_STATUS.DRAG){
       nearDwg = getNearestDwg(x, y);
       Drawing.arrowsOff();
