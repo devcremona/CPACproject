@@ -320,20 +320,35 @@ function setListeners() {
   //==============================================================================
   btnHelp.addEventListener('click', function() { //Go to the spash screen
     if(splash.classList.contains('hidden')){
+      splash.style.zIndex = 10;
       splash.classList.remove('hidden');
       splashIsOpen = true;
     } else{
       splash.classList.add('hidden');
-      splashIsOpen = false;
+      $('#splash').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+          function(event) {
+            splash.style.zIndex = 0;
+            splashIsOpen = false;
+          });
     }
 
 
   });
 
   btnGo.addEventListener('click', function() { //From splash to the sketch
-    splashIsOpen = false;
+
+    //Start moving curtain
+    splashCurtain.classList.add('wrapped');
+
+    //Move the splash on the back and dissolve
     splash.classList.add('hidden');
-    btnHelp.style.zIndex = 6;
-    openPopup();
+    $('#splash').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+        function(event) {
+          splash.style.zIndex = 0;
+        });
+
+    splashIsOpen = false;
+    btnHelp.style.zIndex = 3;
+    setTimeout(openPopup,500);
   });
 }

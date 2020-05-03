@@ -108,7 +108,7 @@ function afterSpeech() {
     doRecap();
   } else {
     //Start recording -> goto afterRecordingEnd
-    playRecord();
+    recDuration = playRecord();
 
     //Remove transition ease from images
     Object.keys(drawings).forEach(function(key) {
@@ -117,13 +117,23 @@ function afterSpeech() {
 
     //Clone the 2 characters images
     app.appendChild(drawings[STATUS_STORY_ENUM.CHARACTER].dwg);
-    app.appendChild(drawings[STATUS_STORY_ENUM.SITUA2].dwg);
+    app.appendChild(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg);
 
-    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({left:'0px',top:'0px'},5000);
-    $(drawings[STATUS_STORY_ENUM.SITUA2].dwg).animate({left:'20px',top:'30px'},5000);
+    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({zIndex:4,left:'0px',top:'0px'},recDuration);
+    $(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg).animate({zIndex:4,left:'20px',top:'30px'},recDuration);
 
     //Change the background: make the background dark and hide sketch container
-    $('#sketchContainer').animate({opacity:0},3000);
+    $('#sketchContainer').animate({opacity:0},recDuration);
+
+    //Close the curtain with a duration equal to the recording duration
+    splashCurtain.style.transition = recDuration+'s transform';
+    splashCurtain.style.transform = 'scaleX(1)';
+
+    //Hide the help button
+    btnHelp.style.zIndex = 0;
+
+    //Increase the z-index for the popup to show it above the curtain
+    popup.style.zIndex = 5;
   }
 
 }
@@ -131,5 +141,5 @@ function afterSpeech() {
 
 function afterRecordingEnd(){
   setNextStatus_Story();
-  openPopup();
+  setTimeout(openPopup, 1000);
 }

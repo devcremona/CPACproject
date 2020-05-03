@@ -2,7 +2,6 @@
 /*-----------------------------------------------------------------------------*/
 
 h1 {
-  color: var(--primary);
   font-size: 60px;
 }
 
@@ -12,42 +11,38 @@ p {
   line-height: 1.5;
 }
 
-a:link, a:visited {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  border-bottom: 4px solid var(--secondary);
-}
-a:hover {
-  background: var(--secondary);
-  color: var(--primary);
-}
-
 #splash {
-  background-color: #F19CC5;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px;
+  text-align: center;
   overflow: auto;
-  transition: 1s transform;
-  transform: translate3d(0, 0, 0);
   z-index: 5;
+  background-color: rgba(255,255,255,0.8);
+  border-radius: 30px;
+  padding: 2vw;
+  width: 72vw;
+  left: 13vw;
+  top: 7vh;
+  opacity: 1;
+  transition: 1s all ease;
 }
 
 #splash.hidden {
-  transform: translate3d(0, -200%, 0);
+  opacity: 0;
 }
 
-#splash.content {
-  color: white;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
+#splashCurtain{
+  position: absolute;
+  height: 1138px;
+  width: 100%;/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGEEEE!!!!!!*/
+  transition: 6s transform;
+  z-index: 4;
 }
+
+#splashCurtain.wrapped{
+  transform-origin: -100% top;
+  transform: scaleX(0.49);
+}
+
 
 
 /* Media queries */
