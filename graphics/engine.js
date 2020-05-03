@@ -3,82 +3,83 @@ const sketch = function(sketch) {
 
 
   sketch.setup = function() {
+    //Needed for Less to load the css for the curtain
+    less.pageLoadFinished.then(
+        function() {
 
-    // Initialize the canvas
-    const containerSize = sketchContainer.getBoundingClientRect();
-    const screenWidth = Math.floor(containerSize.width);
-    const screenHeight = Math.floor(containerSize.height);
-    canvas = sketch.createCanvas(screenWidth, screenHeight);
-    canvas.id('sketchCanvas'); //Rename the canvas id
-    document.getElementById('sketchCanvas').style.position = 'fixed'; //Set the canvas position to fixed (in order to superpose other elements)
-    sketch.pixelDensity(1); //Set the pixel density to 1 (for zoomed resolutions)
+          // Initialize the canvas
+          const containerSize = sketchContainer.getBoundingClientRect();
+          console.log("ENGINE CONTAINER SIZE: ",containerSize);
+          const screenWidth = Math.floor(containerSize.width);
+          const screenHeight = Math.floor(containerSize.height);
+          canvas = sketch.createCanvas(screenWidth, screenHeight);
+          canvas.id('sketchCanvas'); //Rename the canvas id
+          document.getElementById('sketchCanvas').style.position = 'fixed'; //Set the canvas position to fixed (in order to superpose other elements)
+          sketch.pixelDensity(1); //Set the pixel density to 1 (for zoomed resolutions)
 
-    sketch.frameRate(60);
+          sketch.frameRate(60);
 
-    sketchContext = sketch;
+          sketchContext = sketch;
 
-    //Loading gif: Set the style properties for the loading gif to be shown properly and on the center
-    loadingGifStyle = loadingGif.style;
-    loadingGifStyle.position = 'absolute';
-    loadingGifStyle.zIndex = 10;
-    loadingGifStyle.top = '50%';
-    loadingGifStyle.left = '50%';
-    loadingGifStyle.marginTop = "-"+loadingGif.height/2+"px";
-    loadingGifStyle.marginLeft = "-"+loadingGif.width/2+"px";
+          //Loading gif: Set the style properties for the loading gif to be shown properly and on the center
+          loadingGifStyle = loadingGif.style;
+          loadingGifStyle.position = 'absolute';
+          loadingGifStyle.zIndex = 10;
+          loadingGifStyle.top = '50%';
+          loadingGifStyle.left = '50%';
+          loadingGifStyle.marginTop = "-"+loadingGif.height/2+"px";
+          loadingGifStyle.marginLeft = "-"+loadingGif.width/2+"px";
 
-    //Set curtain height
-    splashCurtain.style.height = screenHeight+'px';
+          //Set splash open
+          splashIsOpen = true;
 
-    eraserTransparentColor = sketch.color(0,0,0,0);
+          //Set curtain height
+          //splashCurtain.style.height = screenHeight+'px';
 
-    //Reset the canvas (the following function is called always on the press of clear button)
-    restart(0); //0: called at startup
-    drawingStatus = DRAWING_STATUS.INIT;
+          eraserTransparentColor = sketch.color(0,0,0,0);
 
-    sketch.stroke(currentColor);
+          //Reset the canvas (the following function is called always on the press of clear button)
+          restart(0); //0: called at startup
+          drawingStatus = DRAWING_STATUS.INIT;
 
-    //Reset of the character name field
-    characterNameField.value = '';
+          sketch.stroke(currentColor);
+
+          //Reset of the character name field
+          characterNameField.value = '';
 
 
-    //Speech language setting
-    if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in Firefox
-      speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
-        //Search the last available italian and english voice
-        for(i=0; i<getVoices().length; i++){
-            if(getVoices()[i][1]=='it-IT'){
-                voiceNameITA=getVoices()[i][0];
-            }
-            if(getVoices()[i][1]=='en-US'){
-                voiceNameENG=getVoices()[i][0];
-            }
+          //Speech language setting
+          if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in Firefox
+            speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
+              //Search the last available italian and english voice
+              for(i=0; i<getVoices().length; i++){
+                  if(getVoices()[i][1]=='it-IT'){
+                      voiceNameITA=getVoices()[i][0];
+                  }
+                  if(getVoices()[i][1]=='en-US'){
+                      voiceNameENG=getVoices()[i][0];
+                  }
+              }
+              setVoice(voiceNameENG);
+            };
+          } else { //If we are in firefox we need a delay to detect the voices
+            setTimeout(function(){
+              for(i=0; i<getVoices().length; i++){
+                  if(getVoices()[i][1]=='it-IT'){
+                      voiceNameITA=getVoices()[i][0];
+                  }
+                  if(getVoices()[i][1]=='en-US'){
+                      voiceNameENG=getVoices()[i][0];
+                  }
+              }
+              setVoice(voiceNameENG);
+            },10);
+          }
+
+          setListeners();
+
         }
-        setVoice(voiceNameENG);
-      };
-    } else { //If we are in firefox we need a delay to detect the voices
-      setTimeout(function(){
-        for(i=0; i<getVoices().length; i++){
-            if(getVoices()[i][1]=='it-IT'){
-                voiceNameITA=getVoices()[i][0];
-            }
-            if(getVoices()[i][1]=='en-US'){
-                voiceNameENG=getVoices()[i][0];
-            }
-        }
-        setVoice(voiceNameENG);
-      },10);
-    }
-
-
-
-    setListeners();
-
-    //loadModel(0);
-
-    //openPopup();
-
-    splashIsOpen = true;
-
+    );
   };
 
 
