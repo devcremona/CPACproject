@@ -88,7 +88,7 @@ function stopRecording(callback) {
     console.log('Stopped recording.');
 
     // Stop the getUserMedia Audio Stream !
-    //audio_stream.getAudioTracks()[0].stop();
+    audio_stream.getAudioTracks()[0].stop();
 
     // Disable Stop button and enable Record button and Play button!
     /*document.getElementById("startRecord").disabled = false;
