@@ -64,6 +64,8 @@ function doRecap() {
 
           //Show the background
           sketchContainer.style.opacity = 1; //It take 1s to reach 1
+
+          infoMessage.innerHTML = getNarrationRecap();
           speak(getNarrationRecap());
 
         },1000);
@@ -71,17 +73,17 @@ function doRecap() {
 
       default:
 
-        if(!isAutomaticStoryAhead(getCurrentStatus_Recap()-1) && getCurrentStatus_Recap()<STATUS_RECAP_ENUM.RECORDING){
-          drawings[getCurrentStatus_Recap()-1].dwg.style.opacity = 1;
-
+        if(!isAutomaticStoryAhead(getCurrentStatus_Recap()) && getCurrentStatus_Recap()<STATUS_RECAP_ENUM.RECORDING){
+          drawings[getCurrentStatus_Recap()].dwg.style.opacity = 1;
           setTimeout(function(){
             //Animations for drawings
-            $(drawings[getCurrentStatus_Recap()-1].dwg).animate({left:'100px',top:'100px'},1000); //Just example
+            $(drawings[getCurrentStatus_Recap()].dwg).animate({left:'100px',top:'100px'},1000); //Just example
           },1000); //Equal to the css transition of opacity
 
 
         }
 
+        infoMessage.innerHTML = getNarrationRecap();
         speak(getNarrationRecap());
 
         break;
