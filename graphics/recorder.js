@@ -189,4 +189,5 @@ function stopRecord(){
 
 function playRecord(){
   durationRec = playback(vocalsBuffer);
+  return duration;
 }
