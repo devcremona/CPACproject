@@ -6,7 +6,7 @@
   bottom: var(--bottom-margin);
   width: 100%;
   display: inline-flex;
-  z-index: 3;
+  z-index: 2;
 }
 
 #navigation-tools{
@@ -14,6 +14,10 @@
   display: inline-flex;;
   left: 0.5vw;
   bottom: var(--bottom-margin);
+
+  border-top-right-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 2px 13px #fff;
   }
 
 #infoMessage{
@@ -32,6 +36,10 @@
   width: 12.5vw;
   height: 9vh;
   bottom: var(--bottom-margin);
+
+  border-top-left-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 2px 13px #fff;
 }
 
 
