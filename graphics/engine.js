@@ -250,8 +250,8 @@ function sketchMouseDraggedListener() {
       const dx0 = sketchContext.mouseX - x;
       const dy0 = sketchContext.mouseY - y;
 
-      if ((dx0*dx0+dy0*dy0 > epsilon*epsilon) && checkMask(x, y))
-        nearDwg.updateCoord(dx0, dy0); // todo: drag NEAREST dwg, not last one
+      if ((dx0*dx0+dy0*dy0 > 1) && checkMask(x, y))
+        nearDwg.updateCoord(dx0, dy0, false);
 
       x += dx0;
       y += dy0;
