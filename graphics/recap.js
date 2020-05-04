@@ -1,5 +1,7 @@
 //Alert the user that a recap is going to start
 function introduceRecap() {
+  //Disable question mark button
+  btnHelp.classList.add('inactive');
 
   //Set transitions for the container and the drawings
   sketchContainer.style.transition = '1s all ease';
