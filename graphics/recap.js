@@ -23,6 +23,11 @@ function introduceRecap() {
     //Hide the container
     sketchContainer.style.opacity = 0;
 
+    //Hide tools
+    drawingTools.style.opacity = 0;
+    navigationTools.style.opacity = 0;
+    btnHelp.style.opacity = 0;
+
     //Hide all drawings
     Object.keys(drawings).forEach(function(key) {
        drawings[key].dwg.style.opacity = 0;

@@ -10,4 +10,7 @@
   border-bottom-left-radius: 50%;
   background-color: white;
   box-shadow: 0 0 2px 13px #fff;
+
+  opacity: 1;
+  transition: 1s opacity ease;
 }

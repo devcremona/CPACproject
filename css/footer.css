@@ -9,7 +9,7 @@
   z-index: 2;
 }
 
-#navigation-tools{
+#navigationTools{
   position: fixed;
   display: inline-flex;;
   left: 0.5vw;
@@ -18,6 +18,8 @@
   border-top-right-radius: 50%;
   background-color: white;
   box-shadow: 0 0 2px 13px #fff;
+  opacity: 1;
+  transition: 1s opacity ease;
   }
 
 #infoMessage{
@@ -29,7 +31,7 @@
   padding: 5px 5px 5px 5px;
 }
 
-#drawing-tools{
+#drawingTools{
   position: fixed;
   display: inline-flex;
   right: 0.5vw;
@@ -40,6 +42,8 @@
   border-top-left-radius: 50%;
   background-color: white;
   box-shadow: 0 0 2px 13px #fff;
+  opacity: 1;
+  transition: 1s opacity ease;
 }
 
 
@@ -204,7 +208,7 @@
     width: 30px;
     height: 30px;
   }
-  #drawing-tools{
+  #drawingTools{
     width: 90px;
     height: 35px;
   }
@@ -285,7 +289,7 @@
     height: 40px;
   }
 
-  #drawing-tools{
+  #drawingTools{
     width: 120px;
     height: 45px;
   }
