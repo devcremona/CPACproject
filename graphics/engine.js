@@ -7,6 +7,10 @@ const sketch = function(sketch) {
     less.pageLoadFinished.then(
         function() {
 
+          //Show the splash screen with opacity animation
+          splash.style.transition = '1.5s opacity ease';
+          splash.style.opacity = 1;
+
           // Initialize the canvas
           const containerSize = sketchContainer.getBoundingClientRect();
           console.log("ENGINE CONTAINER SIZE: ",containerSize);

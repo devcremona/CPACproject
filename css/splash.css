@@ -11,7 +11,7 @@
   width: 72vw;
   margin: auto;
   margin-top: 11vh;
-  opacity: 1;
+  opacity: 0;
   transition: 1s all ease;
 }
 
