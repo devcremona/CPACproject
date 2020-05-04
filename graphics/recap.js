@@ -1,8 +1,8 @@
 //Alert the user that a recap is going to start
 function introduceRecap() {
-  //Disable question mark button
+  /*//Disable question mark button
   btnHelp.firstChild.classList.add('inactive');
-  btnHelp.removeEventListener('click',btnHelpCallback);
+  btnHelp.removeEventListener('click',btnHelpCallback);*/
 
   //Set transitions for the container and the drawings
   sketchContainer.style.transition = '1s all ease';
@@ -26,7 +26,6 @@ function introduceRecap() {
     //Hide tools
     drawingTools.style.opacity = 0;
     navigationTools.style.opacity = 0;
-    btnHelp.style.opacity = 0;
 
     //Hide all drawings
     Object.keys(drawings).forEach(function(key) {
@@ -61,6 +60,9 @@ function doRecap() {
         if(getCurrentStatus_Recap()==STATUS_RECAP_ENUM.WHERE){
           //Set the background to sunny 'default' when it is not visible
           sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+'sunny'+'.png)';
+
+          //Show pause button
+          btnPause.style.opacity = 1;
         }
 
         setTimeout(function(){
@@ -137,7 +139,7 @@ function afterSpeech() {
     splashCurtain.style.transform = 'scaleX(1)';
 
     //Hide the help button
-    btnHelp.style.zIndex = 0;
+    btnPause.style.zIndex = 0;
 
     //Increase the z-index for the popup to show it above the curtain
     popup.style.zIndex = 5;

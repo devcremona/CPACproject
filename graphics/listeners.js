@@ -296,8 +296,8 @@ function btnColorsListener() {
 }
 
 
-function btnHelpCallback() { //Go to the spash screen
-  if(splash.classList.contains('hidden')){
+function btnPauseCallback() { //Go to the spash screen
+  /*if(splash.classList.contains('hidden')){
     splash.style.zIndex = 10;
     splash.classList.remove('hidden');
     splashIsOpen = true;
@@ -308,7 +308,9 @@ function btnHelpCallback() { //Go to the spash screen
           splash.style.zIndex = 0;
           splashIsOpen = false;
         });
-  }
+  }*/
+  speakStop();
+  alert('Recap paused!\nPress OK to resume...');
 }
 
 
@@ -364,7 +366,7 @@ function setListeners() {
 
   //SPLASH
   //==============================================================================
-  btnHelp.addEventListener('click', btnHelpCallback);
+  btnPause.addEventListener('click', btnPauseCallback);
 
   btnGo.addEventListener('click', function() { //From splash to the sketch
 
@@ -379,7 +381,7 @@ function setListeners() {
         });
 
     splashIsOpen = false;
-    btnHelp.style.zIndex = 3;
+    btnPause.style.zIndex = 3;
     setTimeout(openPopup,500);
   });
 }

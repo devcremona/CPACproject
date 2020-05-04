@@ -1,7 +1,7 @@
 /* Help Button Style */
 /*-----------------------------------------------------------------------------*/
 
-#btnHelp{
+#btnPause{
   position: fixed;
   right: 0.5vw;
   top: var(--bottom-margin);
@@ -11,6 +11,6 @@
   background-color: white;
   box-shadow: 0 0 2px 13px #fff;
 
-  opacity: 1;
+  opacity: 0;
   transition: 1s opacity ease;
 }
