@@ -8,7 +8,7 @@ function addDrawing(){
 	sketchContainer = document.getElementById('sketchContainer');
 
 
-	var img1 = new Image();						
+	var img1 = new Image();
 	img1.src = sketchContext.canvas.toDataURL('image/png');
 
 	sketchContainer.appendChild(img1);
@@ -73,11 +73,14 @@ class Drawing{
 		this.meanx = Math.round(this.dminx + this.width/2);
 		this.meany = Math.round(this.dminy + this.height/2);
 
+		this.nativeX = this.dminx;
+		this.nativeY = this.dminy;
+
 		this.path = [];
 		this.path.push([this.meanx, this.meany]);
 	}
 
-	updateCoord(dxx, dyy){
+	updateCoord(dxx, dyy, recap){
 		this.dmaxx += dxx;
 		this.dminx += dxx;
 
@@ -91,7 +94,9 @@ class Drawing{
 		this.dwg.style.left = Number(this.dwg.style.left.substring(0, this.dwg.style.left.length-2))+dxx+"px";
 		this.dwg.style.top = Number(this.dwg.style.top.substring(0, this.dwg.style.top.length-2))+dyy+"px";
 
-		this.path.push([this.meanx, this.meany]);
+		// the final recap doesn't need to track the movements
+		if(!recap)
+			this.path.push([this.meanx, this.meany]);
 	}
 
 	setArrows(){
@@ -108,4 +113,31 @@ class Drawing{
 	static arrowsOff(){
 		Drawing.arrows.remove();
 	}
+
+	recapAnimation(){
+		// reset in the original drawing position
+		this.updateCoord(
+			-this.dminx+this.nativeX,
+			-this.dminy+this.nativeY,
+			true
+		);
+
+		 this.stepAnimation(this.path);
+	}
+
+	// recursive callback: arr is the array of remaining steps
+	stepAnimation(arr){
+		if(arr.length!=0){
+			let trans = arr.pop();
+			let dxx = trans[0] - Math.round(this.width/2) - this.dminx;
+			let dyy = trans[1] - Math.round(this.height/2) - this.dminy;
+
+			$(this.dwg).animate({
+				left: dxx,
+				top: dyy
+			}, 20, 'linear', this.stepAnimation(arr) ); // (selector).animate({styles},speed,easing,callback)
+		}
+	}
+
+
 }

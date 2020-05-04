@@ -1,13 +1,17 @@
 //Alert the user that a recap is going to start
 function introduceRecap() {
+  //Disable question mark button
+  btnHelp.firstChild.classList.add('inactive');
+  btnHelp.removeEventListener('click',btnHelpCallback);
 
   //Set transitions for the container and the drawings
   sketchContainer.style.transition = '1s all ease';
 
+/*
   Object.keys(drawings).forEach(function(key) {
-     drawings[key].dwg.style.transition = '1s all ease';
+     drawings[key].dwg.style.transition = '0.1s all ease';
   });
-
+*/
 
   setTimeout(function(){
 
@@ -19,9 +23,15 @@ function introduceRecap() {
     //Hide the container
     sketchContainer.style.opacity = 0;
 
+    //Hide tools
+    drawingTools.style.opacity = 0;
+    navigationTools.style.opacity = 0;
+    btnHelp.style.opacity = 0;
+
     //Hide all drawings
     Object.keys(drawings).forEach(function(key) {
        drawings[key].dwg.style.opacity = 0;
+       drawings[key].dwg.style.transition = 'none';
     });
 
     //Get narration text from story.js and set text
@@ -75,12 +85,7 @@ function doRecap() {
 
         if(!isAutomaticStoryAhead(getCurrentStatus_Recap()) && getCurrentStatus_Recap()<STATUS_RECAP_ENUM.RECORDING){
           drawings[getCurrentStatus_Recap()].dwg.style.opacity = 1;
-          setTimeout(function(){
-            //Animations for drawings
-            $(drawings[getCurrentStatus_Recap()].dwg).animate({left:'100px',top:'100px'},1000); //Just example
-          },1000); //Equal to the css transition of opacity
-
-
+          drawings[getCurrentStatus_Recap()].recapAnimation();
         }
 
         infoMessage.innerHTML = getNarrationRecap();

@@ -131,13 +131,17 @@ function openPopup() {
       break;
 
     case STATUS_STORY_ENUM.RECORDING:
-      choicesDiv.innerHTML = 'Press  <span id="btnStartRecordingText" class="iconify"  data-icon="mdi:record-circle-outline"></span>  to start the audio recording...';
+      choicesDiv.innerHTML = 'Press  <span id="btnStartRecordingText" class="iconify"  data-icon="mdi:record-circle-outline"></span>  to start the audio recording... and then <span id="btnStopRecordingText" class="iconify"  data-icon="mdi:stop-circle-outline"></span> to stop it';
       setTimeout(function(){
         btnStartRecordingText.style.cursor = 'auto';
         btnStartRecordingText.style.marginLeft = '0.5vw';
         btnStartRecordingText.style.marginRight = '0.5vw';
-      },50);
-      speak('Press the rec button to start the audio recording');
+
+        btnStopRecordingText.style.cursor = 'auto';
+        btnStopRecordingText.style.marginLeft = '0.5vw';
+        btnStopRecordingText.style.marginRight = '0.5vw';
+      },300);
+      speak('Press the rec button to start the audio recording, and then the stop button to stop it');
 
       // Prepare and check if requirements are filled
       Initialize();
@@ -150,8 +154,11 @@ function openPopup() {
         speakStop();
         startRecord();
 
-        btnStartRecording.classList.add('Blink'); //Blick recording button
+        btnStartRecording.classList.add('Blink'); //Blink recording button
         btnStartRecording.style.pointerEvents = 'none';
+        setTimeout(function(){ //Timeout needed for firefox
+          btnStartRecording.style.animationName = 'anim';
+        },10);
 
         btnStopRecording.classList.remove('inactive'); //Activate stop recording button,
         btnStopRecording.style.pointerEvents = 'all';
@@ -166,29 +173,25 @@ function openPopup() {
       break;
 
     case STATUS_STORY_ENUM.END:
+
+      //Hide all popup buttons
       btnStartRecordingContainer.style.display = 'none';
       btnStopRecordingContainer.style.display = 'none';
+      btnConfirmPopup.style.display = 'none';
 
-      //Replace the checkmark with another icon for the RELOAD PAGE
-      btnConfirmPopup.replaceChild($('<span data-width="100" data-height="100" class="iconify" id="reloadIcon" data-icon="subway:cloud-reload" data-inline="false"></span>')[0], btnConfirmPopup.firstChild);
+      //Show the reload page button
+      btnReload.style.display = 'block';
+      reloadIcon.style.height = '13vh';
+      reloadIcon.style.width = '7vw';
+      reloadIcon.style.marginTop = '5vh';
+      btnReload.addEventListener('click',function(){
+        location.reload();
+      });
       /*divText = document.createElement('div');
       divText.innerText = 'Restart!';
       divText.style.fontSize = '1.8vw';
       divText.style.marginTop = '-2.5vw';
-      btnConfirmPopup.appendChild(divText);*/
-      //Set the properties for this icon
-      setTimeout(function(){ //Timeout needed because iconify need to have time to substitute the element
-        reloadIcon.style.marginTop = '8vh';
-        reloadIcon.classList.remove('iconify');
-        reloadIcon.style.cursor = 'pointer';
-        reloadIcon.addEventListener('click',function(){
-          location.reload();
-        });
-      },10);
-      //Show the button
-      btnConfirmPopup.removeEventListener('click', confirmPopupCallback);
-      btnConfirmPopup.classList.remove('inactive');
-      btnConfirmPopup.style.display = 'block';
+      btnReload.appendChild(divText);*/
 
       break;
   }

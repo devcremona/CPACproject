@@ -17,6 +17,7 @@ let pen = [0,0,0]; // Model pen state, [pen_down, pen_up, pen_end].
 let previousPen = [1, 0, 0]; // Previous model pen state.
 const PEN = {DOWN: 0, UP: 1, END: 2};
 const epsilon = 2.0; // to ignore data from user's pen staying in one spot.
+const epsilonDrag = 1;
 
 // Human drawing.
 let currentRawLine = [];
