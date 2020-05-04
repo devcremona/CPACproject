@@ -296,6 +296,23 @@ function btnColorsListener() {
 }
 
 
+function btnHelpCallback() { //Go to the spash screen
+  if(splash.classList.contains('hidden')){
+    splash.style.zIndex = 10;
+    splash.classList.remove('hidden');
+    splashIsOpen = true;
+  } else{
+    splash.classList.add('hidden');
+    $('#splash').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+        function(event) {
+          splash.style.zIndex = 0;
+          splashIsOpen = false;
+        });
+  }
+}
+
+
+
 function setListeners() {
 
   //POPUP
@@ -347,22 +364,7 @@ function setListeners() {
 
   //SPLASH
   //==============================================================================
-  btnHelp.addEventListener('click', function() { //Go to the spash screen
-    if(splash.classList.contains('hidden')){
-      splash.style.zIndex = 10;
-      splash.classList.remove('hidden');
-      splashIsOpen = true;
-    } else{
-      splash.classList.add('hidden');
-      $('#splash').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
-          function(event) {
-            splash.style.zIndex = 0;
-            splashIsOpen = false;
-          });
-    }
-
-
-  });
+  btnHelp.addEventListener('click', btnHelpCallback);
 
   btnGo.addEventListener('click', function() { //From splash to the sketch
 
