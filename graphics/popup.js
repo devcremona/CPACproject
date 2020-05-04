@@ -131,13 +131,17 @@ function openPopup() {
       break;
 
     case STATUS_STORY_ENUM.RECORDING:
-      choicesDiv.innerHTML = 'Press  <span id="btnStartRecordingText" class="iconify"  data-icon="mdi:record-circle-outline"></span>  to start the audio recording...';
+      choicesDiv.innerHTML = 'Press  <span id="btnStartRecordingText" class="iconify"  data-icon="mdi:record-circle-outline"></span>  to start the audio recording... and then <span id="btnStopRecordingText" class="iconify"  data-icon="mdi:stop-circle-outline"></span> to stop it';
       setTimeout(function(){
         btnStartRecordingText.style.cursor = 'auto';
         btnStartRecordingText.style.marginLeft = '0.5vw';
         btnStartRecordingText.style.marginRight = '0.5vw';
-      },50);
-      speak('Press the rec button to start the audio recording');
+
+        btnStopRecordingText.style.cursor = 'auto';
+        btnStopRecordingText.style.marginLeft = '0.5vw';
+        btnStopRecordingText.style.marginRight = '0.5vw';
+      },300);
+      speak('Press the rec button to start the audio recording, and then the stop button to stop it');
 
       // Prepare and check if requirements are filled
       Initialize();
@@ -150,8 +154,11 @@ function openPopup() {
         speakStop();
         startRecord();
 
-        btnStartRecording.classList.add('Blink'); //Blick recording button
+        btnStartRecording.classList.add('Blink'); //Blink recording button
         btnStartRecording.style.pointerEvents = 'none';
+        setTimeout(function(){ //Timeout needed for firefox
+          btnStartRecording.style.animationName = 'anim';
+        },10);
 
         btnStopRecording.classList.remove('inactive'); //Activate stop recording button,
         btnStopRecording.style.pointerEvents = 'all';
