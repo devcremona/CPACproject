@@ -166,29 +166,25 @@ function openPopup() {
       break;
 
     case STATUS_STORY_ENUM.END:
+
+      //Hide all popup buttons
       btnStartRecordingContainer.style.display = 'none';
       btnStopRecordingContainer.style.display = 'none';
+      btnConfirmPopup.style.display = 'none';
 
-      //Replace the checkmark with another icon for the RELOAD PAGE
-      btnConfirmPopup.replaceChild($('<span data-width="100" data-height="100" class="iconify" id="reloadIcon" data-icon="subway:cloud-reload" data-inline="false"></span>')[0], btnConfirmPopup.firstChild);
+      //Show the reload page button
+      btnReload.style.display = 'block';
+      reloadIcon.style.height = '13vh';
+      reloadIcon.style.width = '7vw';
+      reloadIcon.style.marginTop = '5vh';
+      btnReload.addEventListener('click',function(){
+        location.reload();
+      });
       /*divText = document.createElement('div');
       divText.innerText = 'Restart!';
       divText.style.fontSize = '1.8vw';
       divText.style.marginTop = '-2.5vw';
-      btnConfirmPopup.appendChild(divText);*/
-      //Set the properties for this icon
-      setTimeout(function(){ //Timeout needed because iconify need to have time to substitute the element
-        reloadIcon.style.marginTop = '8vh';
-        reloadIcon.classList.remove('iconify');
-        reloadIcon.style.cursor = 'pointer';
-        reloadIcon.addEventListener('click',function(){
-          location.reload();
-        });
-      },10);
-      //Show the button
-      btnConfirmPopup.removeEventListener('click', confirmPopupCallback);
-      btnConfirmPopup.classList.remove('inactive');
-      btnConfirmPopup.style.display = 'block';
+      btnReload.appendChild(divText);*/
 
       break;
   }
