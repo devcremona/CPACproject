@@ -33,6 +33,12 @@
 
 #btnGo {
   margin: auto;
+  width: 14vw;
+  height: 11vh;
+  font-family: 'Caveat Brush';
+  font-size: 2vw;
+  border-radius: 30%;
+  margin-top: 6vh;
 }
 
 #btnGoIco{
