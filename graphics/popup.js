@@ -181,10 +181,14 @@ function openPopup() {
 
       //Show the reload page button
       btnReload.style.display = 'block';
+      btnReload.style.height = '13vh';
+      btnReload.style.width = '7vw';
+      btnReload.style.margin = 'auto';
+      btnReload.style.marginTop = '5vh';
+
       reloadIcon.style.height = '13vh';
-      reloadIcon.style.width = '7vw';
-      reloadIcon.style.marginTop = '5vh';
-      btnReload.addEventListener('click',function(){
+      reloadIcon.style.width = '7vw';      
+      reloadIcon.addEventListener('click',function(){
         location.reload();
       });
       /*divText = document.createElement('div');
