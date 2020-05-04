@@ -1,3 +1,15 @@
+function checkAllLetters(text) {
+   var letters = /^[A-Za-z]+$/;
+   if(text.match(letters))
+     {
+      return true;
+     }
+   else
+     {
+     return false;
+     }
+  }
+
 function confirmPopupCallback() { // When the user clicks on x, close the popup
 
   //Stop synth speech
@@ -12,7 +24,17 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
 
   switch (getCurrentStatus_Story()) {
     case STATUS_STORY_ENUM.NAME:
-      setUserChoice(getCurrentStatus_Story(), characterNameField.value);
+      if(checkAllLetters(characterNameField.value)){
+        setUserChoice(getCurrentStatus_Story(), characterNameField.value);
+      } else {
+        alert("You must enter just letters!");
+        //Close popup
+        popup.classList.remove('hidden');
+        popupContent.classList.remove('hidden');
+        popupIsOpen = true;
+        break;
+      }
+
 
     default:
       if(isAutomaticStoryAhead(getCurrentStatus_Story())){
