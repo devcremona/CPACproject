@@ -8,8 +8,7 @@ const sketch = function(sketch) {
         function() {
 
           //Show the splash screen with opacity animation
-          splash.style.transition = '1.5s opacity ease';
-          splash.style.opacity = 1;
+          splash.classList.remove('hidden');
 
           // Initialize the canvas
           const containerSize = sketchContainer.getBoundingClientRect();

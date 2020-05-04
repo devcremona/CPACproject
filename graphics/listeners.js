@@ -375,10 +375,10 @@ function setListeners() {
 
     //Move the splash on the back and dissolve
     splash.classList.add('hidden');
-    $('#splash').one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
-        function(event) {
-          splash.style.zIndex = 0;
-        });
+    splashAnimationDuration = parseInt($('#splash').css('transition-duration').split('s')[0]); //seconds
+    setTimeout(function(){
+      splash.style.zIndex = 0;
+    },splashAnimationDuration*1000);
 
     splashIsOpen = false;
     btnPause.style.zIndex = 3;
