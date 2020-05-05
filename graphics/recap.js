@@ -86,7 +86,7 @@ function doRecap() {
       default:
 
         if(!isAutomaticStoryAhead(getCurrentStatus_Recap()) && getCurrentStatus_Recap()<STATUS_RECAP_ENUM.RECORDING){
-          drawings[getCurrentStatus_Recap()].dwg.style.opacity = 1;
+          $(drawings[getCurrentStatus_Recap()].dwg).animate({opacity: 1}, 2000);
           drawings[getCurrentStatus_Recap()].recapAnimation();
         }
 
@@ -124,12 +124,17 @@ function afterSpeech() {
        drawings[key].dwg.style.transition = 'none';
     });
 
-    //Clone the 2 characters images
+    //Clone the 2 characters images and spawn them
+    drawings[STATUS_STORY_ENUM.CHARACTER].dwg.style.opacity = 0;
+    drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg.style.opacity = 0;
     app.appendChild(drawings[STATUS_STORY_ENUM.CHARACTER].dwg);
     app.appendChild(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg);
+    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({opacity: 1}, 2000);
+    $(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg).animate({opacity: 1}, 2000);
 
-    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({zIndex:4,left:'0px',top:'0px'},recDuration);
-    $(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg).animate({zIndex:4,left:'20px',top:'30px'},recDuration);
+    // move the characters in the two half centers
+    drawings[STATUS_STORY_ENUM.CHARACTER].finalAnimation(recDuration*1000, 1);
+    drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].finalAnimation(recDuration*1000, 2);
 
     //Change the background: make the background dark and hide sketch container
     $('#sketchContainer').animate({opacity:0},recDuration);

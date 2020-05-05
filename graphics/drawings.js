@@ -139,5 +139,25 @@ class Drawing{
 		}
 	}
 
+	finalAnimation(recDuration, i){
+
+		let deltaX = this.nativeX + this.width/2;
+		let deltaY = this.nativeY + this.height/2;
+		this.dwg.style.zIndex = 4;
+
+		if(i==1) // left half screen
+			$(this.dwg).animate({
+				left: Math.round(sketchContext.width/4 - deltaX),
+				top: Math.round(sketchContext.height/2 - deltaY),
+			}, recDuration );
+
+		if(i==2) // right half screen
+			$(this.dwg).animate({
+				left: Math.round(sketchContext.width/4*3 - deltaX),
+				top: Math.round(sketchContext.height/2 - deltaY),
+			}, recDuration );
+
+	}
+
 
 }
