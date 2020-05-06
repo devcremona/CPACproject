@@ -102,3 +102,38 @@ function loadModel(index) {
     speak('Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+' by clicking on the pencil...');
   });
 };
+
+
+
+function setSpeakerVoice(){
+  if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in Firefox
+    speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
+      //Search the last available italian and english voice
+      for(i=0; i<getVoices().length; i++){
+          if(getVoices()[i][1]=='it-IT'){
+              voiceNameITA=getVoices()[i][0];
+          }
+          if(getVoices()[i][1]=='en-US'){
+              voiceNameENG=getVoices()[i][0];
+          }
+      }
+      setVoice(voiceNameENG);
+      console.log('setted voice',voiceNameENG, getVoices());
+    };
+  } else { //If we are in firefox we need a delay to detect the voices
+    getVoices();
+    setTimeout(function(){
+      for(i=0; i<getVoices().length; i++){
+          if(getVoices()[i][1]=='it-IT'){
+              voiceNameITA=getVoices()[i][0];
+          }
+          if(getVoices()[i][1]=='en-US'){
+              voiceNameENG=getVoices()[i][0];
+          }
+      }
+      setVoice(voiceNameENG);
+      console.log('setted voice firefox',voiceNameENG, getVoices());
+    },10);
+
+  }
+}

@@ -106,37 +106,11 @@ const sketch = function(sketch) {
 
           sketch.stroke(currentColor);
 
+          //Just to "initialize" voices for firefox
+          getVoices();
+
           //Reset of the character name field
           characterNameField.value = '';
-
-
-          //Speech language setting
-          if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in Firefox
-            speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
-              //Search the last available italian and english voice
-              for(i=0; i<getVoices().length; i++){
-                  if(getVoices()[i][1]=='it-IT'){
-                      voiceNameITA=getVoices()[i][0];
-                  }
-                  if(getVoices()[i][1]=='en-US'){
-                      voiceNameENG=getVoices()[i][0];
-                  }
-              }
-              setVoice(voiceNameENG);
-            };
-          } else { //If we are in firefox we need a delay to detect the voices
-            setTimeout(function(){
-              for(i=0; i<getVoices().length; i++){
-                  if(getVoices()[i][1]=='it-IT'){
-                      voiceNameITA=getVoices()[i][0];
-                  }
-                  if(getVoices()[i][1]=='en-US'){
-                      voiceNameENG=getVoices()[i][0];
-                  }
-              }
-              setVoice(voiceNameENG);
-            },10);
-          }
 
           setListeners();
 

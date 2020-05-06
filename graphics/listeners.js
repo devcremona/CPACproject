@@ -370,6 +370,8 @@ function setListeners() {
 
   btnGo.addEventListener('click', function() { //From splash to the sketch
 
+    setSpeakerVoice();
+
     //Start moving curtain
     splashCurtain.classList.add('wrapped');
 
