@@ -39,6 +39,7 @@
   font-size: 2vw;
   border-radius: 30%;
   margin-top: 6vh;
+  cursor: pointer;
 }
 
 #btnGoIco{
