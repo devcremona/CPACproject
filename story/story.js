@@ -24,7 +24,7 @@ const STATUS_STORY_ENUM = {
 var choices = {
   [STATUS_STORY_ENUM.WHERE]: ["Lake", "City", "Forest", "Hill", "Farm"],
   [STATUS_STORY_ENUM.WEATHER]: ["Sunny", "Rainy", "Foggy"],
-  [STATUS_STORY_ENUM.CHARACTER]: ["Cat", "Pig"], // dog
+  [STATUS_STORY_ENUM.CHARACTER]: ["Cat", "Pig", "Rabbit", "Scorpion"], // dog
   [STATUS_STORY_ENUM.NAME]: [],
   [STATUS_STORY_ENUM.SITUA1]: ["X wants to play", "X is hungry", "X is thirsty"],
   [STATUS_STORY_ENUM.OBJECT]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
