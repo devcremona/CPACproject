@@ -20,4 +20,5 @@
   flex-grow: 1;
   overflow: hidden;
   height:100%;
+  transition: 0.4s background-image ease;
 }

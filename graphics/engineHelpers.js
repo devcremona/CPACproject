@@ -104,6 +104,47 @@ function loadModel(index) {
 };
 
 
+function preloadImages(){
+
+    //Load background images
+    for(i=0; i<choices[STATUS_STORY_ENUM.WHERE].length; i++){
+      for(j=0; j<choices[STATUS_STORY_ENUM.WEATHER].length; j++){
+        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()] = new Image();
+        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j]+'.png';
+      }
+    }
+
+    //Load character images
+    for(i=0; i<choices[STATUS_STORY_ENUM.CHARACTER].length; i++){
+      buttonImages[choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()] = new Image();
+      buttonImages[choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()].src = '../buttonsImg/'+choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()+'.png';
+    }
+
+    //Load second character images
+    for(i=0; i<choices[STATUS_STORY_ENUM.SECOND_CHARACTER].length; i++){
+      buttonImages[choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()] = new Image();
+      buttonImages[choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()].src = '../buttonsImg/'+choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()+'.png';
+    }
+
+    //Load play list images
+    for(i=0; i<PLAY_LIST.length; i++){
+      buttonImages[PLAY_LIST[i].toLowerCase()] = new Image();
+      buttonImages[PLAY_LIST[i].toLowerCase()].src = '../buttonsImg/'+PLAY_LIST[i].toLowerCase()+'.png';
+    }
+
+    //Load food list images
+    for(i=0; i<FOOD_LIST.length; i++){
+      buttonImages[FOOD_LIST[i].toLowerCase()] = new Image();
+      buttonImages[FOOD_LIST[i].toLowerCase()].src = '../buttonsImg/'+FOOD_LIST[i].toLowerCase()+'.png';
+    }
+
+    //Load thirst list images
+    for(i=0; i<THIRST_LIST.length; i++){
+      buttonImages[THIRST_LIST[i].toLowerCase()] = new Image();
+      buttonImages[THIRST_LIST[i].toLowerCase()].src = '../buttonsImg/'+THIRST_LIST[i].toLowerCase()+'.png';
+    }
+}
+
 
 function setSpeakerVoice(){
   if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in firfox

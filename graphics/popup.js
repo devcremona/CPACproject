@@ -42,8 +42,10 @@ function openPopup() {
   if(getCurrentStatus_Story()<STATUS_STORY_ENUM.END){
     for (var i = 0; i < currentChoices.length; i++){
         if(!isAutomaticStoryAhead(getCurrentStatus_Story())){ //If I have to draw something, place images in the choice buttons
-          img = '<img width="60vw" src="../buttonsImg/'+currentChoices[i].toLowerCase()+'.png" style="margin:auto">'
-          $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+img+currentChoices[i]+'</div>' );
+          img = buttonImages[currentChoices[i].toLowerCase()];
+          img.style.width = '10vh';
+          img.style.margin = 'auto';
+          $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+img.outerHTML+currentChoices[i]+'</div>' );
         }
         else {
           $( '#choicesDiv' ).append( '<div class="choiceButton" id="choice'+i+'">'+currentChoices[i]+'</div>' );
@@ -86,8 +88,7 @@ function openPopup() {
               setUserChoice(getCurrentStatus_Story(),choiceDiv.innerHTML);
             }
 
-
-            sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')+'.png)';
+            sketchContainer.style.backgroundImage = 'url('+backgroundImages[getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')].src+')';
           });
         }
       );
@@ -187,7 +188,7 @@ function openPopup() {
       btnReload.style.marginTop = '5vh';
 
       reloadIcon.style.height = '13vh';
-      reloadIcon.style.width = '7vw';      
+      reloadIcon.style.width = '7vw';
       reloadIcon.addEventListener('click',function(){
         location.reload();
       });

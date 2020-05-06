@@ -49,6 +49,10 @@ let eraserStrokeColor = 'black';
 //Popup variables
 popupIsOpen = false;
 
+//Images variables
+backgroundImages = {};
+buttonImages = {};
+
 
 //Voice variables
 let voiceNameITA;
