@@ -1,11 +1,70 @@
+//availableModels = [];
+
+function preloadImages(){
+
+    //Load background images
+    for(i=0; i<choices[STATUS_STORY_ENUM.WHERE].length; i++){
+      for(j=0; j<choices[STATUS_STORY_ENUM.WEATHER].length; j++){
+        new Image().src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j]+'.png';
+      }
+    }
+
+    //Load character images
+    for(i=0; i<choices[STATUS_STORY_ENUM.CHARACTER].length; i++){
+      new Image().src = '../buttonsImg/'+choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()+'.png';
+      //availableModels.push(choices[STATUS_STORY_ENUM.CHARACTER][i]);
+    }
+
+    //Load second character images
+    for(i=0; i<choices[STATUS_STORY_ENUM.SECOND_CHARACTER].length; i++){
+      new Image().src = '../buttonsImg/'+choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()+'.png';
+      //availableModels.push(choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i]);
+    }
+
+    //Load play list images
+    for(i=0; i<PLAY_LIST.length; i++){
+      new Image().src = '../buttonsImg/'+PLAY_LIST[i].toLowerCase()+'.png';
+      //availableModels.push(PLAY_LIST[i]);
+    }
+
+    //Load food list images
+    for(i=0; i<FOOD_LIST.length; i++){
+      new Image().src = '../buttonsImg/'+FOOD_LIST[i].toLowerCase()+'.png';
+      //availableModels.push(FOOD_LIST[i]);
+    }
+
+    //Load thirst list images
+    for(i=0; i<THIRST_LIST.length; i++){
+      new Image().src = '../buttonsImg/'+THIRST_LIST[i].toLowerCase()+'.png';
+      //availableModels.push(THIRST_LIST[i]);
+    }
+}
+
+
+/*function preloadModels(){
+  for(q=0; q<availableModels.length; q++){
+    model[availableModels[q].toLowerCase()] = new ms.SketchRNN('../ML/models/'+availableModels[q].toLowerCase()+'.gen.json');
+    model[availableModels[q].toLowerCase()].initialize().then(function(index) {
+      console.log(index);
+      //console.log(`🤖${availableModels[i].toLowerCase()} loaded.`);
+      //model[availableModels[q].toLowerCase()].setPixelFactor(5.0);
+    });
+  }
+}
+
+//Load all models as soon as possible
+preloadModels();
+*/
+
 const sketch = function(sketch) {
-
-
 
   sketch.setup = function() {
     //Needed for Less to load the css for the curtain
     less.pageLoadFinished.then(
         function() {
+
+          //Load alla images as soon as possible
+          preloadImages();
 
           //Show the splash screen with opacity animation
           splash.classList.remove('hidden');
