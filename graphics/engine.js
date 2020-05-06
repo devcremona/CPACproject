@@ -106,8 +106,7 @@ const sketch = function(sketch) {
 
           sketch.stroke(currentColor);
 
-          //Just to "initialize" voices for firefox
-          getVoices();
+          setSpeakerVoice();
 
           //Reset of the character name field
           characterNameField.value = '';
