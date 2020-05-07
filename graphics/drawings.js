@@ -105,6 +105,9 @@ class Drawing{
 		buttonImages['arrows'].style.zIndex = "0";
 		buttonImages['arrows'].style.left = (this.meanx - 250)+"px";
 		buttonImages['arrows'].style.top = (this.meany - 250)+"px";
+		buttonImages['arrows'].style.animationTimingFunction = 'linear';
+		buttonImages['arrows'].style.animationName = 'animOpacity';
+		buttonImages['arrows'].classList.add('BlinkOpacity');
 		Drawing.arrows = buttonImages['arrows'];
 	}
 
