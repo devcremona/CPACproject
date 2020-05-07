@@ -7,6 +7,7 @@ var stopRecord = document.getElementById("stopRecord");
 var pauseRecord = document.getElementById("pauseRecord");*/
 var input;
 var rec = false;
+var audiostream;
 
 /**
  * Patch the APIs for every browser that supports them and check
@@ -22,18 +23,19 @@ function Initialize() {
 
         // Store the instance of AudioContext globally
         audio_context = new AudioContext;
-        console.log('Audio context is ready !');
-        console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+        //console.log('Audio context is ready !');
+        //console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
         navigator.getUserMedia({ audio: true }, function (stream) {
             // Expose the stream to be accessible globally
             audio_stream = stream;
             // Create the MediaStreamSource for the Recorder library
             input = audio_context.createMediaStreamSource(stream);
-            console.log('Media stream succesfully created');
+            audiostream = true;
+            //console.log('Media stream succesfully created');
 
             // Initialize the Recorder Library
             recorder = new Recorder(input);
-            console.log('Recorder initialised');
+            //console.log('Recorder initialised');
 
         }, function (e) {
             console.error('No live audio input: ' + e);
@@ -41,6 +43,7 @@ function Initialize() {
     } catch (e) {
         alert('No web audio support in this browser!');
     }
+ 
 }
 
 /**
@@ -51,9 +54,9 @@ function Initialize() {
  */
 
 function startRecording() {
+    
     recorder && recorder.record();
-    console.log('Recording...');
-
+    //console.log('Recording...');
     // Disable Record button and Play button and enable Stop button and Sause button!
     /*document.getElementById("startRecord").disabled = true;
     document.getElementById("stopRecord").disabled = false;
@@ -62,7 +65,7 @@ function startRecording() {
 }
 
 function pauseRecording() {
-    console.log("pauseButton clicked rec.recording=", recorder.recording);
+    //console.log("pauseButton clicked rec.recording=", recorder.recording);
     if (recorder.recording) {
         //pause
         recorder.stop();
@@ -85,10 +88,11 @@ function pauseRecording() {
 function stopRecording(callback) {
     // Stop the recorder instance
     recorder && recorder.stop();
-    console.log('Stopped recording.');
+    //console.log('Stopped recording.');
 
     // Stop the getUserMedia Audio Stream !
     audio_stream.getAudioTracks()[0].stop();
+    audiostream = false;
 
     // Disable Stop button and enable Record button and Play button!
     /*document.getElementById("startRecord").disabled = false;
@@ -123,6 +127,10 @@ function playback(buffers) {
     timer = buffers[0].length/audio_context.sampleRate ;
     setTimeout(afterRecordingEnd,timer*1000);
     return timer;
+}
+
+function isMicrophoneActive() {
+  return audiostream;
 }
 
 /*function callbackFunction() {
