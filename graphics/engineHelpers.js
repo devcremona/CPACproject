@@ -110,7 +110,7 @@ function preloadImages(){
     for(i=0; i<choices[STATUS_STORY_ENUM.WHERE].length; i++){
       for(j=0; j<choices[STATUS_STORY_ENUM.WEATHER].length; j++){
         backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()] = new Image();
-        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j]+'.png';
+        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()+'.png';
       }
     }
 
