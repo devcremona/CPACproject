@@ -175,3 +175,34 @@ function setSpeakerVoice(){
     },10);
   }
 }
+
+function toPixels(xxx, yyy, d){ // x, y, pixelDensity
+	return 4 * d * (xxx + yyy*sketchContext.width);
+}
+
+function toCoord(pix, d){ // pix must be multiple of (4 * pixelDensity)
+	return ( [ (pix/4/d)%sketchContext.width, pix/4/d/sketchContext.width ] );
+}
+
+function scanCanvas(){
+  let d = sketchContext.pixelDensity();
+  maxx = 0; maxy = 0;
+  minx = sketchContext.width; miny = sketchContext.height;
+  step = 4 * 4 * d; // 4 (r,g,b,a) x s (check every s pixel) x d
+
+  for (i=0; i < sketchContext.height*step; i += step){
+    for (j=0; j < sketchContext.width*step; j += step){
+      let ij = sketchContext.height * i + j;
+      //console.log(ij);
+      if(sketchContext.pixels[ij+3]){ // if pixel != (0,0,0,0)
+        let idx = toCoord(ij, d);
+        //console.log(idx);
+        if(idx[0] > maxx) maxx = idx[0];
+        if(idx[0] < minx) minx = idx[0];
+        if(idx[1] > maxy) maxy = idx[1];
+        if(idx[1] < miny) miny = idx[1];
+      }
+    }
+  }
+  //console.log("\nmaxx: "+maxx+"\nmaxy: "+maxy+"\nminx: "+minx+"\nminy: "+miny);
+}

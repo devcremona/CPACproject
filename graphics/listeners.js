@@ -147,7 +147,7 @@ function btnDoneCallback() {
       btnEraser.removeEventListener('click', btnEraserListener);
 
 
-
+      scanCanvas();
       //Save canvas as image, activate dragging
       addDrawing();
 

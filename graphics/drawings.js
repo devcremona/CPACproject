@@ -161,3 +161,20 @@ class Drawing{
 
 
 }
+
+/*
+	Se cancello qualcosa non viene considerato nel movimento e nel centramento delle frecce
+
+	Se muovo per tanto tempo un disegno poi nel recap non finisce l’animazione e
+	la parte finale di movimento verso il centro non viene effettuata
+	
+	Quando inizia il recap e lo sfondo sparisce in dissolvenza i disegni spariscono di colpo
+	invece che in dissolvenza, stessa cosa quando finisce il recap e sparisce di nuovo lo sfondo
+	
+	Diminuirei un po’ il tempo di fade-in dei disegni durante il recap
+	
+	La posizione finale dei due personaggi la mettere più verso il centro
+	
+	Le animazioni del secondo animale (bird,bee,etc.) appaiono prima che terminino tutte
+	le animazioni dell’oggetto (pizza,cup,guitar,etc.)
+*/

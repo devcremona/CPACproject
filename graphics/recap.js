@@ -30,7 +30,10 @@ function introduceRecap() {
     //Hide all drawings
     Object.keys(drawings).forEach(function(key) {
        drawings[key].dwg.style.opacity = 0;
-       drawings[key].dwg.style.transition = 'none';
+    });
+
+    Object.keys(drawings).forEach(function(key) {
+      drawings[key].dwg.style.transition = 'none';
     });
 
     //Get narration text from story.js and set text
@@ -86,7 +89,7 @@ function doRecap() {
       default:
 
         if(!isAutomaticStoryAhead(getCurrentStatus_Recap()) && getCurrentStatus_Recap()<STATUS_RECAP_ENUM.RECORDING){
-          $(drawings[getCurrentStatus_Recap()].dwg).animate({opacity: 1}, 2000);
+          $(drawings[getCurrentStatus_Recap()].dwg).animate({opacity: 1}, 1000);
           drawings[getCurrentStatus_Recap()].recapAnimation();
         }
 
@@ -129,8 +132,8 @@ function afterSpeech() {
     drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg.style.opacity = 0;
     app.appendChild(drawings[STATUS_STORY_ENUM.CHARACTER].dwg);
     app.appendChild(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg);
-    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({opacity: 1}, 2000);
-    $(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg).animate({opacity: 1}, 2000);
+    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({opacity: 1}, 1000);
+    $(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg).animate({opacity: 1}, 1000);
 
     // move the characters in the two half centers
     drawings[STATUS_STORY_ENUM.CHARACTER].finalAnimation(recDuration*1000, 1);
