@@ -152,17 +152,22 @@ function openPopup() {
       btnConfirmPopup.style.display = 'none';
       btnStartRecording.classList.remove('inactive'); //Activate start recording button, but not stop button
       btnStartRecording.addEventListener('click', function(){
-        speakStop();
-        startRecord();
+        if(isMicrophoneActive()){
+          speakStop();
+          startRecord();
 
-        btnStartRecording.classList.add('Blink'); //Blink recording button
-        btnStartRecording.style.pointerEvents = 'none';
-        setTimeout(function(){ //Timeout needed for firefox
-          btnStartRecording.style.animationName = 'anim';
-        },10);
+          btnStartRecording.classList.add('Blink'); //Blink recording button
+          btnStartRecording.style.pointerEvents = 'none';
+          setTimeout(function(){ //Timeout needed for firefox
+            btnStartRecording.style.animationName = 'anim';
+          },10);
 
-        btnStopRecording.classList.remove('inactive'); //Activate stop recording button,
-        btnStopRecording.style.pointerEvents = 'all';
+          btnStopRecording.classList.remove('inactive'); //Activate stop recording button,
+          btnStopRecording.style.pointerEvents = 'all';
+        } else {
+          alert('allow the microphone access to continue!');
+          Initialize();
+        }
       });
       btnStopRecording.addEventListener('click', function(){
         stopRecord();

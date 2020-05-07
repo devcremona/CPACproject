@@ -62,7 +62,7 @@ function doRecap() {
         //First time default weather
         if(getCurrentStatus_Recap()==STATUS_RECAP_ENUM.WHERE){
           //Set the background to sunny 'default' when it is not visible
-          sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+'sunny'+'.png)';
+          sketchContainer.style.backgroundImage = 'url('+backgroundImages[getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+'sunny'].src+')';
 
           //Show pause button
           btnPause.style.opacity = 1;
@@ -74,7 +74,7 @@ function doRecap() {
 
           //Second time default weather
           if(getCurrentStatus_Recap()==STATUS_RECAP_ENUM.WEATHER){
-            sketchContainer.style.backgroundImage = 'url(../background/'+getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase()+'.png)';
+            sketchContainer.style.backgroundImage = 'url('+backgroundImages[getUserChoice(STATUS_STORY_ENUM.WHERE).toLowerCase()+'_'+getUserChoice(STATUS_STORY_ENUM.WEATHER).toLowerCase().replace(/\s/g, '_')].src+')';
           }
 
           //Show the background
@@ -98,10 +98,16 @@ function doRecap() {
 
         break;
     }
-
-
 }
 
+function afterAnimation() {
+  animationIsFinished = false;
+
+  //Go on with the recap status
+  setNextStatus_Recap();
+  //Start/continue with the recap
+  doRecap();
+}
 
 function afterSpeech() {
 
@@ -110,14 +116,26 @@ function afterSpeech() {
     popup.classList.add('hidden');
     popupContent.classList.add('hidden');
     popupIsOpen = false;
-  }
 
-
-  if(getCurrentStatus_Recap() < STATUS_RECAP_ENUM.RECORDING){
     //Go on with the recap status
     setNextStatus_Recap();
     //Start/continue with the recap
     doRecap();
+  } else if(getCurrentStatus_Recap() < STATUS_RECAP_ENUM.RECORDING){
+    if(!isAutomaticStoryAhead(getCurrentStatus_Recap())){ //If we have to manage a drawing, we wait for the end of the animation
+      waitingInterval = setInterval(function(){ //Wait for the callback of the end of the animation
+                          if(animationIsFinished){
+                            afterAnimation();
+                            clearInterval(waitingInterval);
+                          }
+                        },50);
+      setTimeout(function(){animationIsFinished = true;},5000);
+    } else {
+      //Go on with the recap status
+      setNextStatus_Recap();
+      //Start/continue with the recap
+      doRecap();
+    }
   } else {
     //Start recording -> goto afterRecordingEnd
     recDuration = playRecord();
@@ -152,11 +170,10 @@ function afterSpeech() {
     //Increase the z-index for the popup to show it above the curtain
     popup.style.zIndex = 5;
   }
-
 }
 
 
-function afterRecordingEnd(){
+function afterRecordingEnd(){ //End of the recap goto the end of the story
   setNextStatus_Story();
-  setTimeout(openPopup, 1000);
+  setTimeout(openPopup, 2000);
 }

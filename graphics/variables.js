@@ -2,6 +2,8 @@ let sketchContext;
 
 //Model variables
 let model;
+let availableModels;
+let modelsJSON = {};
 
 // Model
 let modelState;
@@ -58,6 +60,9 @@ buttonImages = {};
 let voiceNameITA;
 let voiceNameENG;
 
+//Recap variables
+let animationIsFinished = false;
+let waitingInterval;
 
 //Crop variables
 var maxx, maxy, minx, miny;

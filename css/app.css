@@ -49,6 +49,18 @@
   }
 }
 
+.BlinkOpacity {
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  opacity: 1;
+}
+@keyframes animOpacity {
+  to {
+    opacity:0;
+  }
+}
+
 
 
 /* Meda Queries */

@@ -110,7 +110,7 @@ function preloadImages(){
     for(i=0; i<choices[STATUS_STORY_ENUM.WHERE].length; i++){
       for(j=0; j<choices[STATUS_STORY_ENUM.WEATHER].length; j++){
         backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()] = new Image();
-        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j]+'.png';
+        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()+'.png';
       }
     }
 
@@ -143,6 +143,27 @@ function preloadImages(){
       buttonImages[THIRST_LIST[i].toLowerCase()] = new Image();
       buttonImages[THIRST_LIST[i].toLowerCase()].src = '../buttonsImg/'+THIRST_LIST[i].toLowerCase()+'.png';
     }
+
+    //Load arrow image
+    buttonImages['arrows'] = new Image();
+    buttonImages['arrows'].src = "../arrows.png";
+}
+
+
+function preloadJSONs(){
+  for (var i = 0; i < availableModels.length; i++) {
+    $.getJSON('../ML/models/'+availableModels[i]+'.gen.json');
+  }
+}
+
+function getAvailableModels(){
+  //Concat all the possible choices
+  availableModels = choices[STATUS_STORY_ENUM.CHARACTER].concat(choices[STATUS_STORY_ENUM.SECOND_CHARACTER].concat(PLAY_LIST.concat(FOOD_LIST.concat(THIRST_LIST))));
+  //Set all the models to lower case
+  for (var i = 0; i < availableModels.length; i++) {
+    availableModels[i] = availableModels[i].toLowerCase();
+  }
+  return availableModels;
 }
 
 
