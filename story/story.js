@@ -43,13 +43,13 @@ const THIRST_LIST = ["Bottle", "Cup"];
 // narrationPC
 var narrationPC = {
   [STATUS_STORY_ENUM.WHERE]: ["Once upon a time... but where?"],
-  [STATUS_STORY_ENUM.WEATHER]: ["and it was a day..."],
+  [STATUS_STORY_ENUM.WEATHER]: ["and the day was very..."],
   [STATUS_STORY_ENUM.CHARACTER]: ["But who is the main character of the story?"],
   [STATUS_STORY_ENUM.NAME]: ["What's its name?"],
   [STATUS_STORY_ENUM.SITUA1]: ["Now what happens?"],
   [STATUS_STORY_ENUM.OBJECT]: ["initialize list"], // inizializzare in base alla scelta di cosa fare
   [STATUS_STORY_ENUM.SECOND_CHARACTER]: ["But at some point ... There comes a"],
-  [STATUS_STORY_ENUM.LAST_SITUA]: ["But character2 would like..."],
+  [STATUS_STORY_ENUM.LAST_SITUA]: ["But character2 would like to..."],
   [STATUS_STORY_ENUM.RECORDING]: ["Now tell me how this story ends!"],
   [STATUS_STORY_ENUM.END]: ["The end", "Very good", "What a beautiful story", "Thank you"]
 };
@@ -224,7 +224,7 @@ function setSitua1(situa1){
       //narrationVoice[STATUS_RECAP_ENUM.SITUA1] = userChoice[STATUS_STORY_ENUM.NAME] + " is starving and it would like to eat a big "
 
       choices[STATUS_STORY_ENUM.OBJECT] = FOOD_LIST;
-      narrationPC[STATUS_STORY_ENUM.OBJECT] = ["What does it want to eat?"];
+      narrationPC[STATUS_STORY_ENUM.OBJECT] = ["Which is its favourite food?"];
       }
       break;
     case situa[2]: {
