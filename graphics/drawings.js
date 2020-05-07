@@ -122,7 +122,7 @@ class Drawing{
 			true
 		);
 
-		 this.stepAnimation(this.path);
+		this.stepAnimation(this.path);
 	}
 
 	// recursive callback: arr is the array of remaining steps
