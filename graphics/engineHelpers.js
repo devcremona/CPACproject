@@ -143,6 +143,10 @@ function preloadImages(){
       buttonImages[THIRST_LIST[i].toLowerCase()] = new Image();
       buttonImages[THIRST_LIST[i].toLowerCase()].src = '../buttonsImg/'+THIRST_LIST[i].toLowerCase()+'.png';
     }
+
+    //Load arrow image
+    buttonImages['arrows'] = new Image();
+    buttonImages['arrows'].src = "../arrows.png";
 }
 
 

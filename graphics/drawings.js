@@ -100,14 +100,12 @@ class Drawing{
 	}
 
 	setArrows(){
-		let arrowsImg = new Image();
-		arrowsImg.src = "../arrows.png";;
-		sketchContainer.appendChild(arrowsImg);
-		arrowsImg.style.position = "absolute";
-		arrowsImg.style.zIndex = "0";
-		arrowsImg.style.left = (this.meanx - 250)+"px";
-		arrowsImg.style.top = (this.meany - 250)+"px";
-		Drawing.arrows = arrowsImg;
+		sketchContainer.appendChild(buttonImages['arrows']);
+		buttonImages['arrows'].style.position = "absolute";
+		buttonImages['arrows'].style.zIndex = "0";
+		buttonImages['arrows'].style.left = (this.meanx - 250)+"px";
+		buttonImages['arrows'].style.top = (this.meany - 250)+"px";
+		Drawing.arrows = buttonImages['arrows'];
 	}
 
 	static arrowsOff(){
@@ -167,14 +165,14 @@ class Drawing{
 
 	Se muovo per tanto tempo un disegno poi nel recap non finisce l’animazione e
 	la parte finale di movimento verso il centro non viene effettuata
-	
+
 	Quando inizia il recap e lo sfondo sparisce in dissolvenza i disegni spariscono di colpo
 	invece che in dissolvenza, stessa cosa quando finisce il recap e sparisce di nuovo lo sfondo
-	
+
 	Diminuirei un po’ il tempo di fade-in dei disegni durante il recap
-	
+
 	La posizione finale dei due personaggi la mettere più verso il centro
-	
+
 	Le animazioni del secondo animale (bird,bee,etc.) appaiono prima che terminino tutte
 	le animazioni dell’oggetto (pizza,cup,guitar,etc.)
 */
