@@ -58,6 +58,9 @@ buttonImages = {};
 let voiceNameITA;
 let voiceNameENG;
 
+//Recap variables
+let animationIsFinished = false;
+let waitingInterval;
 
 //Crop variables
 var maxx, maxy, minx, miny;
