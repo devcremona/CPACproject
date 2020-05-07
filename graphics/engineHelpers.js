@@ -150,6 +150,23 @@ function preloadImages(){
 }
 
 
+function preloadJSONs(){
+  for (var i = 0; i < availableModels.length; i++) {
+    $.getJSON('../ML/models/'+availableModels[i]+'.gen.json');
+  }
+}
+
+function getAvailableModels(){
+  //Concat all the possible choices
+  availableModels = choices[STATUS_STORY_ENUM.CHARACTER].concat(choices[STATUS_STORY_ENUM.SECOND_CHARACTER].concat(PLAY_LIST.concat(FOOD_LIST.concat(THIRST_LIST))));
+  //Set all the models to lower case
+  for (var i = 0; i < availableModels.length; i++) {
+    availableModels[i] = availableModels[i].toLowerCase();
+  }
+  return availableModels;
+}
+
+
 function setSpeakerVoice(){
   if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in firfox
     speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list

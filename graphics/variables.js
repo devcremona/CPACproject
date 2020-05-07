@@ -2,6 +2,8 @@ let sketchContext;
 
 //Model variables
 let model;
+let availableModels;
+let modelsJSON = {};
 
 // Model
 let modelState;
