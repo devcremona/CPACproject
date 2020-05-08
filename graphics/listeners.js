@@ -99,6 +99,12 @@ function btnDoneCallback() {
   //increase drawing status
   switch(drawingStatus){
     case DRAWING_STATUS.MAGIC:
+
+      //Re-add mouse listeners when the magic phase is finished
+      sketchContext.mousePressed = sketchMousePressedListener;
+      sketchContext.mouseDragged = sketchMouseDraggedListener;
+      sketchContext.mouseReleased = sketchMouseReleasedListener;
+
       //Deactivate retry magic button
       btnRetryMagic.classList.add('inactive');
       btnRetryMagic.removeEventListener('click', doMagic);
