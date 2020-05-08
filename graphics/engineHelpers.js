@@ -66,11 +66,7 @@ function loadModel(index) {
   }
 
   // loads the TensorFlow.js version of sketch-rnn model, with the model's weights.
-
-  //Use default trained models
-  //model = new ms.SketchRNN(`${BASE_URL}${availableModels[index]}.gen.json`);
-
-  //Use custom trained model of sheep
+  //Use custom trained models
   model = new ms.SketchRNN(`../ML/models/`+getUserChoice(getCurrentStatus_Story()).toLowerCase()+`.gen.json`);
 
   //model = new ms.SketchRNN('https://storage.googleapis.com/quickdraw-models/sketchRNN/models/sheep.gen.json');
@@ -106,47 +102,96 @@ function loadModel(index) {
 
 function preloadImages(){
 
+    bgSrc = { 'city_foggy': 'https://i.imgur.com/tc6qqIh.png',
+                'city_rainy': 'https://i.imgur.com/I86hZcV.jpg',
+                'city_sunny': 'https://i.imgur.com/XxAP4kj.png',
+                'farm_foggy': 'https://i.imgur.com/tLZAHZy.png',
+                'farm_rainy': 'https://i.imgur.com/D3mcL2u.jpg',
+                'farm_sunny': 'https://i.imgur.com/BvBPpFV.png',
+                'forest_foggy': 'https://i.imgur.com/iF5LS3q.png',
+                'forest_rainy': 'https://i.imgur.com/Rxy0Ihl.jpg',
+                'forest_sunny': 'https://i.imgur.com/1N4De4n.png',
+                'hill_foggy': 'https://i.imgur.com/HD7iyMn.png',
+                'hill_sunny': 'https://i.imgur.com/NJGyVkJ.jpg',
+                'hill_rainy': 'https://i.imgur.com/FM0zDUd.jpg',
+                'lake_foggy': 'https://i.imgur.com/0rsehrs.png',
+                'lake_rainy': 'https://i.imgur.com/SkggNz4.jpg',
+                'lake_sunny': 'https://i.imgur.com/Q3EaKnU.jpg'
+              };
+
     //Load background images
     for(i=0; i<choices[STATUS_STORY_ENUM.WHERE].length; i++){
       for(j=0; j<choices[STATUS_STORY_ENUM.WEATHER].length; j++){
         backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()] = new Image();
-        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = '../background/'+choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()+'.png';
+        backgroundImages[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()].src = bgSrc[choices[STATUS_STORY_ENUM.WHERE][i].toLowerCase()+'_'+choices[STATUS_STORY_ENUM.WEATHER][j].toLowerCase()];
       }
     }
+
+
+    characterSrc = {  'cat':'https://i.imgur.com/iYknCBr.png',
+                      'pig':'https://i.imgur.com/2KZ01Cd.png',
+                      'rabbit':'https://i.imgur.com/Cuit5CZ.png',
+                      'scorpion':'https://i.imgur.com/AWZqgx9.png'
+                   };
 
     //Load character images
     for(i=0; i<choices[STATUS_STORY_ENUM.CHARACTER].length; i++){
       buttonImages[choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()] = new Image();
-      buttonImages[choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()].src = '../buttonsImg/'+choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()+'.png';
+      buttonImages[choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()].src = characterSrc[choices[STATUS_STORY_ENUM.CHARACTER][i].toLowerCase()];
     }
+
+
+    secCharacterSrc = {   'bird':'https://i.imgur.com/7p4ll5Z.png',
+                          'bee':'https://i.imgur.com/kVPhK48.png',
+                          'crab':'https://i.imgur.com/oDxe5lj.png',
+                          'duck':'https://i.imgur.com/qhATtJ2.png'
+                       };
 
     //Load second character images
     for(i=0; i<choices[STATUS_STORY_ENUM.SECOND_CHARACTER].length; i++){
       buttonImages[choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()] = new Image();
-      buttonImages[choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()].src = '../buttonsImg/'+choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()+'.png';
+      buttonImages[choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()].src = secCharacterSrc[choices[STATUS_STORY_ENUM.SECOND_CHARACTER][i].toLowerCase()];
     }
+
+
+    playListSrc = {   'ball':'https://i.imgur.com/f7EE8Oz.png',
+                      'boomerang':'https://i.imgur.com/rcggydo.png',
+                      'guitar':'https://i.imgur.com/WSUAM2h.png',
+                   };
 
     //Load play list images
     for(i=0; i<PLAY_LIST.length; i++){
       buttonImages[PLAY_LIST[i].toLowerCase()] = new Image();
-      buttonImages[PLAY_LIST[i].toLowerCase()].src = '../buttonsImg/'+PLAY_LIST[i].toLowerCase()+'.png';
+      buttonImages[PLAY_LIST[i].toLowerCase()].src = playListSrc[PLAY_LIST[i].toLowerCase()];
     }
+
+
+    foodListSrc = {   'hamburger':'https://i.imgur.com/l8q1fUC.png',
+                      'cake':'https://i.imgur.com/m2zCjnB.png',
+                      'pizza':'https://i.imgur.com/g8ENPoQ.png',
+                      'apple':'https://i.imgur.com/iGLFBwd.png'
+                   };
 
     //Load food list images
     for(i=0; i<FOOD_LIST.length; i++){
       buttonImages[FOOD_LIST[i].toLowerCase()] = new Image();
-      buttonImages[FOOD_LIST[i].toLowerCase()].src = '../buttonsImg/'+FOOD_LIST[i].toLowerCase()+'.png';
+      buttonImages[FOOD_LIST[i].toLowerCase()].src = foodListSrc[FOOD_LIST[i].toLowerCase()];
     }
+
+
+    thirstListSrc = {   'bottle':'https://i.imgur.com/NGF2ePS.png',
+                        'cup':'https://i.imgur.com/z2QhtYO.png'
+                     };
 
     //Load thirst list images
     for(i=0; i<THIRST_LIST.length; i++){
       buttonImages[THIRST_LIST[i].toLowerCase()] = new Image();
-      buttonImages[THIRST_LIST[i].toLowerCase()].src = '../buttonsImg/'+THIRST_LIST[i].toLowerCase()+'.png';
+      buttonImages[THIRST_LIST[i].toLowerCase()].src = thirstListSrc[THIRST_LIST[i].toLowerCase()];
     }
 
     //Load arrow image
     buttonImages['arrows'] = new Image();
-    buttonImages['arrows'].src = "../arrows.png";
+    buttonImages['arrows'].src = "https://i.imgur.com/VVf6T1O.png";
 }
 
 
