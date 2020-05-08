@@ -154,7 +154,7 @@ function afterSpeech() {
     drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].finalAnimation(recDuration*1000, 2);
 
     //Change the background: make the background dark and hide sketch container
-    $('#sketchContainer').animate({opacity:0},recDuration);
+    //$('#sketchContainer').animate({opacity:0},recDuration);
 
     //Close the curtain with a duration equal to the recording duration
     splashCurtain.style.transition = recDuration+'s transform';
