@@ -121,6 +121,7 @@ function afterSpeech() {
     //Start/continue with the recap
     doRecap();
   } else if(getCurrentStatus_Recap() < STATUS_RECAP_ENUM.RECORDING){
+    //console.log("animation is finished: ", animationIsFinished);
     if(!isAutomaticStoryAhead(getCurrentStatus_Recap())){ //If we have to manage a drawing, we wait for the end of the animation
       waitingInterval = setInterval(function(){ //Wait for the callback of the end of the animation
                           if(animationIsFinished){
