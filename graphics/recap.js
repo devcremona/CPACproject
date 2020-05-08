@@ -7,11 +7,10 @@ function introduceRecap() {
   //Set transitions for the container and the drawings
   sketchContainer.style.transition = '1s all ease';
 
-/*
   Object.keys(drawings).forEach(function(key) {
      drawings[key].dwg.style.transition = '0.1s all ease';
   });
-*/
+
 
   setTimeout(function(){
 
@@ -129,7 +128,7 @@ function afterSpeech() {
                             clearInterval(waitingInterval);
                           }
                         },50);
-      setTimeout(function(){animationIsFinished = true;},5000);
+      //setTimeout(function(){animationIsFinished = true;},5000);
     } else {
       //Go on with the recap status
       setNextStatus_Recap();

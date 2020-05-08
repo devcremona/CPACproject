@@ -115,20 +115,28 @@ class Drawing{
 		Drawing.arrows.remove();
 	}
 
-	/*
+/*
 	loop(arr, callback, i){
 		i = i || 0;
-		if(i<arr.length && i>0){
+		if(i==arr.length-1){
 			return callback(arr, i).then(function(){
-				return drawings[getCurrentStatus_Recap()].loop(arr, callback, ++i);
-			})
+				console.log("i=L "+animationIsFinished);
+				animationIsFinished = true;
+				animationIsStarted = false;
+				console.log(animationIsFinished);
+				//return drawings[getCurrentStatus_Recap()].loop(arr, callback, ++i);
+			});
 		}
 		else if(i==0){
 			return callback(arr, i).then(function(){
-				console.log(animationIsFinished);
-				animationIsFinished = true;
-				console.log(animationIsFinished);
+				console.log("i=0 "+animationIsFinished);
+				//return drawings[getCurrentStatus_Recap()].loop(arr, callback, ++i);
 			});
+		}
+		else if(i<arr.length-1 && i>0 && !animationIsFinished){
+			return callback(arr, i).then(function(){
+				return drawings[getCurrentStatus_Recap()].loop(arr, callback, ++i);
+			})
 		}
 	}
 
@@ -154,22 +162,39 @@ class Drawing{
 		);
 
 		animationIsStarted = true;
-		this.stepAnimation(this.path);
+		this.dwg.style.transition = 'none';
+		this.stepAnimation(this.path, 0);
 
 		//this.loop(this.path, this.stepAnimation);
 	}
 
 	// recursive callback: arr is the array of remaining steps
-	stepAnimation(arr){
-		if(arr.length>0){
-			let trans = arr.pop();
+	stepAnimation(arr, i){
+		if(i==arr.length-1){
+			let trans = arr[i];
 			let dxx = trans[0] - Math.round(this.width/2) - this.dminx;
 			let dyy = trans[1] - Math.round(this.height/2) - this.dminy;
 
 			$(this.dwg).animate({
 				left: dxx,
 				top: dyy
-			}, 10,  this.stepAnimation(arr) ); // (selector).animate({styles},speed,easing,callback)
+			}, 5,  'linear', function() {
+									drawings[getCurrentStatus_Recap()].stepAnimation(arr, ++i);
+									console.log('last step');
+									animationIsFinished=true;	
+								});
+		}
+		else if(i<arr.length-1){
+			let trans = arr[i];
+			let dxx = trans[0] - Math.round(this.width/2) - this.dminx;
+			let dyy = trans[1] - Math.round(this.height/2) - this.dminy;
+
+			$(this.dwg).animate({
+				left: dxx,
+				top: dyy
+			}, 5,  'linear', function() {
+									drawings[getCurrentStatus_Recap()].stepAnimation(arr, ++i);
+								});
 		}
 	}
 
@@ -195,7 +220,7 @@ class Drawing{
 
 
 }
-
+/*
 function animationInterval(){
 	if(animationIsStarted && drawings[getCurrentStatus_Recap()].path.length==0){
 		animationIsStarted = false;
@@ -205,20 +230,8 @@ function animationInterval(){
 }
 
 setInterval(animationInterval, 10);
-
+*/
 /*
-	Se cancello qualcosa non viene considerato nel movimento e nel centramento delle frecce
-
-	Se muovo per tanto tempo un disegno poi nel recap non finisce l’animazione e
-	la parte finale di movimento verso il centro non viene effettuata
-
 	Quando inizia il recap e lo sfondo sparisce in dissolvenza i disegni spariscono di colpo
 	invece che in dissolvenza, stessa cosa quando finisce il recap e sparisce di nuovo lo sfondo
-
-	Diminuirei un po’ il tempo di fade-in dei disegni durante il recap
-
-	La posizione finale dei due personaggi la mettere più verso il centro
-
-	Le animazioni del secondo animale (bird,bee,etc.) appaiono prima che terminino tutte
-	le animazioni dell’oggetto (pizza,cup,guitar,etc.)
 */

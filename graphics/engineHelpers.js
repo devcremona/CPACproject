@@ -225,5 +225,5 @@ function scanCanvas(){
       }
     }
   }
-  //console.log("\nmaxx: "+maxx+"\nmaxy: "+maxy+"\nminx: "+minx+"\nminy: "+miny);
+  console.log("\nmaxx: "+maxx+"\nmaxy: "+maxy+"\nminx: "+minx+"\nminy: "+miny);
 }
