@@ -6,8 +6,11 @@ function doMagic() {
 
   speakStop();
 
-  infoMessage.innerHTML = 'Look at the magic! Cool!';
+  messages = ['Look at the magic! Wow!', 'Wow, is it magic?', 'Here is the magical drawing!'];
+  randomMessage = messages[Math.floor(Math.random() * messages.length)];
+  infoMessage.innerHTML = randomMessage;
   speakStop();
+
   speak(infoMessage.innerHTML);
 
   sketchContext.clear();
@@ -90,11 +93,11 @@ function loadModel(index) {
     btnColors.addEventListener('click', btnColorsListener);
 
     //Inform the user on what to do now
-    infoMessage.innerHTML = 'Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+' by clicking on <span id="pencilText" class="iconify active" data-icon="bx:bxs-pencil">...';
+    infoMessage.innerHTML = 'Let’s draw it! Click on <span id="pencilText" class="iconify active" data-icon="bx:bxs-pencil">...';
     setTimeout(function(){
       pencilText.style.cursor = 'auto';
     },10);
-    speak('Start drawing a '+getUserChoice(getCurrentStatus_Story()).toLowerCase()+' by clicking on the pencil...');
+    speak('Let’s draw it! Click on the pencil!');
   });
 };
 

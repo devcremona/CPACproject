@@ -161,11 +161,11 @@ function btnDoneCallback() {
       restart();
 
       //Inform the user
-      infoMessage.innerHTML = "Now you can drag your drawing wherever you want! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
+      infoMessage.innerHTML = "Now drag your drawing to animate it! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
       setTimeout(function(){
         doneText.style.cursor = 'auto';
       },10);
-      speak('Now you can drag your drawing wherever you want! Then click Done');
+      speak('Now drag your drawing to animate it! Then click Done');
       break;
     case DRAWING_STATUS.DRAG:
 
