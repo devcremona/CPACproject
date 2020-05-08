@@ -209,13 +209,13 @@ function scanCanvas(){
   let d = sketchContext.pixelDensity();
   maxx = 0; maxy = 0;
   minx = sketchContext.width; miny = sketchContext.height;
-  step = 4 * 2 * d; // 4 (r,g,b,a) x s (check every s pixel) x d
+  step = 4 * 8 * d; // 4 (r,g,b,a) x s (check every s pixel) x d
 
   for (i=0; i < sketchContext.height*step; i += step){
     for (j=0; j < sketchContext.width*step; j += step){
       let ij = sketchContext.height * i + j;
       //console.log(ij);
-      if((sketchContext.pixels[ij] || sketchContext.pixels[ij+1] || sketchContext.pixels[ij+2]) && sketchContext.pixels[ij+3]){ // if pixel != (0,0,0,0)
+      if(/*(sketchContext.pixels[ij] || sketchContext.pixels[ij+1] || sketchContext.pixels[ij+2]) && */sketchContext.pixels[ij+3]){ // if pixel != (0,0,0,0)
         let idx = toCoord(ij, d);
         //console.log(idx);
         if(idx[0] > maxx) maxx = idx[0];

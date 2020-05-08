@@ -62,6 +62,7 @@ let voiceNameENG;
 
 //Recap variables
 let animationIsFinished = false;
+let animationIsStarted = false;
 let waitingInterval;
 
 //Crop variables

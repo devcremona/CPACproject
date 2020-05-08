@@ -115,6 +115,36 @@ class Drawing{
 		Drawing.arrows.remove();
 	}
 
+	/*
+	loop(arr, callback, i){
+		i = i || 0;
+		if(i<arr.length && i>0){
+			return callback(arr, i).then(function(){
+				return drawings[getCurrentStatus_Recap()].loop(arr, callback, ++i);
+			})
+		}
+		else if(i==0){
+			return callback(arr, i).then(function(){
+				console.log(animationIsFinished);
+				animationIsFinished = true;
+				console.log(animationIsFinished);
+			});
+		}
+	}
+
+	stepAnimation(arr, i){
+		return new Promise(function(resolve,reject){
+			let trans = arr.pop();
+			let dxx = trans[0] - Math.round(drawings[getCurrentStatus_Recap()].width/2) - drawings[getCurrentStatus_Recap()].dminx;
+			let dyy = trans[1] - Math.round(drawings[getCurrentStatus_Recap()].height/2) - drawings[getCurrentStatus_Recap()].dminy;
+			if(i==arr.length-1) animationIsFinished = true;
+			$(drawings[getCurrentStatus_Recap()].dwg).animate({
+				left: dxx,
+				top: dyy
+			}, 10, resolve()); // (selector).animate({styles},speed,easing,callback)
+		});
+	}*/
+
 	recapAnimation(){
 		// reset in the original drawing position
 		this.updateCoord(
@@ -123,12 +153,15 @@ class Drawing{
 			true
 		);
 
+		animationIsStarted = true;
 		this.stepAnimation(this.path);
+
+		//this.loop(this.path, this.stepAnimation);
 	}
 
 	// recursive callback: arr is the array of remaining steps
 	stepAnimation(arr){
-		if(arr.length!=0){
+		if(arr.length>0){
 			let trans = arr.pop();
 			let dxx = trans[0] - Math.round(this.width/2) - this.dminx;
 			let dyy = trans[1] - Math.round(this.height/2) - this.dminy;
@@ -136,7 +169,7 @@ class Drawing{
 			$(this.dwg).animate({
 				left: dxx,
 				top: dyy
-			}, 20, 'linear', this.stepAnimation(arr) ); // (selector).animate({styles},speed,easing,callback)
+			}, 10,  this.stepAnimation(arr) ); // (selector).animate({styles},speed,easing,callback)
 		}
 	}
 
@@ -162,6 +195,16 @@ class Drawing{
 
 
 }
+
+function animationInterval(){
+	if(animationIsStarted && drawings[getCurrentStatus_Recap()].path.length==0){
+		animationIsStarted = false;
+		animationIsFinished = true;
+		console.log("finished");
+	}
+}
+
+setInterval(animationInterval, 10);
 
 /*
 	Se cancello qualcosa non viene considerato nel movimento e nel centramento delle frecce
