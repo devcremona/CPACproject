@@ -12,7 +12,7 @@ const sketch = function(sketch) {
           availableModels = getAvailableModels();
 
           //Load all the jsons as soon as possible
-          preloadJSONs();
+          //preloadJSONs();
 
           //Show the splash screen with opacity animation
           splash.classList.remove('hidden');

@@ -67,9 +67,8 @@ function loadModel(index) {
 
   // loads the TensorFlow.js version of sketch-rnn model, with the model's weights.
   //Use custom trained models
-  model = new ms.SketchRNN(`../ML/models/`+getUserChoice(getCurrentStatus_Story()).toLowerCase()+`.gen.json`);
-
-  //model = new ms.SketchRNN('https://storage.googleapis.com/quickdraw-models/sketchRNN/models/sheep.gen.json');
+  model = new ms.SketchRNN(`https://1996158648.rsc.cdn77.org/`+getUserChoice(getCurrentStatus_Story()).toLowerCase()+`.gen.json`);
+  //model = new ms.SketchRNN(`../ML/models/`+getUserChoice(getCurrentStatus_Story()).toLowerCase()+`.gen.json`);
 
   //Actually initialize the model, and set a callback to run at the end of the initialization
   model.initialize().then(function() {
@@ -197,7 +196,9 @@ function preloadImages(){
 
 function preloadJSONs(){
   for (var i = 0; i < availableModels.length; i++) {
-    $.getJSON('../ML/models/'+availableModels[i]+'.gen.json');
+    $.getJSON('https://1996158648.rsc.cdn77.org/'+availableModels[i]+'.gen.json', function(){
+      console.log('loaded model');
+    });
   }
 }
 
