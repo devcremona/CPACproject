@@ -101,7 +101,7 @@ function speak(text){
   msg.onend = function(event) {
 
       if (getCurrentStatus_Story() == STATUS_STORY_ENUM.RECAP){
-        console.log('Narration speech ended in ' + event.elapsedTime + ' milliseconds.');
+        //console.log('Narration speech ended in ' + event.elapsedTime + ' milliseconds.');
         // call a method in graphics at the end of the current speech
         afterSpeech()
       }

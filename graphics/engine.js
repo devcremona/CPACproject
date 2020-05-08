@@ -4,6 +4,7 @@ const sketch = function(sketch) {
     //Needed for Less to load the css for the curtain
     less.pageLoadFinished.then(
         function() {
+          console.clear();
 
           //Load alla images as soon as possible
           preloadImages();
@@ -11,15 +12,12 @@ const sketch = function(sketch) {
           //Get all the available models as a list and set the variable
           availableModels = getAvailableModels();
 
-          //Load all the jsons as soon as possible
-          //preloadJSONs();
-
           //Show the splash screen with opacity animation
           splash.classList.remove('hidden');
 
           // Initialize the canvas
           const containerSize = sketchContainer.getBoundingClientRect();
-          console.log("ENGINE CONTAINER SIZE: ",containerSize);
+          //console.log("ENGINE CONTAINER SIZE: ",containerSize);
           const screenWidth = Math.floor(containerSize.width);
           const screenHeight = Math.floor(containerSize.height);
           canvas = sketch.createCanvas(screenWidth, screenHeight);
@@ -80,7 +78,7 @@ const sketch = function(sketch) {
 
     // If we finished the previous drawing, start a new one.
     if (pen[PEN.END] === 1) {
-      console.log('finished this one');
+      //console.log('finished this one');
       modelIsActive = false;
 
       infoMessage.innerHTML = "If you don't like it, click <span id='retryText' class='iconify' data-icon='ic:baseline-update'></span> Otherwise click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
@@ -269,13 +267,13 @@ function sketchMousePressedListener(e) { //Human drawing
 
     if(drawingStatus == DRAWING_STATUS.INIT){
       drawingStatus = DRAWING_STATUS.FIRST_STROKE;
-      console.log('Drawing in progress...');
+      //console.log('Drawing in progress...');
       maxx = x; minx = x;
       maxy = y; miny = y;
     }else if(drawingStatus == DRAWING_STATUS.DRAG){
       nearDwg = getNearestDwg(x, y);
       Drawing.arrowsOff();
-      console.log("Drag clicked");
+      //console.log("Drag clicked");
     }
 
     modelIsActive = false; //Machine learning in pause while i'm drawing

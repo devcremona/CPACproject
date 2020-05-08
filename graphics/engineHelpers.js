@@ -193,15 +193,6 @@ function preloadImages(){
     buttonImages['arrows'].src = "https://i.imgur.com/VVf6T1O.png";
 }
 
-
-function preloadJSONs(){
-  for (var i = 0; i < availableModels.length; i++) {
-    $.getJSON('https://1996158648.rsc.cdn77.org/'+availableModels[i]+'.gen.json', function(){
-      console.log('loaded model');
-    });
-  }
-}
-
 function getAvailableModels(){
   //Concat all the possible choices
   availableModels = choices[STATUS_STORY_ENUM.CHARACTER].concat(choices[STATUS_STORY_ENUM.SECOND_CHARACTER].concat(PLAY_LIST.concat(FOOD_LIST.concat(THIRST_LIST))));
@@ -271,5 +262,5 @@ function scanCanvas(){
       }
     }
   }
-  console.log("\nmaxx: "+maxx+"\nmaxy: "+maxy+"\nminx: "+minx+"\nminy: "+miny);
+  //console.log("\nmaxx: "+maxx+"\nmaxy: "+maxy+"\nminx: "+minx+"\nminy: "+miny);
 }

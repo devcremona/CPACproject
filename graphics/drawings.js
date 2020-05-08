@@ -180,8 +180,8 @@ class Drawing{
 				top: dyy
 			}, 5,  'linear', function() {
 									drawings[getCurrentStatus_Recap()].stepAnimation(arr, ++i);
-									console.log('last step');
-									animationIsFinished=true;	
+									//console.log('last step');
+									animationIsFinished=true;
 								});
 		}
 		else if(i<arr.length-1){

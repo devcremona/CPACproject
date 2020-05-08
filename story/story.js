@@ -360,7 +360,7 @@ function setNextStatus_Recap(){
 * set the narrationVoice with all the user choices made
 */
 function setNarrationVoice(){
-  console.log("setNarrationVoice");
+  //console.log("setNarrationVoice");
   // where to narration
   narrationVoice[STATUS_RECAP_ENUM.WHERE] = narrationVoice[STATUS_RECAP_ENUM.WHERE].replace("...", userChoice[STATUS_STORY_ENUM.WHERE].toLowerCase());
 
