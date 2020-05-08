@@ -1,15 +1,8 @@
 //Alert the user that a recap is going to start
 function introduceRecap() {
-  /*//Disable question mark button
-  btnHelp.firstChild.classList.add('inactive');
-  btnHelp.removeEventListener('click',btnHelpCallback);*/
 
   //Set transitions for the container and the drawings
   sketchContainer.style.transition = '1s all ease';
-
-  Object.keys(drawings).forEach(function(key) {
-     drawings[key].dwg.style.transition = '0.1s all ease';
-  });
 
 
   setTimeout(function(){
@@ -28,11 +21,7 @@ function introduceRecap() {
 
     //Hide all drawings
     Object.keys(drawings).forEach(function(key) {
-       drawings[key].dwg.style.opacity = 0;
-    });
-
-    Object.keys(drawings).forEach(function(key) {
-      drawings[key].dwg.style.transition = 'none';
+      $(drawings[key].dwg).animate({opacity: 0}, 800);
     });
 
     //Get narration text from story.js and set text
@@ -104,6 +93,7 @@ function afterAnimation() {
 
   //Go on with the recap status
   setNextStatus_Recap();
+
   //Start/continue with the recap
   doRecap();
 }
@@ -120,8 +110,8 @@ function afterSpeech() {
     setNextStatus_Recap();
     //Start/continue with the recap
     doRecap();
+
   } else if(getCurrentStatus_Recap() < STATUS_RECAP_ENUM.RECORDING){
-    //console.log("animation is finished: ", animationIsFinished);
     if(!isAutomaticStoryAhead(getCurrentStatus_Recap())){ //If we have to manage a drawing, we wait for the end of the animation
       waitingInterval = setInterval(function(){ //Wait for the callback of the end of the animation
                           if(animationIsFinished){
@@ -129,7 +119,6 @@ function afterSpeech() {
                             clearInterval(waitingInterval);
                           }
                         },50);
-      //setTimeout(function(){animationIsFinished = true;},5000);
     } else {
       //Go on with the recap status
       setNextStatus_Recap();
