@@ -210,8 +210,8 @@ function getAvailableModels(){
 function setSpeakerVoice(){
   if(navigator.userAgent.indexOf('Firefox') == -1){ //If we are not in firfox
     speechSynthesis.onvoiceschanged = function() { // wait on voices to be loaded before fetching list
-      //Search the last available italian and english voice
-      for(i=0; i<getVoices().length; i++){
+      //Search the first available italian and english voice
+      for(i=getVoices().length-1; i>=0; i--){
           if(getVoices()[i][1]=='it-IT'){
               voiceNameITA=getVoices()[i][0];
           }
@@ -224,7 +224,7 @@ function setSpeakerVoice(){
   } else { //If we are in firefox
     getVoices();
     setTimeout(function(){
-      for(i=0; i<getVoices().length; i++){
+      for(i=getVoices().length-1; i>=0; i--){
           if(getVoices()[i][1]=='it-IT'){
               voiceNameITA=getVoices()[i][0];
           }
