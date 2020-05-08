@@ -146,12 +146,8 @@ function afterSpeech() {
     });
 
     //Clone the 2 characters images and spawn them
-    drawings[STATUS_STORY_ENUM.CHARACTER].dwg.style.opacity = 0;
-    drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg.style.opacity = 0;
     app.appendChild(drawings[STATUS_STORY_ENUM.CHARACTER].dwg);
     app.appendChild(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg);
-    $(drawings[STATUS_STORY_ENUM.CHARACTER].dwg).animate({opacity: 1}, 1000);
-    $(drawings[STATUS_STORY_ENUM.SECOND_CHARACTER].dwg).animate({opacity: 1}, 1000);
 
     // move the characters in the two half centers
     drawings[STATUS_STORY_ENUM.CHARACTER].finalAnimation(recDuration*1000, 1);
