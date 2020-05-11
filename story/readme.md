@@ -1,4 +1,4 @@
-# Module usage #
+# Modules usage #
 
 ## story.js ##
 STATUS_STORY_ENUM is an enumerator to know the flow of the story
