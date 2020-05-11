@@ -1,7 +1,7 @@
 # Modules usage #
 
 ## story.js ##
-STATUS_STORY_ENUM is an enumerator to know the flow of the story
+STATUS_STORY_ENUM is an enumerator to know the flow of the story <br>
 STATUS_RECAP_ENUM is an enumerator to know the flow of the recap
 
 In order set correctly the story use functions in this order:
