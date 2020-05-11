@@ -1,6 +1,13 @@
-# CPACproject
-Project of Creative Programming and Computing
+# CPAC project
+## An emotional experience for children ##
+Project of Creative Programming and Computing @ Oliveri - Simeon - Vassena - Acerbi
 
-Useful link
-progect: https://magenta.tensorflow.org/sketch-rnn-demo
-code reference: https://glitch.com/edit/#!/magic-sketchpad?path=README.md:1:0
+
+The target of our system are the children. <br> 
+With this system they will create a story using their fantasy and drawing their personal characters. <br> 
+The purpose of this emotional installation is to give the child-user the opportunity to see his personal sketch come to life and be part of a story that will be driven by the same child.<br> 
+We will use NN in order to create generative drawing.
+
+
+Useful link <br> 
+demo progect: https://magenta.tensorflow.org/sketch-rnn-demo <br>
