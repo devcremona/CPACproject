@@ -10,4 +10,4 @@ We will use NN in order to create generative drawing.
 
 
 Useful link <br> 
-demo progect: https://magenta.tensorflow.org/sketch-rnn-demo <br>
+reference magenta project: https://magenta.tensorflow.org/sketch-rnn-demo <br>
