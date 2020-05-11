@@ -9,5 +9,4 @@ The purpose of this emotional installation is to give the child-user the opportu
 We will use NN in order to create generative drawing.
 
 
-Useful link <br> 
-reference magenta project: https://magenta.tensorflow.org/sketch-rnn-demo <br>
+Reference magenta project: https://magenta.tensorflow.org/sketch-rnn-demo <br>
