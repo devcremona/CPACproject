@@ -1,6 +1,6 @@
 # CPAC project
 ## An emotional experience for children ##
-Project of Creative Programming and Computing @ Oliveri - Simeon - Vassena - Acerbi
+Project of Creative Programming and Computing @ 2020 Olivieri - Simeon - Vassena - Acerbi
 
 
 The target of our system are the children. <br> 
