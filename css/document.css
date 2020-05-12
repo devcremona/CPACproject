@@ -1,0 +1,40 @@
+/* General Document Style */
+/*-----------------------------------------------------------------------------*/
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  overscroll-behavior-y: contain;
+}
+
+body {
+  font-family: 'Caveat Brush';
+  font-size: 2vw;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  --primary: #4545CC;
+  --secondary: #8EE3C8;
+  --bottom-margin: 1.1vh;
+}
+
+* { box-sizing: border-box; }
+
+
+@media screen and (max-width: 800px) {
+  body {
+    font-size: 3vw;
+  }
+
+}
+
+@media screen and (min-width: 1600px) {
+  body {
+    font-size: 25px;
+  }
+
+}

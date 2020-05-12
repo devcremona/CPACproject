@@ -1,0 +1,346 @@
+/* Footer Style */
+/*-----------------------------------------------------------------------------*/
+
+#footer{
+  position: fixed;
+  bottom: var(--bottom-margin);
+  width: 100%;
+  display: inline-flex;
+  z-index: 2;
+}
+
+#navigationTools{
+  position: fixed;
+  display: inline-flex;;
+  left: 0.5vw;
+  bottom: var(--bottom-margin);
+
+  border-top-right-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 2px 13px #fff;
+  opacity: 1;
+  transition: 1s opacity ease;
+  }
+
+#infoMessage{
+  background-color: white;
+  border-radius: 10px;
+  margin: 0 auto; /* Center the DIV horizontally */
+  text-align: center;
+  width: 60vw;
+  padding: 5px 5px 5px 5px;
+}
+
+#drawingTools{
+  position: fixed;
+  display: inline-flex;
+  right: 0.5vw;
+  width: 12.5vw;
+  height: 9vh;
+  bottom: var(--bottom-margin);
+
+  border-top-left-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 2px 13px #fff;
+  opacity: 1;
+  transition: 1s opacity ease;
+}
+
+
+/* Pencil and eraser*/
+/* ----------------------------------------------------------------------------*/
+#btnEraser,
+#btnPencil{
+  bottom:0px;
+  position:absolute;
+  right:0px;
+}
+
+#btnEraser.active,
+#btnPencil.active{
+  border-radius: 7px;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+#eraser,
+#pencil{
+  --var-slider-width: 7px;
+  --var-slider-height: 120px;
+  --var-slide-shift-y: 10px;
+  --var-slide-shift-x: 12px;
+  position: relative;
+  width: 30px;
+}
+
+
+#eraserSlider,
+#pencilSlider{
+
+  transform: rotate(-90deg) translateX(calc(-1 * var(--var-slider-height) + var(--var-slide-shift-y) - var(--var-slider-width))) translateY(calc(var(--var-slide-shift-x) - 1 / 2 * var(--var-slider-width)));
+  transform-origin: top left;
+  cursor: pointer;
+  margin: 0px;
+  writing-mode: none; /* IE */
+  -webkit-appearance: none;
+  width: var(--var-slider-height);
+  height: var(--var-slider-width);
+  border-radius: 5px;
+}
+
+#eraserSlider::-webkit-slider-thumb,
+#pencilSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: calc(var(--var-slider-width) + 10px);
+  height: calc(var(--var-slider-width) + 10px);
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+  margin: 0px;
+}
+
+#eraserSlider::-moz-range-thumb,
+#pencilSlider::-moz-range-thumb {
+  width: calc(var(--var-slider-width) + 10px);
+  height: calc(var(--var-slider-width) + 10px);
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+  margin: 0px;
+}
+
+#eraserSlider.visible,
+#pencilSlider.visible{
+  opacity: 1;
+}
+
+#eraserSliderContainer,
+#pencilSliderContainer{
+  bottom: 0px;
+  position: absolute;
+  overflow: hidden;
+  height:0px;
+  width: 30px;
+  margin-bottom: 30px;
+  opacity:0;
+  transition: 0.5s all ease;
+}
+
+#eraserSliderContainer.visible,
+#pencilSliderContainer.visible{
+  height: calc(var(--var-slider-height) + 15px);
+  opacity: 1;
+}
+
+
+
+
+/* Colors Manager */
+/* ----------------------------------------------------------------------------*/
+#colorsManager{
+   width: 30px;
+   position: relative;
+}
+
+#colorsManager.active{
+  border-radius: 7px;
+  border-color: black;
+  border-bottom-style: outset;
+}
+
+
+#colors{
+  width: 53px;
+  height: 0px;
+  position: absolute;
+  margin-bottom: 8px;
+  bottom: 20px;
+  right:-15px;
+  transition: 0.5s all ease;
+  background-color: rgba(250,250,250,0.3);
+  border-radius: 20px;
+  overflow: hidden;
+  padding:6px;
+  opacity:0;
+  font-size-adjust: 0.35; /*Just for firefox*/
+  pointer-events: none;
+}
+
+
+
+#colors.visible {
+  height: 50vh;
+  opacity: 1;
+  pointer-events: all;
+}
+
+#colors button {
+  width: 11px;
+  height: 11px;
+  border: 0.3vw solid transparent;
+  border-radius: 50%;
+  padding: 0;
+}
+#colors button.active {
+  border:2px solid white;
+}
+#colors button:hover {
+  transform: scale(1.3);
+}
+
+
+
+#btnColors{
+  position:absolute;
+  bottom:0px;
+  height: 6.4vh;
+  margin-bottom: 4px;
+  background-color: rgba(0,0,0,0);
+  border-radius: 50%;
+}
+
+
+/* Media Query */
+/*----------------------------------------------------------------------------*/
+@media screen and (min-width: 800px) {
+ .iconify {
+    width: 30px;
+    height: 30px;
+  }
+  #drawingTools{
+    width: 90px;
+    height: 35px;
+  }
+  #pencil,
+  #eraser,
+  #colorsManager{
+    width: 30px;
+  }
+  #btnColors{
+    height: 30px;
+  }
+
+  #eraser,
+  #pencil{
+    --var-slider-width: 10px;
+    --var-slider-height: 180px;
+    --var-slide-shift-y: 25px;
+    --var-slide-shift-x: 15px;
+  }
+
+  #eraserSliderContainer.visible,
+  #pencilSliderContainer.visible{
+    height: calc(var(--var-slider-height) + 25px);
+  }
+
+  #eraserSlider::-webkit-slider-thumb,
+  #pencilSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: calc(var(--var-slider-width) + 15px);
+    height: calc(var(--var-slider-width) + 15px);
+    border-radius: 50%;
+    background: gray;
+    cursor: pointer;
+    margin: 0px;
+  }
+
+  #eraserSlider::-moz-range-thumb,
+  #pencilSlider::-moz-range-thumb {
+    width: calc(var(--var-slider-width) + 15px);
+    height: calc(var(--var-slider-width) + 15px);
+    border-radius: 50%;
+    background: gray;
+    cursor: pointer;
+    margin: 0px;
+  }
+
+  #eraserSliderContainer,
+  #pencilSliderContainer{
+    margin-bottom: 35px;
+  }
+
+  #colors{
+    width: 114px;
+    margin-bottom: 10px;
+    bottom: 33px;
+    right:-30px;
+    border-radius: 20px;
+    padding:10px;
+  }
+  #colors.visible {
+    height: 40vh;
+  }
+
+  #colors button {
+    width: 27px;
+    height: 27px;
+  }
+  #colors button.active {
+    border:3px solid white;
+  }
+
+}
+
+@media screen and (min-width: 1700px) {
+ .iconify {
+    width: 40px;
+    height: 40px;
+  }
+
+  #drawingTools{
+    width: 120px;
+    height: 45px;
+  }
+  #pencil,
+  #eraser,
+  #colorsManager{
+    width: 40px;
+  }
+  #btnColors{
+    height: 40px;
+  }
+
+  #eraser,
+  #pencil{
+    --var-slider-width: 13px;
+    --var-slider-height: 200px;
+    --var-slide-shift-y: 20px;
+    --var-slide-shift-x: 17px;
+  }
+
+  #eraserSliderContainer.visible,
+  #pencilSliderContainer.visible{
+    height: calc(var(--var-slider-height) + 35px);
+  }
+
+  #eraserSliderContainer,
+  #pencilSliderContainer{
+    margin-bottom: 40px;
+    width: 40px;
+  }
+
+  #colors{
+    width: 125px;
+    margin-bottom: 8px;
+    bottom: 46px;
+    right: -40px;
+    border-radius: 20px;
+    padding: 10px;
+  }
+
+  #colors.visible{
+    height: 29vh;
+  }
+
+  #colors button {
+    border: 2px solid transparent;
+    width: 30px;
+    height: 30px;
+  }
+
+  #colors button.active {
+    border: 4px solid transparent;
+  }
+}

@@ -1,0 +1,16 @@
+/* Help Button Style */
+/*-----------------------------------------------------------------------------*/
+
+#btnPause{
+  position: fixed;
+  right: 0.5vw;
+  top: var(--bottom-margin);
+  z-index: 1;
+
+  border-bottom-left-radius: 50%;
+  background-color: white;
+  box-shadow: 0 0 2px 13px #fff;
+
+  opacity: 0;
+  transition: 1s opacity ease;
+}

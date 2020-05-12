@@ -1,0 +1,79 @@
+/* Popup Style */
+/*-----------------------------------------------------------------------------*/
+
+#popup {
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  padding-top: 17vh; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  transition: 0.5s background-color;
+}
+#popup.hidden {
+  background-color: rgba(0,0,0,0);
+  z-index: -1;
+  transition: 0.5s background-color, 0.5s z-index;
+}
+
+
+#popupContent {
+  text-align: center;
+  font-size: 4vw;
+  background-color: rgba(255,255,255,0.8);
+  border-radius: 30px;
+  margin: auto;
+  padding: 2vw;
+  width: 72vw;
+  transform: translate3d(0, 0, 0);
+  transition: 0.5s transform;
+}
+#popupContent.hidden {
+  transform: translate3d(0, -500%, 0);
+  transition: 0.5s transform;
+}
+
+#btnConfirmPopup {
+  width: fit-content;
+  margin: auto;
+}
+
+#btnStartRecordingContainer,
+#btnStopRecordingContainer {
+  display: none;
+}
+
+#textField {
+  display: none;
+  margin:auto;
+}
+
+#choicesDiv {
+  display: inline-flex;
+  font-size: 2vw;
+  padding: 3vw;
+}
+
+.choiceButton {
+  display: grid;
+  margin: 0px 2vw 0px 2vw;
+  padding: 1vw;
+  border-radius: 30%;
+  border-width:2px;
+  border-style:solid;
+  border-color:black;
+}
+
+.choiceButton.active {
+  background-color: rgba(255,255,255,1);
+}
+
+.choiceButton:hover,
+.choiceButton:focus {
+  background-color: rgba(255,255,255,1);
+  text-decoration: none;
+  cursor: pointer;
+}

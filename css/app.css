@@ -1,0 +1,81 @@
+/* General App Style */
+/*-----------------------------------------------------------------------------*/
+
+#app{
+  height:100%;
+  width: 100%;
+  position: absolute;
+  background-color: darkgray;
+}
+
+#app.loading {
+  pointer-events: none;
+  opacity: 0.6;
+  filter: blur(3px);
+}
+
+#loadingGif {
+  filter: invert(90%);
+}
+
+.inactive {
+  filter: invert(60%);
+  pointer-events: none;
+}
+
+/* Buttons */
+/*----------------------------------------------------------------------------*/
+.iconify{
+ width: 4vw;
+ height: 4vw;
+ text-align: center;
+ cursor: pointer;
+
+ animation-timing-function: linear;
+ animation-name: anim;
+
+ border-radius: 50%;
+}
+
+.Blink {
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  background-color: #c72c2c;
+}
+@keyframes anim {
+  to {
+    background-color: #00000000;
+  }
+}
+
+.BlinkOpacity {
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  opacity: 1;
+}
+@keyframes animOpacity {
+  to {
+    opacity:0;
+  }
+}
+
+
+
+/* Meda Queries */
+/*----------------------------------------------------------------------------*/
+@media screen and (min-width: 800px) {
+  .iconify {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+@media screen and (min-width: 1700px) {
+  .iconify {
+    width: 40px;
+    height: 40px;
+  }
+}
