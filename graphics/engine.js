@@ -192,34 +192,6 @@ function sketchMouseReleasedListener() {
     }
   }
 
-  let flagDwg = (drawingStatus==DRAWING_STATUS.FIRST_STROKE || drawingStatus==DRAWING_STATUS.FINISHING);
-
-  //Draw dots when you click the mouse
-  if (!eraserActive && sketchContext.isInBounds() && !splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && !graphicToolsOpen && flagDwg){
-      const dx0 = sketchContext.mouseX - x;
-      const dy0 = sketchContext.mouseY - y;
-      dx = dx0;
-      dy = dy0;
-      userPen = 1;
-      if (previousUserPen == 1) {
-        sketchContext.line(x, y, x, y); // draw line connecting prev point to current point.
-        lastHumanDrawing.push([x, y, x, y]);
-      }
-      x += dx;
-      y += dy;
-      currentRawLine.push([x, y]);
-
-      maxx = Math.round(Math.max(x, maxx)); minx = Math.round(Math.min(x, minx));        // updating crop area
-      maxy = Math.round(Math.max(y, maxy)); miny = Math.round(Math.min(y, miny));
-      previousUserPen = userPen;
-      flagDwg = false;
-
-      if(sketchContext.isInBounds() && drawingStatus==DRAWING_STATUS.FINISHING){
-        //Reactivate done button
-        btnDone.classList.remove('inactive');
-        btnDone.addEventListener('click', btnDoneCallback);
-      }
-  }
 }
 
 function sketchMouseDraggedListener() {
@@ -314,6 +286,34 @@ function sketchMousePressedListener(e) { //Human drawing
     //currentRawLine = [];
     //lastHumanDrawing = [];
     previousUserPen = userPen;
+  }
+
+  //Draw dots when you click the mouse
+  let flagDwg = (drawingStatus==DRAWING_STATUS.FIRST_STROKE || drawingStatus==DRAWING_STATUS.FINISHING);
+  if (!eraserActive && sketchContext.isInBounds() && !splashIsOpen && !popupIsOpen && !modelIsActive && modelLoaded && !graphicToolsOpen && flagDwg){
+      const dx0 = sketchContext.mouseX - x;
+      const dy0 = sketchContext.mouseY - y;
+      dx = dx0;
+      dy = dy0;
+      userPen = 1;
+      if (previousUserPen == 1) {
+        sketchContext.line(x, y, x, y); // draw line connecting prev point to current point.
+        lastHumanDrawing.push([x, y, x, y]);
+      }
+      x += dx;
+      y += dy;
+      currentRawLine.push([x, y]);
+
+      maxx = Math.round(Math.max(x, maxx)); minx = Math.round(Math.min(x, minx));        // updating crop area
+      maxy = Math.round(Math.max(y, maxy)); miny = Math.round(Math.min(y, miny));
+      previousUserPen = userPen;
+      flagDwg = false;
+
+      if(sketchContext.isInBounds() && drawingStatus==DRAWING_STATUS.FINISHING){
+        //Reactivate done button
+        btnDone.classList.remove('inactive');
+        btnDone.addEventListener('click', btnDoneCallback);
+      }
   }
 }
 

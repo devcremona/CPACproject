@@ -74,3 +74,7 @@ var arrows;
 
 //debug variables
 var testing = false;
+
+//Buttons variables
+let btnGoClicked = false;
+let btnDoneClicked = false;

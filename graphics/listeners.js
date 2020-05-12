@@ -106,107 +106,113 @@ function btnEraserListener() {
 }
 
 function btnDoneCallback() {
-  speakStop();
+  if(!btnDoneClicked){
+    speakStop();
 
-  //increase drawing status
-  switch(drawingStatus){
-    case DRAWING_STATUS.MAGIC:
+    //increase drawing status
+    switch(drawingStatus){
+      case DRAWING_STATUS.MAGIC:
 
-      //Re-add mouse listeners when the magic phase is finished
-      sketchContext.mousePressed = sketchMousePressedListener;
-      sketchContext.mouseDragged = sketchMouseDraggedListener;
-      sketchContext.mouseReleased = sketchMouseReleasedListener;
+        //Re-add mouse listeners when the magic phase is finished
+        sketchContext.mousePressed = sketchMousePressedListener;
+        sketchContext.mouseDragged = sketchMouseDraggedListener;
+        sketchContext.mouseReleased = sketchMouseReleasedListener;
 
-      //Deactivate retry magic button
-      btnRetryMagic.classList.add('inactive');
-      btnRetryMagic.removeEventListener('click', doMagic);
+        //Deactivate retry magic button
+        btnRetryMagic.classList.add('inactive');
+        btnRetryMagic.removeEventListener('click', doMagic);
 
-      //Activate eraser
-      btnEraser.classList.remove('inactive');
-      btnEraser.addEventListener('click', btnEraserListener);
+        //Activate eraser
+        btnEraser.classList.remove('inactive');
+        btnEraser.addEventListener('click', btnEraserListener);
 
-      //Activate pencil
-      btnPencil.classList.remove('inactive');
-      btnPencil.classList.add('active');
-      btnPencil.addEventListener('click', btnPencilListener);
-      btnPencil.style.removeProperty('filter');
+        //Activate pencil
+        btnPencil.classList.remove('inactive');
+        btnPencil.classList.add('active');
+        btnPencil.addEventListener('click', btnPencilListener);
+        btnPencil.style.removeProperty('filter');
 
-      //Increase drawing status
-      drawingStatus = DRAWING_STATUS.FINISHING;
+        //Increase drawing status
+        drawingStatus = DRAWING_STATUS.FINISHING;
 
-      //Inform the user
-      infoMessage.innerHTML = "Now finish your drawing as you like! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
-      setTimeout(function(){
-        doneText.style.cursor = 'auto';
-      },10);
-      speak('Now finish your drawing as you like! Then click Done');
-      break;
-    case DRAWING_STATUS.FINISHING:
-      drawingStatus = DRAWING_STATUS.DRAG;
+        //Inform the user
+        infoMessage.innerHTML = "Now finish your drawing as you like! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
+        setTimeout(function(){
+          doneText.style.cursor = 'auto';
+        },10);
+        speak('Now finish your drawing as you like! Then click Done');
+        break;
+      case DRAWING_STATUS.FINISHING:
+        drawingStatus = DRAWING_STATUS.DRAG;
 
-      //Deactivate all buttons exept for done
-      btnClear.classList.add('inactive');
-      btnClear.removeEventListener('click', btnClearListener);
+        //Deactivate all buttons exept for done
+        btnClear.classList.add('inactive');
+        btnClear.removeEventListener('click', btnClearListener);
 
-      btnRetryMagic.classList.add('inactive');
-      btnRetryMagic.removeEventListener('click', doMagic);
+        btnRetryMagic.classList.add('inactive');
+        btnRetryMagic.removeEventListener('click', doMagic);
 
-      btnPencil.classList.add('inactive');
-      btnPencil.classList.remove('active');
-      btnPencil.removeEventListener('click', btnPencilListener);
+        btnPencil.classList.add('inactive');
+        btnPencil.classList.remove('active');
+        btnPencil.removeEventListener('click', btnPencilListener);
 
-      btnColors.classList.add('inactive');
-      btnColors.classList.remove('active');
-      btnColors.removeEventListener('click', btnColorsListener);
-      btnColors.style.backgroundColor = 'rgba(0,0,0,0)';
+        btnColors.classList.add('inactive');
+        btnColors.classList.remove('active');
+        btnColors.removeEventListener('click', btnColorsListener);
+        btnColors.style.backgroundColor = 'rgba(0,0,0,0)';
 
-      btnEraser.classList.add('inactive');
-      btnEraser.classList.remove('active');
-      btnEraser.removeEventListener('click', btnEraserListener);
+        btnEraser.classList.add('inactive');
+        btnEraser.classList.remove('active');
+        btnEraser.removeEventListener('click', btnEraserListener);
 
 
-      scanCanvas();
-      //Save canvas as image, activate dragging
-      addDrawing();
+        scanCanvas();
+        //Save canvas as image, activate dragging
+        addDrawing();
 
-      //Reset canvas
-      restart();
+        //Reset canvas
+        restart();
 
-      //Inform the user
-      infoMessage.innerHTML = "Now drag your drawing to animate it! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
-      setTimeout(function(){
-        doneText.style.cursor = 'auto';
-      },10);
-      speak('Now drag your drawing to animate it! Then click Done');
-      break;
-    case DRAWING_STATUS.DRAG:
+        //Inform the user
+        infoMessage.innerHTML = "Now drag your drawing to animate it! Then click <span id='doneText' class='iconify' data-icon='ic:baseline-done-outline'>";
+        setTimeout(function(){
+          doneText.style.cursor = 'auto';
+        },10);
+        speak('Now drag your drawing to animate it! Then click Done');
+        break;
+      case DRAWING_STATUS.DRAG:
 
-      //Increase the story status
-      if(getCurrentStatus_Story()<STATUS_STORY_ENUM.END){
-        setNextStatus_Story();
-      }
+        //Increase the story status
+        if(getCurrentStatus_Story()<STATUS_STORY_ENUM.END){
+          setNextStatus_Story();
+        }
 
-      Drawing.arrowsOff();
+        Drawing.arrowsOff();
 
-      //Deactivate Done button
-      btnDone.classList.add('inactive');
-      btnDone.removeEventListener('click', btnDoneCallback);
+        //Deactivate Done button
+        btnDone.classList.add('inactive');
+        btnDone.removeEventListener('click', btnDoneCallback);
 
-      //Deactivate eraser
-      btnEraser.classList.add('inactive');
-      btnEraser.removeEventListener('click', btnEraserListener);
+        //Deactivate eraser
+        btnEraser.classList.add('inactive');
+        btnEraser.removeEventListener('click', btnEraserListener);
 
-      //Deactivate clear
-      btnClear.classList.add('inactive');
-      btnClear.removeEventListener('click', btnClearListener);
+        //Deactivate clear
+        btnClear.classList.add('inactive');
+        btnClear.removeEventListener('click', btnClearListener);
 
-      //Reset the drawing status
-      drawingStatus = DRAWING_STATUS.INIT;
-      openPopup();
-      break;
-    default:
-      console.log("ERROR: Drawing status not handle...draw something!");
-      break;
+        //Reset the drawing status
+        drawingStatus = DRAWING_STATUS.INIT;
+        openPopup();
+        break;
+      default:
+        console.log("ERROR: Drawing status not handle...draw something!");
+        break;
+    }
+
+    btnDoneClicked = true;
+    //Start timeout for next click delay
+    setTimeout(function(){ btnDoneClicked = false; },500);
   }
 }
 
@@ -387,21 +393,24 @@ function setListeners() {
   btnPause.addEventListener('click', btnPauseCallback);
 
   btnGo.addEventListener('click', function() { //From splash to the sketch
+    if(!btnGoClicked){
+      btnGoClicked = true;
+      popupIsOpen = true;
+      setSpeakerVoice();
 
-    setSpeakerVoice();
+      //Start moving curtain
+      splashCurtain.classList.add('wrapped');
 
-    //Start moving curtain
-    splashCurtain.classList.add('wrapped');
+      //Move the splash on the back and dissolve
+      splash.classList.add('hidden');
+      splashAnimationDuration = parseInt($('#splash').css('transition-duration').split('s')[0]); //seconds
+      setTimeout(function(){
+        splash.style.zIndex = 0;
+      },splashAnimationDuration*1000);
 
-    //Move the splash on the back and dissolve
-    splash.classList.add('hidden');
-    splashAnimationDuration = parseInt($('#splash').css('transition-duration').split('s')[0]); //seconds
-    setTimeout(function(){
-      splash.style.zIndex = 0;
-    },splashAnimationDuration*1000);
-
-    splashIsOpen = false;
-    btnPause.style.zIndex = 3;
-    setTimeout(openPopup,500);
+      splashIsOpen = false;
+      btnPause.style.zIndex = 3;
+      setTimeout(openPopup,500);
+    }
   });
 }
