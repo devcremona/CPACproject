@@ -44,6 +44,18 @@ function confirmPopupCallback() { // When the user clicks on x, close the popup
       } else {
         loadModel(currentChoices.indexOf(getUserChoice(getCurrentStatus_Story())));
 
+        //Reset the color to black
+        sketchContext.updateCurrentColor(index=0); //Set the color to black
+        colors.children[0].classList.add('active'); //activate the button for black
+        $( '#colors' ).children().toArray().forEach(function(item) { //Deactivate all the others
+          item.classList.remove('active');
+        });
+
+        //Reset the pencil size
+        currentStrokeWeight = 3; //Reset the stroke weight
+        pencilSlider.value = currentStrokeWeight;
+        sketchContext.strokeWeight(currentStrokeWeight);
+
         //Activate clear button
         btnClear.classList.remove('inactive');
         btnClear.addEventListener('click', btnClearListener);
